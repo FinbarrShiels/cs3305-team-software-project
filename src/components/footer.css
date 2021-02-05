@@ -13,10 +13,7 @@
     display: flex;
     height:90px;
     width:100%;
-    border-top: 2.5px solid white;
-    background:#3e414b;  
-    background: -webkit-linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c);  
-    background: linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c); 
+
 
 }
 
