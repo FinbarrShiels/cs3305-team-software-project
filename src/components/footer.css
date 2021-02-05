@@ -1,0 +1,26 @@
+
+.icons i {
+    color: white;
+    font-size:5em;
+    padding:10px;
+    padding-left:55px;
+    padding-right: 55px;
+
+}
+
+.my-footer{
+    justify-content:center;
+    display: flex;
+    height:90px;
+    width:100%;
+    border-top: 2.5px solid white;
+    background:#3e414b;  
+    background: -webkit-linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c);  
+    background: linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c); 
+
+}
+
+.icons i:hover{
+    color:rgb(220,120,0);
+  }
+
