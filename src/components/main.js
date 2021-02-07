@@ -7,6 +7,7 @@ import LogIn from './login';
 import signUp from './signUp';
 import AboutUs from './AboutUs';
 import ForgotPassword from './ForgotPassword';
+import RequestSent from './RequestSent';
 
 
 const Main = () => (
@@ -17,6 +18,7 @@ const Main = () => (
     <Route path="/Voting" component={Voting} />
     <Route path="/AboutUs" component={AboutUs} />
     <Route path="/ForgotPassword" component={ForgotPassword} />
+    <Route path="/RequestSent" component={RequestSent} />
     <Route path="/AnonymousV" component={Anon} />
   </Switch>
 )
