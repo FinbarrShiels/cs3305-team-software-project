@@ -10,17 +10,17 @@ class App extends Component {
     return (
 
 
-<div className="container">                           {/*Container inherits 100% height from body* in index.css*/}
-<div className="header">
-<Theheader/>
-</div>
-<div className="body">
-<Main/>
-</div>
-<div className="footer">
-<Thefooter/>
-</div>
-</div>
+      <div className="container">                           {/*Container inherits 100% height from body* in index.css*/}
+        <div className="header">
+          <Theheader/>
+        </div>
+        <div className="body">
+          <Main/>
+        </div>
+        <div className="footer">
+          <Thefooter/>
+        </div>
+      </div>
     );
   }
 }
