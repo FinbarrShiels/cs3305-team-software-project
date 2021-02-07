@@ -6,6 +6,7 @@ import Voting from './Voting';
 import LogIn from './login';
 import signUp from './signUp';
 import AboutUs from './AboutUs';
+import ForgotPassword from './ForgotPassword';
 
 
 const Main = () => (
@@ -15,6 +16,7 @@ const Main = () => (
     <Route path="/login" component={LogIn} />
     <Route path="/Voting" component={Voting} />
     <Route path="/AboutUs" component={AboutUs} />
+    <Route path="/ForgotPassword" component={ForgotPassword} />
     <Route path="/AnonymousV" component={Anon} />
   </Switch>
 )

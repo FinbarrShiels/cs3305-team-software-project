@@ -32,7 +32,7 @@ class LogIn extends Component {
 
         <div className="bottomOptionButtons">
           <a href="/login">Create Account</a>
-          <a href="/login">Forgot Password</a>
+          <a href="/ForgotPassword">Forgot Password</a>
         </div>
       </div>
     )
