@@ -15,7 +15,7 @@ class LogIn extends Component {
             <form className="loginForm">
               <input className="loginFormInput" type="text" placeholder="Username"></input>
               <br/>
-              <input className="loginFormInput" type="text" placeholder="Password"></input>
+              <input className="loginFormInput" type="password" placeholder="Password"></input>
               <br/>
               <input className="btn" type="submit" value="Login"></input>
             </form>

@@ -37,13 +37,13 @@
 }
 
 .loginFormInput{
-    color: white;
+    color: #000;
     text-align: center;
+    font-size: 15px;
     font-weight: 600;
     max-width:380px;
     width: 100%;
     height: 55px;
-    background-color: #2f4aba;
     border-radius: 49px;
     display: grid;
     grid-template-columns: 15% 85%;
@@ -58,7 +58,7 @@
     border-radius: 49px;
     cursor: pointer;
     background-color: grey;
-    colour: white;
+    color: white;
     text-transform: uppercase;
     font-weight: 600;
     transition: 0.5s;
