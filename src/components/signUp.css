@@ -1,0 +1,96 @@
+
+
+.signUpContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+
+}
+
+.sections{
+    background-color: #203079;
+    padding: 2em 2em 3em;
+    display: flex;
+    box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
+    border-radius: 25px;
+
+}
+
+.rightTab{
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 50%;
+    padding: 10px;
+    margin: 0;
+ }
+
+.leftTab{
+    #height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 50%;
+    padding: 10px;
+
+}
+
+.leftTab h2{
+    color: #fff;
+    font-weight: bold;
+}
+.leftTab h2 span{
+    color: #6a51ff;
+}
+
+.formInputSection{
+    display: flex;
+    justify-content: flex-end;
+    padding: .5em;
+
+}
+
+.checkboxSection{
+    margin-top: 15px;
+}
+
+.signUpForm label{
+    color: #fff;
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+.signUpForm input{
+    #background-color: #203079;
+    border: 2px solid #4440bc ;
+    border-radius: 5px;
+}
+.existingMemberLogin{
+    color: #fff;
+    padding-top: 60px;
+    margin-top: 300px;
+    position: absolute;
+}
+
+.existingMemberLogin button{
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.formSubmitButton{
+    font-size: 18px;
+    margin: 15px 0 15px 0;
+    padding: 10px;
+    background-color: #6a51ff;
+    color: #fff;
+    border-radius: 8px;
+    transition-duration: 0.5s;
+}
+
+.formSubmitButton:hover{
+    background-color: #402daf;
+}
+
+
