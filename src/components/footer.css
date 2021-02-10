@@ -1,23 +1,6 @@
 
-.icons i {
-    color: white;
-    font-size:5em;
-    padding:10px;
-    padding-left:55px;
-    padding-right: 55px;
-
+p{
+    text-align: center;
+    color: #fff;
 }
-
-.my-footer{
-    justify-content:center;
-    display: flex;
-    height:90px;
-    width:100%;
-
-
-}
-
-.icons i:hover{
-    color:rgb(220,120,0);
-  }
 
