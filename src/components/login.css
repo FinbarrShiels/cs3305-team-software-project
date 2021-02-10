@@ -11,10 +11,8 @@
 }
 
 .mainLogin{
-
     background-color: #1f3079;
     padding: 2em 2em 3em;
-    border-radius: 8px;
     max-width: 500px;
     display: flex;
     flex-wrap: wrap;
