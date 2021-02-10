@@ -4,27 +4,34 @@ import { Route, withRouter } from 'react-router'
 import './Theheader.css';
 import SearchBar from './SearchBar';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 function Theheader() {
     return(
         <header>
-            <div >
-                <nav className="The-header">
-                <ul>
-                    <li><a href="/"> Show Of Hands </a></li>
-                <div className="right">
+                <nav>
+                    <div class="menuIcon"><span>
+                        <FontAwesomeIcon icon={['fas','bars']}/>
+                        </span>
+                    </div>
+                    <div class="logo">ShowOfHands</div>
+                    <div class="menuItems">
                     <li><a href="/login"> Log In  </a></li>
                     <li><a href="/signUp"> Sign Up </a></li>
-                    {/* <li><a href="/Voting"> Voting </a></li> */}
                     <li><a href="/AboutUs"> About Us  </a></li>
-                    <li><SearchBar/></li>
-                    {/* <li><a href="/AnonymousV"><i className="fa fa-user-secret" aria-hidden="true"></i></a></li> */}
-                </div>
-                </ul>
-                </nav>
+                    </div>
+                    <div class="searchIcon"><span>
+                        <FontAwesomeIcon icon={['fas', 'search']}/>
+                        </span>
+                    </div>
+                    <div class="cancelIcon"><span>
+                        <FontAwesomeIcon icon={['fas', 'times']}/>
+                        </span>
+                    </div>
+                    <div class="search"><SearchBar/></div>
 
-            </div>
+                </nav>
         </header>
     );
 }
-
 export default Theheader
