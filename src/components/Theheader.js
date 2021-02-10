@@ -29,7 +29,6 @@ function Theheader() {
                         </span>
                     </div>
                     <div class="search"><SearchBar/></div>
-
                 </nav>
         </header>
     );
