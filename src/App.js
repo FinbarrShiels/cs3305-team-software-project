@@ -7,6 +7,7 @@ import Thefooter from './components/Thefooter';
 import initFontAwesome from "./components/FontAwesome";
 initFontAwesome();
 
+
 class App extends Component {
 
   render() {
