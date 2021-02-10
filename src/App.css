@@ -6,9 +6,9 @@
 
   .container{
     min-height: 100vh;
-    background: #484a4e; 
-    background: -webkit-linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c);  
-    background: linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c); 
+    background: #1A2A6C;
+    #background: -webkit-linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c);
+    #background: linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c);
     display: flex;
     flex-direction: column;
     justify-content:space-between;

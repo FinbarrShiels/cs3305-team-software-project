@@ -1,50 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
-
-.The-header{
-  z-index: 9999;
-  top:0;
-  max-width:100%;
+*{
   margin: 0;
-  background:#3e414b; 
-  background: -webkit-linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c);  
-  background: linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c); 
-  height:75px;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
 }
 
-.The-header ul{
+nav{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  padding: 0 100px;
+  background:#1A2A6C;
+}
+.menuItems{
+  display: flex;
+  flex: 1;
   list-style: none;
-  margin:0;
-  padding-top: 2em;
-  padding-right:4em;
-  padding-left: 2em;
+  padding: 0 0 0 40px;
+}
+.logo{
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -1px;
 }
 
-.The-header ul li {
-  display:inline;
+.menuItems li{
+  padding: 0 15px;
+
 }
 
-.The-header a {
-  width:100%;
-  height:100%;
-  color:white;
-  font-size:1.5em;
-  font-weight:lighter;
+.menuItems li a{
   text-decoration: none;
-  letter-spacing: 1px;
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+}
+
+.menuItems li a:hover{
+  color: black;
+}
+
+.search{
+  display: flex;
+  background: whitesmoke;
+  min-width: 20%!important;
+}
+
+.menuIcon, .searchIcon, .cancelIcon{
+  width: 40px;
+  color: white;
   text-align: center;
-
+  margin: 0 50px;
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
 }
 
-.The-header a:hover{
-  color:rgb(220,120,0);
+.menuIcon span, .searchIcon, .cancelIcon{
+  display: none;
 }
-
-.right{
-  float:right;
+@media (max-width: 1245px) {
+  nav{
+    padding: 0 50px;
+  }
 }
+@media (max-width: 1140px) {
+  nav{
+    padding: 0px;
+  }
+  .logo{
+    flex: 2;
+    text-align: center;
+  }
+  .menuItems{
+    position: fixed;
+    z-index: 99;
+    top: 70px;
+    width: 100px;
+    left: -100%;
+    height: 100px;
+    background: indigo;
+    transition: left 0.3s ease;
+    display: inline-block;
+    padding: 10px 50px 0 50px;
+    text-align: center;
+  }
 
-.right li{
-  padding-left: 1.5em;
-  padding-right: 1.5em;
+  .menuItems.active{
+    left: 0px;
+  }
+  .menuItems li{
+    line-height: 40px;
+    margin: 30px 0;
+  }
+
+  .menuItems li a{
+    font-size: 20px;
+  }
+  .search{
+    display: none;
+  }
+
 
 }
