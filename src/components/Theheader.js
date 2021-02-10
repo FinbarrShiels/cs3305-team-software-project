@@ -2,9 +2,7 @@
 import React from 'react';
 import './Theheader.css';
 import SearchBar from './SearchBar';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Redirect } from 'react-router-dom';
 
 function Theheader() {
     return(
@@ -16,9 +14,9 @@ function Theheader() {
                     </div>
                     <div onClick={() => {window.location.href="/"}} class="logo"> ShowOfHands </div>
                     <div class="menuItems">
-                    <li><a href="/login"> Log In  </a></li>
-                    <li><a href="/signUp"> Sign Up </a></li>
-                    <li><a href="/AboutUs"> About Us  </a></li>
+                        <li><a href="/login"> Log In  </a></li>
+                        <li><a href="/signUp"> Sign Up </a></li>
+                        <li><a href="/AboutUs"> About Us  </a></li>
                     </div>
                     <div class="searchIcon"><span>
                         <FontAwesomeIcon icon={['fas', 'search']}/>
