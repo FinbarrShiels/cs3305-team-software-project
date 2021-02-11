@@ -29,28 +29,28 @@ function Profile() {
     const [ page, setPage ] = useState(() => {return 1});
 
     return(
-      <div className="profileCard">
-        <div className="left">
-            <div className="profileAvatar"></div>
-            <p className="profileName"> Name </p>
-            <p className="profileOccupation"> Occupation </p>
-            <p className="profileLocation"> Location </p>
-            <div className="profileConnectedAccounts">
-                <div> Twitter </div>
-                <div> GitHub </div>
-                <div> LinkedIn </div>
+        <div className="profileCard">
+            <div className="left">
+                <div className="profileAvatar"></div>
+                <p className="profileName"> Name </p>
+                <p className="profileOccupation"> Occupation </p>
+                <p className="profileLocation"> Location </p>
+                <div className="profileConnectedAccounts">
+                    <div> Twitter </div>
+                    <div> GitHub </div>
+                    <div> LinkedIn </div>
+                </div>
+                <button className="profileSettings"> Profile Settings </button>
             </div>
-            <button className="profileSettings"> Profile Settings </button>
-        </div>
-        <div className="right">
-            <div className="tabOptions">
-                <button onClick={() => {setPage(1)}}> Biography </button>
-                <button onClick={() => {setPage(2)}}> Videos </button>
-                <button onClick={() => {setPage(3)}}> Results </button>
+            <div className="right">
+                <div className="tabOptions">
+                    <button onClick={() => {setPage(1)}}> Biography </button>
+                    <button onClick={() => {setPage(2)}}> Videos </button>
+                    <button onClick={() => {setPage(3)}}> Results </button>
+                </div>
+                {getPage(page)}
             </div>
-            {getPage(page)}
         </div>
-      </div>
     )
 }
 export default Profile;
