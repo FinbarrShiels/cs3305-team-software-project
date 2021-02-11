@@ -9,6 +9,7 @@ import AboutUs from './AboutUs';
 import ForgotPassword from './ForgotPassword';
 import RequestSent from './RequestSent';
 import Search from './Search';
+import Profile from './Profile';
 
 
 const Main = () => (
@@ -22,6 +23,7 @@ const Main = () => (
     <Route path="/RequestSent" component={RequestSent} />
     <Route path="/AnonymousV" component={Anon} />
     <Route path="/Search" component={Search} />
+    <Route path="/Profile" component={Profile} />
   </Switch>
 )
 
