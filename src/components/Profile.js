@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import { useState } from 'react';
 
 function getPage(page) {
