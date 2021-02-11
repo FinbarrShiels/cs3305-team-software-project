@@ -25,13 +25,13 @@ class LogIn extends Component {
 
             <div className="thirdPartyLogins">
                 {/* <p>Third party portal logins go here</p> */}
-                <a href="#" className="socialIcon">
+                <a href="/" className="socialIcon">
                     <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
                 </a>
-                <a href="#" className="socialIcon">
+                <a href="/" className="socialIcon">
                     <FontAwesomeIcon icon={['fab', 'google']}/>
                 </a>
-                <a href="#" className="socialIcon">
+                <a href="/" className="socialIcon">
                     <FontAwesomeIcon icon={['fab', 'twitter']}/>
                 </a>
             </div>
