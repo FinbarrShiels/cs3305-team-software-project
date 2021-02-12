@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class SearchBar extends Component {        
   render() {
     return(
       <div>
-            <input type="text" placeholder="Search..."></input>
-            <a href="/Search"><input type="submit" value="Search"></input></a>
+            <input type="search" placeholder="Search..."></input>
+            <a href="/Search"><FontAwesomeIcon icon={['fas', 'search']}/></a>
       </div>
     )
   }
