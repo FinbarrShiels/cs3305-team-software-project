@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import './App.css';
 import Main from './components/main';
-import Theheader from './components/Theheader';
-import Thefooter from './components/Thefooter';
+import Theheader from './components/NavBar-Header/Theheader';
+import Thefooter from './components/Footer/Thefooter';
 
-import initFontAwesome from "./components/FontAwesome";
+import initFontAwesome from "./components/FontAwesome/FontAwesome";
 initFontAwesome();
 
 class App extends Component {

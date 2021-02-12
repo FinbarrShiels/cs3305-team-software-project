@@ -1,5 +1,5 @@
 import React, { Component } from 'react';                   /*home page */
-import handsUp from './handsUp.png';
+import handsUp from '../../Images/handsUp.png';
 import './landing.css'
 
 class Default extends Component {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BackToLoginButton from './BackToLoginButton';
+import BackToLoginButton from '../PasswordReset/BackToLoginButton';
 
 class RequestSent extends Component {
     render() {

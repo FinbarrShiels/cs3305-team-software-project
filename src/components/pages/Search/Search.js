@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ProfileCard from './ProfileCard';
-import SearchBar from './SearchBar';
+import ProfileCard from '../Profile/ProfileCard';
+import SearchBar from '../../NavBar-Header/SearchBar';
 
 class Search extends Component {        
   render() {

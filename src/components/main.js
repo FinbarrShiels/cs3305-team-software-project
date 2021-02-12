@@ -1,15 +1,15 @@
 import React from 'react';                            /*used instead of BrowserRouter to switch between pages */
 import { Switch, Route } from 'react-router-dom';
-import LandingPage from './landingpage';
-import Anon from './AnonymousV.js';
-import Voting from './Voting';
-import LogIn from './login';
-import signUp from './signUp';
-import AboutUs from './AboutUs';
-import ForgotPassword from './ForgotPassword';
-import RequestSent from './RequestSent';
-import Search from './Search';
-import Profile from './Profile';
+import LandingPage from './pages/LandingPage/landingpage';
+import Anon from './pages/AnonymousVoting/AnonymousV.js';
+import Voting from './pages/Voting/Voting';
+import LogIn from './pages/Login/login';
+import signUp from './pages/SignUp/signUp';
+import AboutUs from './pages/AboutUs/AboutUs';
+import ForgotPassword from './pages/PasswordReset/ForgotPassword';
+import RequestSent from './pages/PasswordResetConfirmation/RequestSent';
+import Search from './pages/Search/Search';
+import Profile from './pages/Profile/Profile';
 
 
 const Main = () => (

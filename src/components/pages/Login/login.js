@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './login.css';
-import loginLogo from './id-card.png';
+import loginLogo from '../../Images/id-card.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class LogIn extends Component {
