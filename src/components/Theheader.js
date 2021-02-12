@@ -3,7 +3,7 @@ import React from 'react';
 import './Theheader.css';
 import SearchBar from './SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import "./menuSelector.js"
 function Theheader() {
     return(
         <header>

@@ -18,17 +18,13 @@ nav {
 }
 
 .logo{
-  color: #000;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.logo a{
   font-size: 25px;
   font-weight: 600;
   color: #000;
   text-decoration: none;
+  cursor: pointer;
 }
+
 
 .menuItems{
   display: flex;
