@@ -17,10 +17,10 @@ function ChangePassword() {
                 </ul>
                 <form className="changePasswordForm">
                     <label for="password"> New Password: </label>
-                    <input type="text" id="password" name="password"></input>
+                    <input type="text" id="password" name="password"/>
                     <label for="re-enter password"> Re-enter New Password: </label>
-                    <input type="text" id="re-enter password" name="re-enter password"></input>
-                    <input type="submit" value="Change Password"></input>
+                    <input type="text" id="re-enter password" name="re-enter password"/>
+                    <input type="submit" value="Change Password"/>
                 </form>
             </div>
         </div>
