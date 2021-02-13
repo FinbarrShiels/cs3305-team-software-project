@@ -1,5 +1,7 @@
-import { useState } from 'react';
-
+import React, { useState } from 'react';
+import "./profile.css"
+import avatar from '../../Images/avatar.png';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 function getPage(page) {
     if (page === 1) {
         return (
@@ -31,22 +33,25 @@ function Profile() {
     return(
         <div className="profileCard">
             <div className="left">
-                <div className="profileAvatar"></div>
+                <div className="profileAvatar"><img className="avatarImage" src={avatar} alt="avatar"/>
+                </div>
                 <p className="profileName"> Name </p>
                 <p className="profileOccupation"> Occupation </p>
                 <p className="profileLocation"> Location </p>
                 <div className="profileConnectedAccounts">
-                    <div> Twitter </div>
-                    <div> GitHub </div>
-                    <div> LinkedIn </div>
+                    <div><FontAwesomeIcon icon={['fab', 'twitter']}/> </div>
+                    <div><FontAwesomeIcon icon={['fab', 'linkedin']}/></div>
+                    <div><FontAwesomeIcon icon={['fab', 'github']}/></div>
                 </div>
                 <button className="profileSettings"> Profile Settings </button>
             </div>
             <div className="right">
                 <div className="tabOptions">
-                    <button onClick={() => {setPage(1)}}> Biography </button>
-                    <button onClick={() => {setPage(2)}}> Videos </button>
-                    <button onClick={() => {setPage(3)}}> Results </button>
+                    <div className="buttonContainer">
+                    <button class="button" onClick={() => {setPage(1)}}> Biography </button>
+                    <button class="button" onClick={() => {setPage(2)}}> Videos </button>
+                    <button class="button" onClick={() => {setPage(3)}}> Results </button>
+                    </div>
                 </div>
                 {getPage(page)}
             </div>

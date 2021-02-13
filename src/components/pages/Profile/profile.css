@@ -1,0 +1,91 @@
+.profileContainer{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-content: center;
+    box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
+}
+
+.profileCard{
+    #background-color: #203079;
+    padding: 2em 2em 3em;
+    display: flex;
+}
+
+.right{
+    flex-direction: column;
+    background-color: #203079;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 50%;
+    padding: 10px;
+    margin: 0;
+    border-radius: 25px;
+    border: 2px solid #02b9d2;
+}
+
+.left{
+    flex-direction: column;
+    background-color: #203079;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 50%;
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.avatarImage{
+    width: 150px;
+    height: 150px;
+}
+.profileName{
+    margin-top: 10px;
+    font-size: 20px;
+}
+.profileConnectedAccounts{
+    margin-right: 100px;
+    align-items: flex-start;
+    color:#02b9d2;
+}
+.profileSettings{
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.profileAvatar{
+    display: flex;
+
+}
+.tabOptions{
+    display: flex;
+    #min-height:300px;
+}
+.buttonContainer{
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+    border: 2px solid #02b9d2;
+}
+.button{
+    border-radius: 8px;
+    float: left;
+    padding: 15px 32px;
+    color: #fff;
+    background-color: #203079;
+    font-size: 10px;
+}
+
+.button:active{
+    border: 2px solid #02b9d2;
+}
+
+@media screen and (max-width: 990px){
+    .profileCard{
+        display: inline-block;
+        position: relative;
+    }
+}
