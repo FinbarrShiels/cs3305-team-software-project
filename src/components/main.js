@@ -10,6 +10,7 @@ import ForgotPassword from './pages/PasswordReset/ForgotPassword';
 import RequestSent from './pages/PasswordResetConfirmation/RequestSent';
 import Search from './pages/Search/Search';
 import Profile from './pages/Profile/Profile';
+import ChangePassword from './pages/ChangePassword/ChangePassword';
 
 
 const Main = () => (
@@ -21,9 +22,10 @@ const Main = () => (
     <Route path="/AboutUs" component={AboutUs} />
     <Route path="/ForgotPassword" component={ForgotPassword} />
     <Route path="/RequestSent" component={RequestSent} />
-    <Route path="/AnonymousV" component={Anon} />
-    <Route path="/Search" component={Search} />
-    <Route path="/Profile" component={Profile} />
+    <Route path="/ChangePassword" component={ChangePassword} />
+    <Route path="/AnonymousV" component={Anon}/>
+    <Route path="/Search" component={Search}/>
+    <Route path="/Profile" component={Profile}/>
   </Switch>
 )
 
