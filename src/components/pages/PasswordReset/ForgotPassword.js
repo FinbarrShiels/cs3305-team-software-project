@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BackToLoginButton from './BackToLoginButton';
+import {forgotPassword} from "../../../firebaseFunctions/passwordReset.js";
 
 class ForgotPassword extends Component {
     render() {
@@ -16,15 +17,23 @@ class ForgotPassword extends Component {
             </div>
 
             <form className="forgotPasswordForm" action="/RequestSent">
-                <input type="text" placeholder="example@example.com"/>
+                <input type="text" placeholder="example@example.com" id="email"/>
                 <br/>
-                <input type="submit" value="Send Request"/>
+                <input type="submit" value="Send Request" onClick={(e)=> callForgotPassword(e)}/>
             </form>
 
             <BackToLoginButton/>
         </div>
       )
     }
+  }
+
+  function callForgotPassword(e) {
+    e.preventDefault();
+    var email = document.getElementById('email').value;
+    forgotPassword(email);
+    var form = document.getElementsByClassName('forgotPasswordForm');
+    form[0].submit();
   }
   
   export default ForgotPassword;

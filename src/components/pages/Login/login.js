@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './login.css';
 import loginLogo from '../../Images/id-card.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { firebaseTwitterLogIn, firebaseFacebookLogIn, firebaseGoogleLogIn, firebaseRegularLogIn } from '../../../firebaseFunctions/auth';
 
 class LogIn extends Component {
   render() {
@@ -17,7 +18,7 @@ class LogIn extends Component {
               <br/>
               <input className="loginFormInput" type="password" placeholder="Password"></input>
               <br/>
-              <input className="btn" type="submit" value="Login"></input>
+              <input className="btn" type="submit" value="Login" onClick={(e)=>regularLogin(e)}></input>
             </form>
             <div className="loginOptionBreak">
                 <p><span>Or Sign In With</span></p>
@@ -25,13 +26,13 @@ class LogIn extends Component {
 
             <div className="thirdPartyLogins">
                 {/* <p>Third party portal logins go here</p> */}
-                <a href="/" className="socialIcon">
+                <a href="/" className="socialIcon" onClick={(e)=>facebookLogIn(e)}>
                     <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
                 </a>
-                <a href="/" className="socialIcon">
+                <a href="/" className="socialIcon" onClick={(e)=>googleLogIn(e)}>
                     <FontAwesomeIcon icon={['fab', 'google']}/>
                 </a>
-                <a href="/" className="socialIcon">
+                <a href="/" className="socialIcon" onClick={(e)=>twitterLogIn(e)}>
                     <FontAwesomeIcon icon={['fab', 'twitter']}/>
                 </a>
             </div>
@@ -45,5 +46,29 @@ class LogIn extends Component {
     )
   }
 }
+
+function regularLogin(e) {
+  e.preventDefault();
+  var creds = document.getElementsByClassName("loginFormInput");
+  firebaseRegularLogIn(creds[0].value, creds[1].value);
+  creds[0].value = "";
+  creds[1].value = "";
+}
+
+function facebookLogIn(e) {
+  e.preventDefault();
+  firebaseFacebookLogIn();
+}
+
+function googleLogIn(e) {
+  e.preventDefault();
+  firebaseGoogleLogIn();
+}
+
+function twitterLogIn(e) {
+  e.preventDefault();
+  firebaseTwitterLogIn();
+}
+
 
 export default LogIn;
