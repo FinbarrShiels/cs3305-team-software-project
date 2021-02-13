@@ -5,6 +5,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
+    padding: 10px;
 
 }
 
@@ -93,4 +94,10 @@
     background-color: #402daf;
 }
 
+@media screen and (max-width: 990px){
+    .sections{
+        display: inline-block;
+        position: relative;
+    }
+}
 
