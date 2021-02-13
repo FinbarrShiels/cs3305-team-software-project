@@ -35,13 +35,15 @@ class AboutUs extends Component {
               statement="some statement"
             />
           </div>
-          <div className="description">
-            <h2>Description</h2>
-            <p>Text</p>
-          </div>
-          <div className="unique">
-            <h2>Unique</h2>
-            <p>Text</p>
+          <div>
+            <div className="description">
+              <h2>Description</h2>
+              <p>Text</p>
+            </div>
+            <div className="unique">
+              <h2>Unique</h2>
+              <p>Text</p>
+            </div>
           </div>
           <div className="projectLinks">
             GitHub Link
