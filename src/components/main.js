@@ -11,6 +11,7 @@ import RequestSent from './pages/PasswordResetConfirmation/RequestSent';
 import Search from './pages/Search/Search';
 import Profile from './pages/Profile/Profile';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
+import ContactUs from './pages/ContactUs/ContactUs';
 
 
 const Main = () => (
@@ -26,6 +27,7 @@ const Main = () => (
     <Route path="/AnonymousV" component={Anon}/>
     <Route path="/Search" component={Search}/>
     <Route path="/Profile" component={Profile}/>
+    <Route path="/Contact" component={ContactUs}/>
   </Switch>
 )
 
