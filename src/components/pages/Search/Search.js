@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import ProfileCard from '../Profile/ProfileCard';
 import SearchBar from '../../NavBar-Header/SearchBar';
 import VoteSearchCard from './VoteSearchCard';
