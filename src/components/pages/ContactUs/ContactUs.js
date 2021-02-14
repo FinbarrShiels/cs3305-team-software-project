@@ -17,5 +17,4 @@ function ContactUs() {
         </div>
     )
 }
-
 export default ContactUs
