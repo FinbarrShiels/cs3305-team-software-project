@@ -35,6 +35,44 @@ npm start
 ```
 A new tab should open in your browser with the app running.
 
+## Deploying with Firebase
+Using Firebase allows for for the live hosting of the web app.
+
+First install firebase and firebase-tools from the project root.
+```
+npm install firebase
+npm install -g firebase-tools
+```
+After successful installation, login to firebase to register the local app with a firebase app
+```
+firebase login
+```
+To begin deploying, initialise the project root as a firebase project.
+``` 
+firebase init
+```
+Follow the prompts in terminal, installing only firestore and hosting, registering the local app with a new or existing firebase app.
+
+To build the app for deployment, first edit `PROJECT_ROOT/firebase.json` and find the hosting rules.
+```json
+"hosting" {
+  "public": "public",
+```
+and change to 
+```json
+"hosting" {
+  "public": "build",
+```
+Then build with
+```
+npm run build
+```
+Finally, deploy with
+```
+firebase deploy
+```
+The link to the app will be displayed in terminal after successful deployment.
+
 ### Dependencies
 For routing and the use of prebuilt components, react-router-dom and react-mdl are used. If you get an error when trying to view the page via the live server, installing these two dependencies should fix any of these errors.
 To install these run:
