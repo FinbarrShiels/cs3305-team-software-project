@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import "./profile.css"
 import avatar from '../../Images/avatar.png';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-function getPage(page) {
-    if (page === 1) {
+
+function getTab(tab) {
+    if (tab === 1) {
         return (
             <div className="bioTab">
                 <h2>BIO</h2>
@@ -11,14 +12,14 @@ function getPage(page) {
             </div>
         )
     }
-    else if (page === 2) {
+    else if (tab === 2) {
         return (
             <div className="videosTab">
                 <h2>Videos</h2>
             </div>
         )
     }
-    else if (page === 3) {
+    else if (tab === 3) {
         return (
             <div className="resultsTab">
                 <h2>Results</h2>
@@ -28,7 +29,7 @@ function getPage(page) {
 }
 
 function Profile() { 
-    const [ page, setPage ] = useState(() => {return 1});
+    const [ tab, setTab ] = useState(() => {return 1});
 
     return(
         <div className="profileCard">
@@ -48,12 +49,12 @@ function Profile() {
             <div className="right">
                 <div className="tabOptions">
                     <div className="buttonContainer">
-                    <button class="button" onClick={() => {setPage(1)}}> Biography </button>
-                    <button class="button" onClick={() => {setPage(2)}}> Videos </button>
-                    <button class="button" onClick={() => {setPage(3)}}> Results </button>
+                    <button class="button" onClick={() => {setTab(1)}}> Biography </button>
+                    <button class="button" onClick={() => {setTab(2)}}> Videos </button>
+                    <button class="button" onClick={() => {setTab(3)}}> Results </button>
                     </div>
                 </div>
-                {getPage(page)}
+                {getTab(tab)}
             </div>
         </div>
     )

@@ -13,5 +13,4 @@ function ResultVote(props) {
         </div>
     )
 }
-
 export default ResultVote

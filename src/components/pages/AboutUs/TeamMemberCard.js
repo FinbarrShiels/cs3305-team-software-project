@@ -1,4 +1,3 @@
-
 function TeamMemberCard(props) {
     return (
         <div className="teamMember">
@@ -17,5 +16,4 @@ function TeamMemberCard(props) {
         </div>
     )
 }
-
 export default TeamMemberCard

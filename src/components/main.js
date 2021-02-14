@@ -1,6 +1,6 @@
 import React from 'react';                            /*used instead of BrowserRouter to switch between pages */
 import { Switch, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage/landingpage';
+import landingPage from './pages/LandingPage/landingPage';
 import Anon from './pages/AnonymousVoting/AnonymousV.js';
 import Voting from './pages/Voting/Voting';
 import LogIn from './pages/Login/login';
@@ -16,7 +16,7 @@ import ContactUs from './pages/ContactUs/ContactUs';
 
 const Main = () => (
   <Switch>
-    <Route exact path="/" component={LandingPage} />
+    <Route exact path="/" component={landingPage} />
     <Route path="/signUp" component={signUp} />
     <Route path="/login" component={LogIn} />
     <Route path="/Voting" component={Voting} />
