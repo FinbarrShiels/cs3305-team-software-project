@@ -1,15 +1,15 @@
-import ProfileCard from '../Profile/ProfileCard';
+import ResultProfile from './ResultProfile';
 import SearchBar from '../../NavBar-Header/SearchBar';
-import VoteSearchCard from './VoteSearchCard';
+import VoteSearchCard from './ResultVote';
 
 function Search() {
   return(
     <div>
       <SearchBar className="mainSearchBar"/>
       <div className="profileResultGrid">
-        <ProfileCard name="Name" location="Location" occupation="Occupation"/>
-        <ProfileCard name="Name" location="Location" occupation="Occupation"/>
-        <ProfileCard name="Name" location="Location" occupation="Occupation"/>
+        <ResultProfile name="Name" location="Location" occupation="Occupation"/>
+        <ResultProfile name="Name" location="Location" occupation="Occupation"/>
+        <ResultProfile name="Name" location="Location" occupation="Occupation"/>
         <VoteSearchCard title="Title"organiser="Organiser" winner="Winner"/>
         <VoteSearchCard title="Title"organiser="Organiser" winner="Winner"/>
         <VoteSearchCard title="Title"organiser="Organiser" winner="Winner"/>

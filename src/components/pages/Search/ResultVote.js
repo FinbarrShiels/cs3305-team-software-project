@@ -1,4 +1,4 @@
-function VoteSearchCard(props) {
+function ResultVote(props) {
     return (
         <div>
             <div className="info">
@@ -13,5 +13,4 @@ function VoteSearchCard(props) {
         </div>
     )
 }
-
-export default VoteSearchCard
+export default ResultVote
