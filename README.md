@@ -54,12 +54,12 @@ firebase init
 Follow the prompts in terminal, installing only firestore and hosting, registering the local app with a new or existing firebase app.
 
 To build the app for deployment, first edit `PROJECT_ROOT/firebase.json` and find the hosting rules.
-```json
+```
 "hosting" {
   "public": "public",
 ```
 and change to 
-```json
+```
 "hosting" {
   "public": "build",
 ```
