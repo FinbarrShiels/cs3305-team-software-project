@@ -54,14 +54,14 @@ function register(e) {
   var email = registerForm[0]['email'].value;
   var password = registerForm[0]['password'].value;
   var checkBox = registerForm[0]['agreecheckbox'].checked;
-  if ((fname == '' || sname =='') && checkBox == false) {
+  if ((fname === '' || sname ==='') && checkBox === false) {
     console.log('please fill in both fname and sname');
     console.log('please agree to the terms and services');
   }
-  else if (fname == '' || sname =='') {
+  else if (fname === '' || sname ==='') {
     console.log('please fill in both fname and sname');
   }
-  else if (checkBox == false) {
+  else if (checkBox === false) {
     console.log('please agree to the terms and services');
   }
   else {
