@@ -8,7 +8,7 @@ function getTab(tab) {
         return (
             <div className="bioTab">
                 <h2>BIO</h2>
-                <button> Edit Bio </button>
+                <button className="editBio"> Edit Bio </button>
             </div>
         )
     }
@@ -32,6 +32,7 @@ function Profile() {
     const [ tab, setTab ] = useState(() => {return 1});
 
     return(
+        <div className="profileContainer">
         <div className="profileCard">
             <div className="left">
                 <div className="profileAvatar"><img className="avatarImage" src={avatar} alt="avatar"/>
@@ -56,6 +57,7 @@ function Profile() {
                 </div>
                 {getTab(tab)}
             </div>
+        </div>
         </div>
     )
 }
