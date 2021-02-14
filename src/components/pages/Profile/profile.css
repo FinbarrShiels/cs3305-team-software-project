@@ -1,0 +1,105 @@
+.profileContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.profileCard{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items:center;
+    width: 1000px;
+    padding: 2em 2em 3em;
+
+
+}
+
+.right{
+    flex-direction: column;
+    background-color: #203079;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    flex: 50%;
+    padding: 10px;
+    margin: 0;
+    border-radius: 25px;
+    border: 2px solid #02b9d2;
+}
+
+.left{
+    flex-direction: column;
+    background-color: #203079;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 50%;
+    padding: 10px;
+    border-radius: 25px;
+}
+
+.avatarImage{
+    width: 150px;
+    height: 150px;
+}
+.profileName{
+    margin-top: 10px;
+    font-size: 20px;
+}
+.profileConnectedAccounts{
+    margin-right: 100px;
+    align-items: flex-start;
+    color:#02b9d2;
+}
+.profileSettings{
+    margin-top: 10px;
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.profileAvatar{
+    display: flex;
+
+}
+.tabOptions{
+    display: flex;
+    #min-height:300px;
+}
+.buttonContainer{
+    margin: 0;
+    padding: 0;
+    border-radius: 8px;
+    border: 2px solid #02b9d2;
+}
+.button{
+    border-radius: 8px;
+    float: left;
+    padding: 15px 32px;
+    color: #fff;
+    background-color: #203079;
+    font-size: 10px;
+}
+
+.button:active{
+    border: 2px solid #02b9d2;
+}
+
+
+
+@media screen and (max-width: 900px){
+    .profileCard{
+        display: inline-block;
+        position: relative;
+        max-width: 500px;
+    }
+}
+
+/* Edit Bio */
+
+.editBio{
+    margin-top: 10px;
+    border-radius: 8px;
+    padding: 5px;
+}
+

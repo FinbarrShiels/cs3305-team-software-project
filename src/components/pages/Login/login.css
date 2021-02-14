@@ -1,0 +1,138 @@
+
+
+
+.loginContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    padding: 6%;
+    margin: 0;
+}
+
+.mainLogin{
+    background-color: #1f3079;
+    padding: 2em 2em 3em;
+    max-width: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
+    border-radius: 25px;
+}
+
+.loginForm{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.title img{
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+
+}
+
+.loginFormInput{
+    color: #000;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    max-width:380px;
+    width: 100%;
+    height: 55px;
+    border-radius: 49px;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 0 .4rem;
+}
+
+.btn{
+    width: 380px;
+    height: 49px;
+    border: none;
+    outline: none;
+    border-radius: 49px;
+    cursor: pointer;
+    background-color: grey;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: 0.5s;
+}
+
+.btn:hover{
+    background-color: darkgrey;
+}
+
+.thirdPartyLogins{
+    display: flex;
+    justify-content: center;
+}
+
+.loginOptionBreak p{
+    color: white;
+    padding: .7rem 0;
+    font-size: 1.5rem;
+    overflow: hidden;
+    text-align: center;
+}
+
+.loginOptionBreak p > span{
+    position: relative;
+    display: inline-block;
+}
+
+.loginOptionBreak p >span:before, .loginOptionBreak p > span:after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    border-bottom: 2px solid white;
+    width: 50px;
+    margin: 0 20px;
+}
+
+.loginOptionBreak p > span:before{
+    right: 100%;
+    margin-right: 15px;
+}
+
+.loginOptionBreak p > span:after{
+    left: 100%;
+    margin-left: 15px;
+}
+
+.socialIcon{
+    height: 46px;
+    width: 46px;
+    border: 1px solid black;
+    margin: 0 0.45rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-size: 1.1rem;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.socialIcon:hover{
+    color: blue;
+    border-color: blue;
+}
+
+.bottomOptionButtons{
+    /* margin-top: 10px; */
+    display: flex;
+    justify-content: center;
+
+}
+
+.bottomOptionButtons a{
+    display: inline-block;
+    padding: 50px;
+}

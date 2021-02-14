@@ -1,0 +1,38 @@
+.Avatar-img{                            /*Home page css */
+    position: relative;;
+    height:500px;
+}
+
+.whoops{
+    text-align: center;
+}
+.banner-text {
+    background-color: black;
+    position: relative;
+    opacity: .8;
+    width: 55%;
+    margin: auto;
+    border-radius: 10px;
+
+  }
+
+  .banner-text h1 {
+    font-size: 66px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .banner-text hr {
+    border-top: 5px dotted white;
+    width: 50%;
+    margin: auto;
+  }
+
+
+  .banner-text p {
+    color: white;
+    font-size: 20px;
+    padding: 1em;
+    margin: 0;
+  }
+
