@@ -1,10 +1,8 @@
 import "./TeamMemberCard.css";
-import avatar from "../../Images/avatar.png";
 function TeamMemberCard(props) {
     return (
         <div className="teamMember">
             <div className="memberAvatar">
-                <img src={avatar} alt={"avater"}/>
                 {props.avatar}
             </div>
             <h4 className="memberName">
@@ -16,6 +14,9 @@ function TeamMemberCard(props) {
             <p className="memberStatement">
                 {props.statement}
             </p>
+            <div className="gitHubLink">
+                {props.github}
+            </div>
         </div>
     )
 }

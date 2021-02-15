@@ -7,22 +7,36 @@
     padding: 10px;
 }
 
-.description{
+.descriptionContainer{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    margin-bottom: 20px;
 
 }
+.description{
+    flex-basis: 50%;
 
+}
+.unique{
+    flex-basis: 50%;
+
+}
 .description h2{
     color: #1BBAFF;
 }
 
 .unique h2{
     color: #1BBAFF;
+
 }
 
-.projectLinks h5{
+.projectLinks a{
     color: #fff;
+    text-decoration: none;
+    font-size: 20px;
 }
 .icon{
     color: #1BBAFF;

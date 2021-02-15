@@ -2,40 +2,49 @@ import TeamMemberCard from './TeamMemberCard';
 import "./AboutUs.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React from "react";
+import avatar from "../../Images/avatar.png";
 function AboutUs() {
   return(
+
     <div>
       <div className="memberCards">
         <TeamMemberCard 
-          avatar=""
-          name="Luke" 
-          role="Team Lead / Front End (React)" 
-          statement="some statement"
-        />
-        <TeamMemberCard 
-          avatar="" name="Finbarr"
-          role="Front End (CSS)" 
-          statement="some statement"
+           avatar=<img src={avatar}/>
+          name={"Luke"}
+          role="Team Lead/Front End"
+          statement=""
+          github=<a href="https://github.com/luketynan" ><FontAwesomeIcon icon={['fab', 'github']} size="2x"/></a>
         />
         <TeamMemberCard
-          avatar="" name="Jack"
-          role="Front End (Design)" 
-          statement="some statement"
+            avatar=<img src={avatar}/>
+          name="Finbarr"
+          role="Front End (CSS)" 
+          statement=""
+          github=<a href="https://github.com/FinbarrShiels" ><FontAwesomeIcon icon={['fab', 'github']} size="2x"/></a>
         />
-        <TeamMemberCard 
-          avatar=""
+        <TeamMemberCard
+            avatar=<img src={avatar}/>
+          name="Jack"
+          role="Front End (Design)" 
+          statement=""
+          github=<a href="https://github.com/jackboy-creator" ><FontAwesomeIcon icon={['fab', 'github']} size="2x"/></a>
+        />
+        <TeamMemberCard
+            avatar=<img src={avatar}/>
           name="Diarmuid" 
           role="Backend" 
-          statement="some statement"
+          statement=""
+          github=<a href="https://github.com/diarmuidmckenna" ><FontAwesomeIcon icon={['fab', 'github']} size="2x"/></a>
         />
-        <TeamMemberCard 
-          avatar=""
-          name="Con" 
+        <TeamMemberCard
+            avatar=<img src={avatar}/>
+            name={"Con"}
           role="Backend" 
-          statement="some statement"
+          statement=""
+          github=<a href="https://github.com/okeeffecon" ><FontAwesomeIcon icon={['fab', 'github']} size="2x"/></a>
         />
       </div>
-      <div>
+      <div className="descriptionContainer">
         <div className="description">
           <h2>Description</h2>
           <p>Text</p>
@@ -46,7 +55,7 @@ function AboutUs() {
         </div>
       </div>
       <div className="projectLinks">
-          <h5><FontAwesomeIcon className="icon" icon={['fab', 'github',]} size="2x"/>cs3305-team-software-project</h5>
+          <a href="https://github.com/FinbarrShiels/cs3305-team-software-project"><FontAwesomeIcon className="icon" icon={['fab', 'github',]} size="2x"/>cs3305-team-software-project</a>
       </div>
     </div>
   )
