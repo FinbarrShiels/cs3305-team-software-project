@@ -1,0 +1,29 @@
+
+
+.teamMember{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 5px;
+    width: 200px;
+    box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
+}
+
+.memberAvatar{
+    padding-top: 50px;
+}
+.memberAvatar img{
+    height: 70px;
+    width: 70px;
+}
+
+.memberName {
+    color: #fff;
+    float: left;
+
+}
+
+.memberRole{
+    color: #fff;
+    font-size: 15px;
+}

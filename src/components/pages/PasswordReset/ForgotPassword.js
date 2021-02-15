@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import BackToLoginButton from './BackToLoginButton';
 import {forgotPassword} from "../../../firebaseFunctions/passwordReset.js";
+import "./ForgotPassword.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import forgotPW from "../../Images/forgot-password.png";
 
 class ForgotPassword extends Component {
     render() {
@@ -9,7 +12,7 @@ class ForgotPassword extends Component {
   
         <div className="mainForgotPassword">
             <div className="forgotPasswordImage">
-                
+                <img src={forgotPW} alt="forgot-password"/>
             </div>
             <div className="instructionSection">
                 <h2>Forgot your password?</h2>
@@ -17,12 +20,14 @@ class ForgotPassword extends Component {
             </div>
 
             <form className="forgotPasswordForm" action="/RequestSent">
+                <FontAwesomeIcon className="envelopeIcon" icon={['fas', 'envelope']}/>
                 <input type="text" placeholder="example@example.com" id="email"/>
                 <br/>
                 <input type="submit" value="Send Request" onClick={(e)=> callForgotPassword(e)}/>
             </form>
-
+            <div className="backButton">
             <BackToLoginButton/>
+            </div>
         </div>
       )
     }
