@@ -1,6 +1,6 @@
 import React from 'react';                            /*used instead of BrowserRouter to switch between pages */
 import { Switch, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage/LandingPage';
+import LandingPage from './pages/LandingPage/LandingPage.js';
 import Anon from './pages/AnonymousVoting/AnonymousV.js';
 import Voting from './pages/Voting/Voting';
 import LogIn from './pages/Login/login';
