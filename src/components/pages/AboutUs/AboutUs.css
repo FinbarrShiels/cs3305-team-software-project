@@ -1,0 +1,30 @@
+.memberCards{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.description{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.description h2{
+    color: #1BBAFF;
+}
+
+.unique h2{
+    color: #1BBAFF;
+}
+
+.projectLinks h5{
+    color: #fff;
+}
+.icon{
+    color: #1BBAFF;
+    margin-right: 5px;
+}

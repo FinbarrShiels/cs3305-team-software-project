@@ -1,33 +1,35 @@
 import TeamMemberCard from './TeamMemberCard';
-
+import "./AboutUs.css";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import React from "react";
 function AboutUs() {
   return(
     <div>
       <div className="memberCards">
         <TeamMemberCard 
-          avatar="none" 
+          avatar=""
           name="Luke" 
           role="Team Lead / Front End (React)" 
           statement="some statement"
         />
         <TeamMemberCard 
-          avatar="none" name="Finbarr" 
+          avatar="" name="Finbarr"
           role="Front End (CSS)" 
           statement="some statement"
         />
         <TeamMemberCard
-          avatar="none" name="Jack" 
+          avatar="" name="Jack"
           role="Front End (Design)" 
           statement="some statement"
         />
         <TeamMemberCard 
-          avatar="none" 
+          avatar=""
           name="Diarmuid" 
           role="Backend" 
           statement="some statement"
         />
         <TeamMemberCard 
-          avatar="none" 
+          avatar=""
           name="Con" 
           role="Backend" 
           statement="some statement"
@@ -44,7 +46,7 @@ function AboutUs() {
         </div>
       </div>
       <div className="projectLinks">
-        GitHub Link
+          <h5><FontAwesomeIcon className="icon" icon={['fab', 'github',]} size="2x"/>cs3305-team-software-project</h5>
       </div>
     </div>
   )
