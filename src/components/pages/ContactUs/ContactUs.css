@@ -1,0 +1,16 @@
+.contactSection{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    padding: 10px;
+    color: black;
+}
+
+.contactForm{
+    background-color: #203079;
+    padding: 2em 2em 3em;
+    display: flex;
+    box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
+    border-radius: 25px;
+}

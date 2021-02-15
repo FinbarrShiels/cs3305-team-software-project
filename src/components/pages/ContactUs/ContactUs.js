@@ -1,3 +1,4 @@
+import "./ContactUs.css";
 function ContactUs() {
     return (
         <div className="contactSection">
@@ -17,4 +18,4 @@ function ContactUs() {
         </div>
     )
 }
-export default ContactUs
+export default ContactUs;
