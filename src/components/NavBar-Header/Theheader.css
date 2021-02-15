@@ -134,7 +134,7 @@ nav {
     z-index: -1;
     margin: -20px 0 0;
     border: 10px solid transparent;
-    border-bottom-color: #6a51ff;
+    border-bottom-color: #1A2A6C;
   }
 
   .search:after{
@@ -143,7 +143,7 @@ nav {
     height: 60px;
     width: calc(100% + 20px);
     padding: 2px;
-    background: #6a51ff;
+    background: #1A2A6C;
     border-radius: 2px;
     z-index: -2;
     left: 50%;
