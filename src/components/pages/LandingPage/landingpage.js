@@ -1,7 +1,7 @@
 import handsUp from '../../Images/handsUp.png';
 import './landing.css'
 
-function landingPage() {
+function landingpage() {
   return(
     <main className="whoops">
       <img src = {handsUp}
@@ -18,4 +18,4 @@ function landingPage() {
     </main>
   )
 }
-export default landingPage; 
+export default landingpage;
