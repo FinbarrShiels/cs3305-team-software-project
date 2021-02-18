@@ -1,8 +1,12 @@
-function ProfileCard(props) {        
+import avatar from "../../Images/avatar.png";
+import TeamMemberCard from "../AboutUs/TeamMemberCard";
+import "./ResultProfile.css";
+
+function ProfileCard(props) {
   return(
-    <div>
+    <div className="resultsProfileContainer">
       <div className="profileAvatar">
-          Avatar
+          <img src={avatar} alt="avatar"/>
       </div>
       <div className="profileInfo">
           <div className="profileConnectedAccounts"> Connected Accounts </div>

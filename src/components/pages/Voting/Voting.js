@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Tabs, Tab, Grid, Cell, Card, CardTitle, CardText, CardActions, Button, CardMenu, IconButton } from 'react-mdl';
-
+import "./Voting.css";
 
 class Voting extends Component {
   constructor(props) {
@@ -82,7 +82,7 @@ class Voting extends Component {
     return(
       <div>
         <Tabs activeTab={this.state.activeTab} onChange={(tabId) => this.setState({ activeTab: tabId })}ripple>
-          <Tab>Organizer</Tab>
+          <Tab style={{color:"#fff"}}>Organizer</Tab>
           <Tab>Voter</Tab>
           <Tab>Candidates</Tab>
         </Tabs>

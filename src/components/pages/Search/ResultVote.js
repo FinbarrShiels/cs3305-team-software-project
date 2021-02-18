@@ -1,6 +1,8 @@
+import "./ResultsVote.css"
+
 function ResultVote(props) {
     return (
-        <div>
+        <div className="resultsVoteContainer">
             <div className="info">
                 <h5>{props.title}</h5>
                 <p>Organiser: {props.organiser}</p>
