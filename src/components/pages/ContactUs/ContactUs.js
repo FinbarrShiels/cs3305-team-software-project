@@ -1,10 +1,12 @@
 import "./ContactUs.css";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import React from "react";
 function ContactUs() {
     return (
         <div className="contactSection">
             <h1>Contact Us</h1>
             <div>
-                <div className="mailLogo">Logo</div>
+                <div className="mailLogo"></div>
                 <form className="contactForm">
                     <label for="name"> Name: </label>
                     <input type="text" placeholder="Name" id="name" name="name"/>

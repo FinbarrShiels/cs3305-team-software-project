@@ -1,16 +1,27 @@
 .contactSection{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
-    padding: 10px;
-    color: black;
+    padding: 20px;
 }
-
+.contactSection h1{
+    color: #fff;
+}
 .contactForm{
+    max-width: 500px;
+    margin: 0 auto;
     background-color: #203079;
-    padding: 2em 2em 3em;
+    padding: 2em 3em 2em;
     display: flex;
+    flex-direction: column;
     box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
     border-radius: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+#message {
+    width: 100%;
+    border: 1px solid #ccc;
+    background: #FFF;
+    margin: 0 0 5px;
+    padding: 10px;
+    height: 100px;
 }
