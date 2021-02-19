@@ -1,11 +1,13 @@
 import ResultProfile from './ResultProfile';
 import SearchBar from '../../NavBar-Header/SearchBar';
 import VoteSearchCard from './ResultVote';
-
+import "./Search.css";
 function Search() {
   return(
-    <div>
-      <SearchBar className="mainSearchBar"/>
+    <div className="searchContainer">
+        <div className="mainSearchBar">
+      <SearchBar />
+        </div>
       <div className="profileResultGrid">
         <ResultProfile name="Name" location="Location" occupation="Occupation"/>
         <ResultProfile name="Name" location="Location" occupation="Occupation"/>

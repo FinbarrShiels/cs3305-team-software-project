@@ -1,0 +1,53 @@
+.votingContainer{
+    padding: 10px;
+}
+
+.tabContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    padding: 10px;
+    text-decoration: none;
+}
+.organiser, .candidate, .voter{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 5px;
+    width: 200px;
+    box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
+    color: #fff;
+    cursor: pointer;
+
+}
+
+.informationContainer{
+    background-color: #203079;
+    padding: 2em 2em 3em;
+    display: flex;
+    box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
+    border-radius: 25px;
+}
+
+.activeSelector h2{
+    color: #fff;
+}
+
+.activeSelector h2 span{
+    color: #1BBAFF;
+}
+
+.activeSelector img{
+    height: 200px;
+    width: 200px;
+}
+
+
+@media screen and (max-width: 800px){
+    .tabContainer{
+        display: inline-block;
+        position: relative;
+    }
+}

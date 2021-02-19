@@ -12,7 +12,7 @@ import Search from './pages/Search/Search';
 import Profile from './pages/Profile/Profile';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
 import ContactUs from './pages/ContactUs/ContactUs';
-
+import VotingAlt from "./pages/Voting/VotingAlt";
 
 const Main = () => (
   <Switch>
@@ -27,7 +27,8 @@ const Main = () => (
     <Route path="/AnonymousV" component={Anon}/>
     <Route path="/Search" component={Search}/>
     <Route path="/Profile" component={Profile}/>
-    <Route path="/Contact" component={ContactUs}/>
+    <Route path="/ContactUs" component={ContactUs}/>
+    <Route path="/VotingAlt" component={VotingAlt}/>
   </Switch>
 )
 
