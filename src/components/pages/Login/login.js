@@ -17,7 +17,6 @@ function LogIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Logging in...\nUsername: ${username}\nPassword: ${password}`);
     regularLogin(e);
     resetUsername();
     resetPassword();
