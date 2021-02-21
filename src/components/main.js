@@ -13,6 +13,7 @@ import Profile from './pages/Profile/Profile';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
 import ContactUs from './pages/ContactUs/ContactUs';
 import VotingAlt from "./pages/Voting/VotingAlt";
+import LatchPage from "./pages/latchPage";
 
 const Main = () => (
   <Switch>
@@ -29,6 +30,7 @@ const Main = () => (
     <Route path="/Profile" component={Profile}/>
     <Route path="/ContactUs" component={ContactUs}/>
     <Route path="/VotingAlt" component={VotingAlt}/>
+    <Route path="/latch" component={LatchPage}/>
   </Switch>
 )
 
