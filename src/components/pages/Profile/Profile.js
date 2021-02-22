@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import "./profile.css"
 import avatar from '../../Images/avatar.png';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import "./activeButton.js";
 
 function getTab(tab) {
     if (tab === 1) {
@@ -19,45 +20,37 @@ function getTab(tab) {
             </div>
         )
     }
-    else if (tab === 3) {
-        return (
-            <div className="resultsTab">
-                <h2>Results</h2>
-            </div>
-        )
-    }
 }
 
-function Profile() { 
+function Profile() {
     const [ tab, setTab ] = useState(() => {return 1});
 
     return(
         <div className="profileContainer">
-        <div className="profileCard">
-            <div className="left">
-                <div className="profileAvatar"><img className="avatarImage" src={avatar} alt="avatar"/>
-                </div>
-                <p className="profileName"> Name </p>
-                <p className="profileOccupation"> Occupation </p>
-                <p className="profileLocation"> Location </p>
-                <div className="profileConnectedAccounts">
-                    <div><FontAwesomeIcon icon={['fab', 'twitter']}/> </div>
-                    <div><FontAwesomeIcon icon={['fab', 'linkedin']}/></div>
-                    <div><FontAwesomeIcon icon={['fab', 'github']}/></div>
-                </div>
-                <button className="profileSettings"> Profile Settings </button>
-            </div>
-            <div className="right">
-                <div className="tabOptions">
-                    <div className="buttonContainer">
-                    <button class="button" onClick={() => {setTab(1)}}> Biography </button>
-                    <button class="button" onClick={() => {setTab(2)}}> Videos </button>
-                    <button class="button" onClick={() => {setTab(3)}}> Results </button>
+            <div className="profileCard">
+                <div className="left">
+                    <div className="profileAvatar"><img className="avatarImage" src={avatar} alt="avatar"/>
                     </div>
+                    <p className="profileName"> Name </p>
+                    <p className="profileOccupation"> Occupation </p>
+                    <p className="profileLocation"> Location </p>
+                    <div className="profileConnectedAccounts">
+                        <div><FontAwesomeIcon icon={['fab', 'twitter']}/> </div>
+                        <div><FontAwesomeIcon icon={['fab', 'linkedin']}/></div>
+                        <div><FontAwesomeIcon icon={['fab', 'github']}/></div>
+                    </div>
+                    <button className="profileSettings"> Profile Settings </button>
                 </div>
-                {getTab(tab)}
+                <div className="right">
+                    <div className="tabOptions">
+                        <div className="buttonContainer">
+                            <li class="buttonBio" onClick={() => {setTab(1)}}> Biography </li>
+                            <li class="buttonElection" onClick={() => {setTab(2)}}> Elections </li>
+                        </div>
+                    </div>
+                    {getTab(tab)}
+                </div>
             </div>
-        </div>
         </div>
     )
 }
