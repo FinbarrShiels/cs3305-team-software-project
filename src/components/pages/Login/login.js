@@ -17,7 +17,13 @@ function LogIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    regularLogin(e);
+    setFormErrors({
+      ...formErrors,
+      username: username.trim() === "" && "Please enter your username",
+      password: password.trim() === "" && "Please enter your password"
+    })
+    // regularLogin(username, password);
+    alert(`Username: ${username}, Password: ${password}`) 
     resetUsername();
     resetPassword();
   }
@@ -56,7 +62,6 @@ function LogIn() {
         </div>
 
         <div className="thirdPartyLogins">
-            {/* <p>Third party portal logins go here</p> */}
             <a href="/" className="socialIcon" onClick={(e)=>facebookLogIn(e)}>
                 <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
             </a>
@@ -77,12 +82,8 @@ function LogIn() {
 }
 export default LogIn;
 
-function regularLogin(e) {
-  // e.preventDefault();
-  var creds = document.getElementsByClassName("loginFormInput");
-  firebaseRegularLogIn(creds[0].value, creds[1].value);
-  creds[0].value = "";
-  creds[1].value = "";
+function regularLogin(username, password) {
+  firebaseRegularLogIn(username, password);
 }
 
 function facebookLogIn(e) {
