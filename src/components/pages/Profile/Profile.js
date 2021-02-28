@@ -22,7 +22,6 @@ function Profile() {
 
     return(
         <div className="profileContainer">
-        <div className="profileCard">
             <div className="left">
                 <div className="profileAvatar"><img className="avatarImage" src={avatar} alt="avatar"/>
                 </div>
@@ -46,7 +45,6 @@ function Profile() {
                 </div>
                 {currentTab(tab)}
             </div>
-        </div>
         </div>
     )
 }
