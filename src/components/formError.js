@@ -1,13 +1,6 @@
 function FormError(props) {
-    if (props.errorMsg === "") {
-        return (
-            <div></div>
-        )
-    }
-    else {
-        return (
-            <p>{props.errorMsg}</p>
-        )
-    }
+    return (
+        props.errorMsg ? <p>{props.errorMsg}</p> : null
+    )
 }
 export default FormError
