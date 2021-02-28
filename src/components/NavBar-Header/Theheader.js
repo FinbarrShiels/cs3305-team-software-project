@@ -2,8 +2,9 @@ import './Theheader.css';
 import SearchBar from './SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "./menuSelector.js"
+import { Link } from 'react-router-dom';
 
-function Theheader(props) {
+function Theheader() {
     return(
         <header>
             <nav>
@@ -13,11 +14,12 @@ function Theheader(props) {
                 </div>
                 <div onClick={() => {window.location.href="/"}} class="logo"> ShowOfHands </div>
                 <div class="menuItems">
-                    {(!props.loggedIn) && <li><a href="/login"> Log In  </a></li>}
-                    {(!props.loggedIn) && <li><a href="/signUp"> Sign Up </a></li>}
-                    {(props.loggedIn) && <li><a href="/profile"> Profile </a></li>}
-                    <li><a href="/voting"> Voting </a></li>
-                    <li><a href="/AboutUs"> About Us  </a></li>
+                    {/* <li><a href="/login"> Log In  </a></li> */}
+                    <li><Link to="/login"> Login </Link></li>
+                    <li><Link to="/signup"> Sign Up </Link></li>
+                    <li><Link to="/profile"> Profile</Link></li>
+                    <li><Link to="/voting"> Voting </Link></li>
+                    <li><Link to="/aboutUs"> About Us </Link></li>
                 </div>
                 <div class="searchIcon"><span>
                     <FontAwesomeIcon icon={['fas', 'search']}/>
