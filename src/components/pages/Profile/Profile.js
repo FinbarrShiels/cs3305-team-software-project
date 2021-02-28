@@ -2,29 +2,18 @@ import React, { useState } from 'react';
 import "./profile.css"
 import avatar from '../../Images/avatar.png';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Elections from "./Elections";
+import Invites from "./Invites";
+import Bio from "./Bio";
 
-function getTab(tab) {
-    if (tab === 1) {
-        return (
-            <div className="bioTab">
-                <h2>BIO</h2>
-                <button className="editBio"> Edit Bio </button>
-            </div>
-        )
-    }
-    else if (tab === 2) {
-        return (
-            <div className="videosTab">
-                <h2>Videos</h2>
-            </div>
-        )
-    }
-    else if (tab === 3) {
-        return (
-            <div className="resultsTab">
-                <h2>Results</h2>
-            </div>
-        )
+function currentTab(tab) {
+    switch(tab) {
+        case 1:
+            return <Invites/>
+        case 2:
+            return <Elections/>
+        default:
+            return <Bio/>
     }
 }
 
@@ -50,12 +39,12 @@ function Profile() {
             <div className="right">
                 <div className="tabOptions">
                     <div className="buttonContainer">
-                    <button class="button" onClick={() => {setTab(1)}}> Biography </button>
-                    <button class="button" onClick={() => {setTab(2)}}> Videos </button>
-                    <button class="button" onClick={() => {setTab(3)}}> Results </button>
+                    <button class="button" onClick={() => {setTab(1)}}> Invites </button>
+                    <button class="button" onClick={() => {setTab(2)}}> Elections </button>
+                    <button class="button" onClick={() => {setTab(3)}}> Bio </button>
                     </div>
                 </div>
-                {getTab(tab)}
+                {currentTab(tab)}
             </div>
         </div>
         </div>
