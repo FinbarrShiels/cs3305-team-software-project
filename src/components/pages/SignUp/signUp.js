@@ -13,6 +13,7 @@ function SignUp() {
     tos: ""
   }))
 
+  const { value:username, bind:bindUsername, reset:resetUsername } = useInput('');
   const { value:fname, bind:bindFname, reset:resetFname } = useInput('');
   const { value:sname, bind:bindSname, reset:resetSname } = useInput('');
   const { value:email, bind:bindEmail, reset:resetEmail } = useInput('');
@@ -23,6 +24,7 @@ function SignUp() {
     e.preventDefault();
     setFormErrors({
       ...formErrors,
+      username: username.trim() === "" && "Please choose a username",
       fname: fname.trim() === "" && "Please enter your first name",
       sname: sname.trim() === "" && "Please enter your second name",
       email: email.trim() === "" && "Please enter your email",
@@ -31,6 +33,7 @@ function SignUp() {
     })
     alert(`First: ${fname}, Second: ${sname}, Email: ${email}, Password: ${password}, Checked: ${tosChecked}`) 
     // register(fname, sname, email, password, tosChecked);
+    resetUsername();
     resetFname();
     resetSname();
     resetEmail();
@@ -47,6 +50,11 @@ function SignUp() {
 
         <div className="rightTab">
           <form class="signUpForm" onSubmit={handleSubmit}>
+            <div className="formInputSection">
+              <FormError errorMsg={formErrors.username}/>
+              <label for="username"> Username:  </label>
+              <input type="text" id="username" {...bindUsername}/>
+            </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.fname}/>
               <label for="fname"> First Name:  </label>
