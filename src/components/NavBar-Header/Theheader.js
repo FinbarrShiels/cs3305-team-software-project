@@ -15,6 +15,7 @@ function Theheader() {
                 <div class="menuItems">
                     <li><a href="/login"> Log In  </a></li>
                     <li><a href="/signUp"> Sign Up </a></li>
+                    <li><a href="/profile"> Profile </a></li>
                     <li><a href="/AboutUs"> About Us  </a></li>
                 </div>
                 <div class="searchIcon"><span>
