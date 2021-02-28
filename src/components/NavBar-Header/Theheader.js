@@ -3,7 +3,7 @@ import SearchBar from './SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "./menuSelector.js"
 
-function Theheader() {
+function Theheader(props) {
     return(
         <header>
             <nav>
@@ -13,9 +13,9 @@ function Theheader() {
                 </div>
                 <div onClick={() => {window.location.href="/"}} class="logo"> ShowOfHands </div>
                 <div class="menuItems">
-                    <li><a href="/login"> Log In  </a></li>
-                    <li><a href="/signUp"> Sign Up </a></li>
-                    <li><a href="/profile"> Profile </a></li>
+                    {(!props.loggedIn) && <li><a href="/login"> Log In  </a></li>}
+                    {(!props.loggedIn) && <li><a href="/signUp"> Sign Up </a></li>}
+                    {(props.loggedIn) && <li><a href="/profile"> Profile </a></li>}
                     <li><a href="/voting"> Voting </a></li>
                     <li><a href="/AboutUs"> About Us  </a></li>
                 </div>
