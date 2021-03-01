@@ -6,7 +6,6 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyBsRA7R4Wbf_M2aKmJeDdf421UsSkVAT0g",
   authDomain: "project-970041699397464178.firebaseapp.com",
@@ -19,8 +18,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
-
-
 
 export function firebaseRegister(fname, sname, email, pass) {
   const recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
@@ -77,7 +74,6 @@ function addNewUserToFirestore(uid, fname, sname, email) {
     })
   
 }
-
 
 export function firebaseGoogleLogIn() {
     let provider = new firebase.auth.GoogleAuthProvider();

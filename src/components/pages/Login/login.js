@@ -22,7 +22,7 @@ function LogIn() {
       username: username.trim() === "" && "Please enter your username",
       password: password.trim() === "" && "Please enter your password"
     })
-    regularLogin(username, password);
+    firebaseRegularLogIn(username, password);
     alert(`DEBUG:\nUsername: ${username}, Password: ${password}`) 
     resetUsername();
     resetPassword();
@@ -62,41 +62,22 @@ function LogIn() {
         </div>
 
         <div className="thirdPartyLogins">
-            <a href="/" className="socialIcon" onClick={(e)=>facebookLogIn(e)}>
+            <a href="/" className="socialIcon" onClick={()=>firebaseFacebookLogIn()}>
                 <FontAwesomeIcon icon={['fab', 'facebook-f']} size="2x"/>
             </a>
-            <a href="/" className="socialIcon" onClick={(e)=>googleLogIn(e)}>
+            <a href="/" className="socialIcon" onClick={()=>firebaseGoogleLogIn()}>
                 <FontAwesomeIcon icon={['fab', 'google']} size="2x"/>
             </a>
-            <a href="/" className="socialIcon" onClick={(e)=>twitterLogIn(e)}>
+            <a href="/" className="socialIcon" onClick={()=>firebaseTwitterLogIn()}>
                 <FontAwesomeIcon icon={['fab', 'twitter']} size="2x"/>
             </a>
         </div>
         <div className="bottomOptionButtons">
-            <a href="/login">Create Account</a>
-            <a href="/ForgotPassword">Forgot Password</a>
+            <a href="/signUp"> Create Account </a>
+            <a href="/ForgotPassword"> Forgot Password </a>
         </div>
       </div>
     </div>
   )
 }
 export default LogIn;
-
-function regularLogin(username, password) {
-  firebaseRegularLogIn(username, password);
-}
-
-function facebookLogIn(e) {
-  e.preventDefault();
-  firebaseFacebookLogIn();
-}
-
-function googleLogIn(e) {
-  e.preventDefault();
-  firebaseGoogleLogIn();
-}
-
-function twitterLogIn(e) {
-  e.preventDefault();
-  firebaseTwitterLogIn();
-}

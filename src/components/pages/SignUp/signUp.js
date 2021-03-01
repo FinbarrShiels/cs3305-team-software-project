@@ -32,7 +32,7 @@ function SignUp() {
       tos: tosChecked === false && "Please agree to the Terms of Service"
     })
     alert(`First: ${fname}, Second: ${sname}, Email: ${email}, Password: ${password}, Checked: ${tosChecked}`) 
-    // register(fname, sname, email, password, tosChecked);
+    firebaseRegister(fname, sname, email, password);
     resetUsername();
     resetFname();
     resetSname();
@@ -97,19 +97,3 @@ function SignUp() {
   )
 }
 export default SignUp;
-
-function register(fname, sname, email, password, tosChecked) {
-  if ((fname === '' || sname ==='') && tosChecked === false) {
-    console.log('please fill in both fname and sname');
-    console.log('please agree to the terms and services');
-  }
-  else if (fname === '' || sname ==='') {
-    console.log('please fill in both fname and sname');
-  }
-  else if (tosChecked === false) {
-    console.log('please agree to the terms and services');
-  }
-  else {
-    firebaseRegister(fname, sname, email, password);
-  }
-}
