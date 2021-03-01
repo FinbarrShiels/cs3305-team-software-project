@@ -22,8 +22,8 @@ function LogIn() {
       username: username.trim() === "" && "Please enter your username",
       password: password.trim() === "" && "Please enter your password"
     })
-    // regularLogin(username, password);
-    alert(`Username: ${username}, Password: ${password}`) 
+    regularLogin(username, password);
+    alert(`DEBUG:\nUsername: ${username}, Password: ${password}`) 
     resetUsername();
     resetPassword();
   }

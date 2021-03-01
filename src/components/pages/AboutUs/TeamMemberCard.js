@@ -1,10 +1,9 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./TeamMemberCard.css";
 function TeamMemberCard(props) {
     return (
         <div className="teamMember">
-            <div className="memberAvatar">
-                {props.avatar}
-            </div>
+            <img className="memberAvatar" src={props.avatar} alt=""/>
             <h4 className="memberName">
                 {props.name}
             </h4>
@@ -15,7 +14,9 @@ function TeamMemberCard(props) {
                 {props.statement}
             </p>
             <div className="gitHubLink">
-                {props.github}
+                <a href={props.github} >
+                    <FontAwesomeIcon icon={['fab', 'github']} size="2x"/>
+                </a>
             </div>
         </div>
     )

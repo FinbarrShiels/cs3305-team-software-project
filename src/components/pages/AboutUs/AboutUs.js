@@ -9,39 +9,39 @@ function AboutUs() {
     <div>
       <div className="memberCards">
         <TeamMemberCard 
-           avatar=<img src={avatar}/>
+          avatar={avatar}
           name={"Luke"}
           role="Team Lead/Front End"
           statement=""
-          github=<a href="https://github.com/luketynan" ><FontAwesomeIcon icon={['fab', 'github']} size="2x"/></a>
+          github="https://github.com/luketynan"
         />
         <TeamMemberCard
-            avatar=<img src={avatar}/>
+          avatar={avatar}
           name="Finbarr"
           role="Front End (CSS)" 
           statement=""
-          github=<a href="https://github.com/FinbarrShiels" ><FontAwesomeIcon icon={['fab', 'github']} size="2x"/></a>
+          github="https://github.com/FinbarrShiels"
         />
         <TeamMemberCard
-            avatar=<img src={avatar}/>
+            avatar={avatar}
           name="Jack"
           role="Front End (Design)" 
           statement=""
-          github=<a href="https://github.com/jackboy-creator" ><FontAwesomeIcon icon={['fab', 'github']} size="2x"/></a>
+          github="https://github.com/jackboy-creator"
         />
         <TeamMemberCard
-            avatar=<img src={avatar}/>
+            avatar={avatar}
           name="Diarmuid" 
           role="Backend" 
           statement=""
-          github=<a href="https://github.com/diarmuidmckenna" ><FontAwesomeIcon icon={['fab', 'github']} size="2x"/></a>
+          github="https://github.com/diarmuidmckenna"
         />
         <TeamMemberCard
-            avatar=<img src={avatar}/>
+            avatar={avatar}
             name={"Con"}
           role="Backend" 
           statement=""
-          github=<a href="https://github.com/okeeffecon" ><FontAwesomeIcon icon={['fab', 'github']} size="2x"/></a>
+          github="https://github.com/okeeffecon"
         />
       </div>
       <div className="descriptionContainer">
@@ -55,7 +55,10 @@ function AboutUs() {
         </div>
       </div>
       <div className="projectLinks">
-          <a href="https://github.com/FinbarrShiels/cs3305-team-software-project"><FontAwesomeIcon className="icon" icon={['fab', 'github',]} size="2x"/>cs3305-team-software-project</a>
+          <a href="https://github.com/FinbarrShiels/cs3305-team-software-project">
+            <FontAwesomeIcon className="icon" icon={['fab', 'github',]} size="2x"/>
+            cs3305-team-software-project
+          </a>
       </div>
     </div>
   )
