@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { useInput } from '../../../customHooks/form-input.js';
 import "./ChangePassword.css";
 import FormError from '../../formError';
+import { useHistory } from "react-router-dom"
 
 function ChangePassword() {
 
+    const history = useHistory();
     const [ formErrors, setFormErrors ] = useState(() => ({
         password1: "",
         password2: ""
     }))
-
     const { value:password1, bind:bindPassword1, reset:resetPassword1 } = useInput('');
     const { value:password2, bind:bindPassword2, reset:resetPassword2 } = useInput('');
-
     const handleSubmit = (e) => {
         e.preventDefault();
         setFormErrors({
@@ -23,6 +23,7 @@ function ChangePassword() {
         alert(`Username: ${password1}, Password: ${password2}`) 
         resetPassword1();
         resetPassword2();
+        history.push("/PasswordChanged");
       }
     
     return (

@@ -14,6 +14,7 @@ import ChangePassword from './pages/ChangePassword/ChangePassword';
 import ContactUs from './pages/ContactUs/ContactUs';
 import VotingAlt from "./pages/Voting/VotingAlt";
 import LatchPage from "./pages/latchPage";
+import PasswordChanged from "./pages/PasswordReset/PasswordChanged";
 
 const Main = () => (
   <Switch>
@@ -31,6 +32,7 @@ const Main = () => (
     <Route path="/ContactUs" component={ContactUs}/>
     <Route path="/VotingAlt" component={VotingAlt}/>
     <Route path="/latch" component={LatchPage}/>
+    <Route path="/PasswordChanged" component={PasswordChanged}/>
   </Switch>
 )
 
