@@ -22,28 +22,30 @@ function Profile() {
 
     return(
         <div className="profileContainer">
-            <div className="left">
-                <div className="profileAvatar">
-                    <img className="avatarImage" src={avatar} alt="avatar"/>
-                </div>
-                <p className="profileName"> Name </p>
-                <p className="profileOccupation"> Occupation </p>
-                <p className="profileLocation"> Location </p>
-                <div className="profileConnectedAccounts">
-                    <FontAwesomeIcon icon={['fab', 'twitter']}/>
-                    <FontAwesomeIcon icon={['fab', 'linkedin']}/>
-                    <FontAwesomeIcon icon={['fab', 'github']}/>
-                </div>
-                <button className="profileSettings"> Profile Settings </button>
-            </div>
-            <div className="right">
-                <div className="tabOptions">
-                    <div className="buttonContainer">
-                        <button class="button" onClick={() => {setTab(1)}}> Invites </button>
-                        <button class="button" onClick={() => {setTab(2)}}> Elections </button>
-                        <button class="button" onClick={() => {setTab(3)}}> Bio </button>
+            <div className="profileCard">
+                <div className="left">
+                    <div className="profileAvatar">
+                        <img className="avatarImage" src={avatar} alt="avatar"/>
                     </div>
-                {currentTab(tab)}
+                    <p className="profileName"> Name </p>
+                    <p className="profileOccupation"> Occupation </p>
+                    <p className="profileLocation"> Location </p>
+                    <div className="profileConnectedAccounts">
+                        <FontAwesomeIcon icon={['fab', 'twitter']}/>
+                        <FontAwesomeIcon icon={['fab', 'linkedin']}/>
+                        <FontAwesomeIcon icon={['fab', 'github']}/>
+                    </div>
+                    <button className="profileSettings"> Profile Settings </button>
+                </div>
+                <div className="right">
+                    <div className="tabOptions">
+                        <div className="buttonContainer">
+                            <button class="button" onClick={() => {setTab(1)}}> Invites </button>
+                            <button class="button" onClick={() => {setTab(2)}}> Elections </button>
+                            <button class="button" onClick={() => {setTab(3)}}> Bio </button>
+                        </div>
+                    </div>
+                    {currentTab(tab)}
                 </div>
             </div>
         </div>
