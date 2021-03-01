@@ -3,11 +3,12 @@ import SearchBar from './SearchBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "./menuSelector.js"
 import { Link } from 'react-router-dom'
-import { useUser } from "../../context/UserContext"
+import { useUser, useUserToggle } from "../../context/UserContext"
 
 function Theheader() {
 
     const user = useUser();
+    const toggleUser = useUserToggle();
 
     return(
         <nav>
@@ -16,6 +17,7 @@ function Theheader() {
                 </span>
             </div>
             <div onClick={() => {window.location.href="/"}} className="logo"> ShowOfHands </div>
+            <button onClick={toggleUser}>Toggle: User login state</button>
             <div className="menuItems">
                 {user === null && <li><Link to="/login"> Login </Link></li>}
                 {user === null && <li><Link to="/signup"> Sign Up </Link></li>}
