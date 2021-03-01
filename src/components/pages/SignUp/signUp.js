@@ -43,13 +43,13 @@ function SignUp() {
 
   return(
     <div className="signUpContainer">
-      <div class="sections">
+      <div className="sections">
         <div className="leftTab">
           <h2>Cast Your <span>Vote</span> Now!</h2>
         </div>
 
         <div className="rightTab">
-          <form class="signUpForm" onSubmit={handleSubmit}>
+          <form className="signUpForm" onSubmit={handleSubmit}>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.username}/>
               <label htmlFor="username"> Username:  </label>
@@ -82,7 +82,7 @@ function SignUp() {
               onChange={(e) => {
                 setTosChecked(e.target.checked)
               }}/>
-              <label for="agreecheckbox"> I agree to terms of Service </label>
+              <label htmlFor="agreecheckbox"> I agree to terms of Service </label>
             </div>
             <input className="formSubmitButton" type="submit" value="Create Account"/>
           </form>
