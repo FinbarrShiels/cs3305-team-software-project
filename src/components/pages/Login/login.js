@@ -63,13 +63,13 @@ function LogIn() {
 
         <div className="thirdPartyLogins">
             <a href="/" className="socialIcon" onClick={(e)=>facebookLogIn(e)}>
-                <FontAwesomeIcon icon={['fab', 'facebook-f']}/>
+                <FontAwesomeIcon icon={['fab', 'facebook-f']} size="2x"/>
             </a>
             <a href="/" className="socialIcon" onClick={(e)=>googleLogIn(e)}>
-                <FontAwesomeIcon icon={['fab', 'google']}/>
+                <FontAwesomeIcon icon={['fab', 'google']} size="2x"/>
             </a>
             <a href="/" className="socialIcon" onClick={(e)=>twitterLogIn(e)}>
-                <FontAwesomeIcon icon={['fab', 'twitter']}/>
+                <FontAwesomeIcon icon={['fab', 'twitter']} size="2x"/>
             </a>
         </div>
         <div className="bottomOptionButtons">
