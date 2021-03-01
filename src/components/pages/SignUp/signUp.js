@@ -52,17 +52,17 @@ function SignUp() {
           <form class="signUpForm" onSubmit={handleSubmit}>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.username}/>
-              <label for="username"> Username:  </label>
+              <label htmlFor="username"> Username:  </label>
               <input type="text" id="username" {...bindUsername}/>
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.fname}/>
-              <label for="fname"> First Name:  </label>
+              <label htmlFor="fname"> First Name:  </label>
               <input type="text" id="fname" {...bindFname}/>
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.sname}/>
-              <label for="sname"> Second Name:  </label>
+              <label htmlFor="sname"> Second Name:  </label>
               <input type="text" id="sname" {...bindSname}/>
             </div>
             <div className="formInputSection">
