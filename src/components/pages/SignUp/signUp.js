@@ -3,6 +3,7 @@ import './signUp.css';
 import { firebaseRegister } from '../../../firebaseFunctions/auth';
 import { useInput } from '../../../customHooks/form-input.js';
 import FormError from '../../formError';
+import { useHistory } from 'react-router-dom';
 
 function SignUp() {
   const [ formErrors, setFormErrors ] = useState(() => ({
@@ -12,6 +13,8 @@ function SignUp() {
     password: "",
     tos: ""
   }))
+
+  const history = useHistory();
 
   const { value:username, bind:bindUsername, reset:resetUsername } = useInput('');
   const { value:fname, bind:bindFname, reset:resetFname } = useInput('');
@@ -34,12 +37,15 @@ function SignUp() {
     })
     alert(`First: ${fname}, Second: ${sname}, Email: ${email}, Password: ${password}, Checked: ${tosChecked}`) 
     firebaseRegister(fname, sname, email, password);
-    resetUsername();
-    resetFname();
-    resetSname();
-    resetEmail();
-    resetPassword();
-    setTosChecked(false);
+    // if (registerResult) {
+    //   resetUsername();
+    //   resetFname();
+    //   resetSname();
+    //   resetEmail();
+    //   resetPassword();
+    //   setTosChecked(false);
+    //   history.push("/SignUpComplete");
+    // }
   }
 
   return(
@@ -89,7 +95,7 @@ function SignUp() {
           </form>
           <div id='recaptcha'></div>
           <div className="existingMemberLogin">
-            <span>Already Have an Account?   </span>
+            <span>Already Have an Account?</span>
             <a href="/login"><button> Log In </button></a>
           </div>
         </div>

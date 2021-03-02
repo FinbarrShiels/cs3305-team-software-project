@@ -4,10 +4,14 @@ import Theheader from './components/NavBar-Header/Theheader'
 import Thefooter from './components/Footer/Thefooter'
 import initFontAwesome from "./components/FontAwesome/FontAwesome"
 import UserProvider from "./context/UserContext"
+import { useHistory } from 'react-router-dom';
 initFontAwesome();
 
 
 function App() {
+
+  const history = useHistory();
+
   return (
     <div className="container">                           {/*Container inherits 100% height from body* in index.css*/}
     <UserProvider>

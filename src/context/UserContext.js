@@ -1,33 +1,24 @@
 import React, { useContext, useState } from "react"
 
 const UserContext = React.createContext();
-const UserToggleContext = React.createContext();
+const UserSetContext = React.createContext();
 
 export function useUser() {
     return useContext(UserContext);
 }
 
-export function useUserToggle() {
-    return useContext(UserToggleContext);
+export function useUserSet() {
+    return useContext(UserSetContext);
 }
 
 export default function UserProvider({ children }) {
-    const [ user, setUser] = useState();
-
-    const toggleUser = () => {
-        if (user !== null) {
-            setUser(null);
-        }
-        else {
-            setUser();
-        }
-    }
+    const [ user, setUser ] = useState(null);
 
     return (
         <UserContext.Provider value={user}>
-            <UserToggleContext.Provider value={toggleUser}>
+            <UserSetContext.Provider value={setUser}>
                 {children}
-            </UserToggleContext.Provider>
+            </UserSetContext.Provider>
         </UserContext.Provider>
     )
 }
