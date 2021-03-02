@@ -1,5 +1,3 @@
-import SignUp from "./signUp"
-
 function SignUpComplete() {
     return (
         <div>

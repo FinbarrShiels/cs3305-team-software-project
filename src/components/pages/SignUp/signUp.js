@@ -21,7 +21,7 @@ function SignUp() {
   const { value:sname, bind:bindSname, reset:resetSname } = useInput('');
   const { value:email, bind:bindEmail, reset:resetEmail } = useInput('');
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput('');
-  const [tosChecked, setTosChecked] = useState();
+  const [tosChecked, setTosChecked] = useState(false);
 
 
   const handleSubmit = (e) => {
@@ -36,16 +36,15 @@ function SignUp() {
       tos: tosChecked === false && "Please agree to the Terms of Service"
     })
     alert(`First: ${fname}, Second: ${sname}, Email: ${email}, Password: ${password}, Checked: ${tosChecked}`) 
-    firebaseRegister(fname, sname, email, password);
-    // if (registerResult) {
-    //   resetUsername();
-    //   resetFname();
-    //   resetSname();
-    //   resetEmail();
-    //   resetPassword();
-    //   setTosChecked(false);
-    //   history.push("/SignUpComplete");
-    // }
+    if (firebaseRegister(fname, sname, email, password)) {
+      resetUsername();
+      resetFname();
+      resetSname();
+      resetEmail();
+      resetPassword();
+      setTosChecked(false);
+      history.push("/SignUpComplete");
+    }
   }
 
   return(
