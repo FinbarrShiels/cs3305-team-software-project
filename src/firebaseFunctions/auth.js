@@ -20,7 +20,7 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 export function firebaseRegister(fname, sname, email, pass) {
-  const recaptcha = new auth.RecaptchaVerifier('recaptcha');
+  const recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
   recaptcha.verify().then(promise => {auth.createUserWithEmailAndPassword(email, pass)
     .then(userCred => {
         console.log(userCred.user.email, userCred.user.emailVerified);
