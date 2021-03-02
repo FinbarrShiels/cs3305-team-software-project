@@ -20,6 +20,7 @@ function SignUp() {
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput('');
   const [tosChecked, setTosChecked] = useState();
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors({

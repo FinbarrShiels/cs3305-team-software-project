@@ -20,32 +20,27 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 export function firebaseRegister(fname, sname, email, pass) {
-  const recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
+  const recaptcha = new auth.RecaptchaVerifier('recaptcha');
   recaptcha.verify().then(promise => {auth.createUserWithEmailAndPassword(email, pass)
     .then(userCred => {
         console.log(userCred.user.email, userCred.user.emailVerified);
         addNewUserToFirestore(userCred.user.uid, fname, sname, userCred.user.email);
         userCred.user.sendEmailVerification()
           .then(() =>{
-            console.log('verifaction email sent');
+            return true;
           })
     }).catch(error => {
         switch (error.code) {
           case 'auth/email-already-in-use':
-            console.log(`Email address ${email} already in use.`);
-            break;
+            return `Email address ${email} already in use.`;
           case 'auth/invalid-email':
-            console.log(`Email address ${email} is invalid.`);
-            break;
+            return `Email address ${email} is invalid.`;
           case 'auth/operation-not-allowed':
-            console.log(`Error during sign up.`);
-            break;
+            return `Error during sign up.`;
           case 'auth/weak-password':
-            console.log('Password is not strong enough. Add additional characters including special characters and numbers.');
-            break;
+            return `Password is not strong enough. Add additional characters including special characters and numbers.`;
           default:
-            console.log(error.message);
-            break; 
+            return `Unexpected error has occured, please try again`;
         }
     })
   })
@@ -55,12 +50,20 @@ export function firebaseRegister(fname, sname, email, pass) {
 export function firebaseRegularLogIn(email, pass) {
   auth.signInWithEmailAndPassword(email, pass)
   .then(userCred => {
-    let emailVerification = userCred.user.emailVerified;
-    console.log(`${userCred.user.email} is logged in` );
-    console.log(`Email address verified: ${emailVerification}` );
-
+    return userCred.user;
   }).catch(error => {
-      console.log('incorrect email or password');
+    switch (error.code) {
+      case 'auth/user-disabled':
+        return `This account has been disabled`;
+      case 'auth/invalid-email':
+        return `Email address ${email} is invalid.`;
+      case 'auth/user-not-found':
+        return `No user corresponding to email provided`;
+      case 'auth/wrong-password':
+        return `Incorrect password provided`;
+      default:
+        return `Unexpected error has occured, please try again`;
+    }
 
   })
 }
@@ -80,10 +83,9 @@ export function firebaseGoogleLogIn() {
     auth.signInWithPopup(provider)
         .then((userCred) => {
             addNewUserToFirestore(userCred.user.uid, userCred.user.email);
-            console.log(userCred.user.email);
-            console.log(`Email address verified: ${userCred.user.emailVerified}`);
+            return userCred
         }).catch((error) => {
-            console.log('fail');
+            return 'fail';
         });  
 }
 
@@ -93,7 +95,7 @@ export function firebaseTwitterLogIn() {
         .then((result) => {
             addNewUserToFirestore(result.user.uid, result.user.email);
         }).catch((error) => {
-            console.log('fail');
+            return 'fail';
         });  
 }
 
@@ -103,7 +105,7 @@ export function firebaseFacebookLogIn() {
         .then((result) => {
             addNewUserToFirestore(result.user.uid, result.user.email);
         }).catch((error) => {
-            console.log('fail');
+            return 'fail';
         });  
 }
 
