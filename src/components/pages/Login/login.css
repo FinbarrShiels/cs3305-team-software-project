@@ -52,16 +52,17 @@
 }
 
 
-.button{
-    border-radius: 50px;
+.submitButton{
     outline: none;
     width: 60%;
     height: 49px;
+    cursor: pointer;
     font-weight: 600;
     transition: 0.5s;
+    border-radius: 50px;
 }
 
-.button:hover{
+.submitButton:hover{
     background-color: darkgrey;
 }
 

@@ -51,7 +51,7 @@ function LogIn() {
             {...bindPassword} />
           <br/>
           <input 
-            className="btn" 
+            className="submitButton"
             type="submit" 
             value="Login" />
         </form>

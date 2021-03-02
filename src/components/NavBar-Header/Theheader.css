@@ -45,7 +45,7 @@ nav {
 }
 
 .menuItems li a:hover {
-  color: #000;
+  color: orange;
 }
 .searchIcon{
   width:40px;
@@ -105,8 +105,8 @@ nav {
 }
 
 .loginButton {
-  color: #1BBAFF;
-  border: #000 solid 1px;
+  color: #1BBAFf;
+  border: #fff solid 1px;
   padding: 12px 24px;
   #background-color: #1BBAFF;
   border-radius: 8px;
@@ -117,9 +117,13 @@ nav {
   background-color: #fff;
 }
 
+.loginButton:active{
+  background-color: #fff;
+}
+
 .signUpButton {
   color: #1BBAFF;
-  border: #000 solid 1px;
+  border: #fff solid 1px;
   padding: 12px 24px;
   #background-color: #1BBAFF;
   border-radius: 8px;
