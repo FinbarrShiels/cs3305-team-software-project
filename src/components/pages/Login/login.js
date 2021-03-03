@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { firebaseTwitterLogIn, firebaseFacebookLogIn, firebaseGoogleLogIn, firebaseRegularLogIn } from '../../../firebaseFunctions/auth';
 import { useInput } from '../../../customHooks/form-input.js';
 import FormError from '../../formError';
+import { useUser, useUserSet } from '../../../context/UserContext'
 
 function LogIn() {
   const [ formErrors, setFormErrors ] = useState(() => ({
@@ -15,6 +16,9 @@ function LogIn() {
   const { value:username, bind:bindUsername, reset:resetUsername } = useInput('');
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput('');
 
+  const user = useUser();
+  const userSet = useUserSet();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors({
@@ -22,8 +26,20 @@ function LogIn() {
       username: username.trim() === "" && "Please enter your username",
       password: password.trim() === "" && "Please enter your password"
     })
-    firebaseRegularLogIn(username, password);
-    alert(`DEBUG:\nUsername: ${username}, Password: ${password}`) 
+    // firebaseRegularLogIn(username, password)
+    // .then((userEmail) => {
+    //   console.log()
+    //   alert(`DEBUG:\nUsername: ${username}, Password: ${password}`)
+    //   // resetUsername();
+    //   // resetPassword();
+    // })
+    // .catch(
+    //   console.log("There was a problem with logging in")
+    // )
+    userSet({
+      email: "test@example.com",
+      emailVerified: true
+    })
     resetUsername();
     resetPassword();
   }

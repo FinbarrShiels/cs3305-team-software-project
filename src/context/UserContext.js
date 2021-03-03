@@ -12,7 +12,10 @@ export function useUserSet() {
 }
 
 export default function UserProvider({ children }) {
-    const [ user, setUser ] = useState(null);
+    const [ user, setUser ] = useState({
+        email: "test@example.com",
+        emailVerified: true
+    });
 
     return (
         <UserContext.Provider value={user}>
