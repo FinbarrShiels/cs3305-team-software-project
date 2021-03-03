@@ -33,9 +33,9 @@ function Profile() {
                     <p className="profileOccupation"> Occupation </p>
                     <p className="profileLocation"> Location </p>
                     <div className="profileConnectedAccounts">
-                        <FontAwesomeIcon icon={['fab', 'twitter']}/>
-                        <FontAwesomeIcon icon={['fab', 'linkedin']}/>
-                        <FontAwesomeIcon icon={['fab', 'github']}/>
+                        <div><FontAwesomeIcon icon={['fab', 'twitter']}/> @testTwitterHandle </div>
+                        <div><FontAwesomeIcon icon={['fab', 'linkedin']}/> www.linkedin.com/in/testLinkedInUser </div>
+                        <div><FontAwesomeIcon icon={['fab', 'github']}/> github.com/testGitHubUser </div>
                     </div>
                     <button className="profileSettings"> Profile Settings </button>
                 </div>
