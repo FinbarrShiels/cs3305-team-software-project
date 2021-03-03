@@ -40,9 +40,9 @@ function Profile() {
                 <div className="right">
                     <div className="tabOptions">
                         <div className="buttonContainer">
-                            <button class="button" onClick={() => {setTab(1)}}> Invites </button>
-                            <button class="button" onClick={() => {setTab(2)}}> Elections </button>
-                            <button class="button" onClick={() => {setTab(3)}}> Bio </button>
+                            <button className="button" onClick={() => {setTab(1)}}> Invites </button>
+                            <button className="button" onClick={() => {setTab(2)}}> Elections </button>
+                            <button className="button" onClick={() => {setTab(3)}}> Bio </button>
                         </div>
                     </div>
                     {currentTab(tab)}
