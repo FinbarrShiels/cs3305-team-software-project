@@ -36,15 +36,15 @@ function SignUp() {
       tos: tosChecked === false && "Please agree to the Terms of Service"
     })
     alert(`First: ${fname}, Second: ${sname}, Email: ${email}, Password: ${password}, Checked: ${tosChecked}`) 
-    if (firebaseRegister(fname, sname, email, password)) {
-      resetUsername();
-      resetFname();
-      resetSname();
-      resetEmail();
-      resetPassword();
-      setTosChecked(false);
-      history.push("/SignUpComplete");
-    }
+    // if (firebaseRegister(fname, sname, email, password)) {
+    //   resetUsername();
+    //   resetFname();
+    //   resetSname();
+    //   resetEmail();
+    //   resetPassword();
+    //   setTosChecked(false);
+    //   history.push("/SignUpComplete");
+    // }
   }
 
   return(
