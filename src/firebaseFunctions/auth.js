@@ -52,68 +52,6 @@ export function firebaseRegister(fname, sname, email, pass) {
     })
 }
 
-    /*
-    const verifyCaptcha = () => {
-        return new Promise((resolve, reject) => {
-            let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
-            console.log("reCAPTCHA created");
-            recaptcha.verify().then(r => resolve(true)
-            ).catch(error => {
-                console.log(error.message)
-                reject(error.code);
-            })
-        })
-    };
-    const result = async() => {
-        let v = await verifyCaptcha();
-        console.log("v: ", v, " End V");
-        return await new Promise(((resolve, reject) => {
-            if (!v) {
-                reject(v)
-            }
-
-            ).catch(error => {
-                console.log(error.code);
-                reject(error.code)})
-        }))
-    }
-    let r = result()
-    console.log("R: ", r, "End R");
-}
-            .then(
-                cr => {
-                    return true
-                }
-            ).catch(error => {
-                console.log("Error with creating user", error.code);
-                recaptcha.clear();
-                return error.code
-            })
-            /*
-            userCred => {
-
-
-
-                .then(() =>{
-                    console.log("Register fully successful");
-                    return true;
-                }).catch(error => {
-                console.log(error.code);
-                return error.code})
-        )}).catch(error =>{
-    console.log(error.message, "reCAPTCHA verify failed");
-    recaptcha.clear();
-    console.log("reCAPTCHA reset");
-    return error.code
-     })
-    }).then(result => {
-        return result
-    }).catch(error => {
-        console.log(error.message, "Error with outer promise")
-    })
-}
-*/
-
 export function firebaseRegularLogIn(email, pass) {
     auth.signInWithEmailAndPassword(email, pass)
     .then(userCred => {
