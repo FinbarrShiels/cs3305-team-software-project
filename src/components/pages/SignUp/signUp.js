@@ -35,15 +35,25 @@ function SignUp() {
       password: password.trim() === "" && "Please enter your password",
       tos: tosChecked === false && "Please agree to the Terms of Service"
     })
-    alert(`First: ${fname}, Second: ${sname}, Email: ${email}, Password: ${password}, Checked: ${tosChecked}`) 
-    if (firebaseRegister(fname, sname, email, password)) {
-      resetUsername();
-      resetFname();
-      resetSname();
-      resetEmail();
-      resetPassword();
-      setTosChecked(false);
-      history.push("/SignUpComplete");
+    console.log(`First: ${fname}, Second: ${sname}, Email: ${email}, Password: ${password}, Checked: ${tosChecked}`)
+    let outcome = firebaseRegister(fname, sname, email, password);
+    //console.log("Outcome: ", outcome);
+    //Temp code to handle return
+    switch (outcome) {
+      case true:
+        //console.log("Register fully successful");
+        resetUsername();
+        resetFname();
+        resetSname();
+        resetEmail();
+        resetPassword();
+        setTosChecked(false);
+        history.push("/SignUpComplete");
+        break;
+      default:
+        //console.log("Default > Temp Error handling");
+        //Handle error
+        break;
     }
   }
 
@@ -92,7 +102,7 @@ function SignUp() {
             </div>
             <input className="formSubmitButton" type="submit" value="Create Account"/>
           </form>
-          <div id='recaptcha'></div>
+          <div id='recaptcha' />
           <div className="existingMemberLogin">
             <span>Already Have an Account?</span>
             <a href="/login"><button> Log In </button></a>

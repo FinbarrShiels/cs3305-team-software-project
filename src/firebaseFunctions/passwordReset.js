@@ -3,13 +3,17 @@ import 'firebase/auth';
 import 'firebase/firestore';
 
 const auth = firebase.auth();
+const actionCodeSettings = {
+    url: "https://project-970041699397464178.web.app/Login",
+    handleCodeInApp: false
+}
 
 //Reset password from landing page is user has forgotten their password and cannot login
 export function forgotPassword(email) {
     //let signUpForm = document.querySelector('#regular')
     //let email = signUpForm['resetEmail'].value;
     //console.log(email);
-    auth.sendPasswordResetEmail(email)
+    auth.sendPasswordResetEmail(email, actionCodeSettings)
     .catch(error => {
         switch (error.code) {
             case 'auth/invalid-email':
