@@ -16,6 +16,7 @@ export default function UserProvider({ children }) {
         email: "test@example.com",
         emailVerified: true
     });
+    // const [ user, setUser ] = useState(null);
 
     return (
         <UserContext.Provider value={user}>

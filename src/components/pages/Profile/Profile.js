@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import "./profile.css"
-import avatar from '../../Images/avatar.png';
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Elections from "./Elections";
-import Invites from "./Invites";
-import Bio from "./Bio";
+import avatar from '../../Images/avatar.png'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Elections from "./Elections"
+import Invites from "./Invites"
+import Bio from "./Bio"
+import { useUser } from '../../../context/UserContext'
 
 function currentTab(tab) {
     switch(tab) {
@@ -18,16 +19,17 @@ function currentTab(tab) {
 }
 
 function Profile() {
-    const [ tab, setTab ] = useState(() => {return 1});
+    const user = useUser();
+    const [ tab, setTab ] = useState(1);
 
-    return(
+    return user !== null ? 
         <div className="profileContainer">
             <div className="profileCard">
                 <div className="left">
                     <div className="profileAvatar">
                         <img className="avatarImage" src={avatar} alt="avatar"/>
                     </div>
-                    <p className="profileName"> Name </p>
+                    <p className="profileName"> {user.email} </p>
                     <p className="profileOccupation"> Occupation </p>
                     <p className="profileLocation"> Location </p>
                     <div className="profileConnectedAccounts">
@@ -49,6 +51,7 @@ function Profile() {
                 </div>
             </div>
         </div>
-    )
+    :
+        <h1>YOU NEED TO LOG IN TO VIEW YOUR PROFILE</h1>
 }
 export default Profile;
