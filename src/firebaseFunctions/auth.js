@@ -23,7 +23,9 @@ const actionCodeSettings = {
     handleCodeInApp: false,
 }
 
-export function firebaseRegister(fname, sname, email, pass) {
+export var firebaseRegister = function(fname, sname, email, pass) {
+    return new Promise(function(resolve, reject)
+    {
     let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
     recaptcha.verify().then(() => {
         //console.log("reCAPTCHA verified")
@@ -34,22 +36,23 @@ export function firebaseRegister(fname, sname, email, pass) {
             userCred.user.sendEmailVerification(actionCodeSettings).then(() => {
                 //console.log("Verification email sent");
                 recaptcha.clear();
-                return true
+                resolve(true)
             }).catch(error => {
                 //console.log("Send email verification error catch", error.code);
                 recaptcha.clear();
-                return error.code
+                reject(error.code);
             })
         }).catch(error => {
             //console.log("Create user error catch", error.code);
             recaptcha.clear();
-            return error.code
+            reject(error.code);
         })
     }).catch(error => {
         //console.log("Outermost verify error catch", error.code);
         recaptcha.clear();
-        return error.code
+        reject(error.code);
     })
+    });
 }
 
 export function firebaseRegularLogIn(email, pass) {

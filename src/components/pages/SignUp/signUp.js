@@ -36,26 +36,28 @@ function SignUp() {
       tos: tosChecked === false && "Please agree to the Terms of Service"
     })
     console.log(`First: ${fname}, Second: ${sname}, Email: ${email}, Password: ${password}, Checked: ${tosChecked}`)
-    let outcome = firebaseRegister(fname, sname, email, password);
-    //console.log("Outcome: ", outcome);
-    //Temp code to handle return
-    switch (outcome) {
-      case true:
-        //console.log("Register fully successful");
-        resetUsername();
-        resetFname();
-        resetSname();
-        resetEmail();
-        resetPassword();
-        setTosChecked(false);
-        history.push("/SignUpComplete");
-        break;
-      default:
-        //console.log("Default > Temp Error handling");
-        //Handle error
-        break;
-    }
-  }
+    firebaseRegister(fname, sname, email, password)
+      .then((outcome) => {
+        console.log("Outcome: ", outcome);
+        //Temp code to handle return
+        switch (outcome) {
+          case true:
+            //console.log("Register fully successful");
+            resetUsername();
+            resetFname();
+            resetSname();
+            resetEmail();
+            resetPassword();
+            setTosChecked(false);
+            history.push("/SignUpComplete");
+            break;
+          default:
+            //console.log("Default > Temp Error handling");
+            //Handle error
+            break;
+        }
+  })
+}
 
   return(
     <div className="signUpContainer">
