@@ -14,9 +14,15 @@ export function useUserSet() {
 export default function UserProvider({ children }) {
     const [ user, setUser ] = useState(null);
 
+    const updateUser = newUser => {
+        console.log(`User updated`);
+        console.log(newUser);
+        setUser(newUser);
+    }
+
     return (
         <UserContext.Provider value={user}>
-            <UserSetContext.Provider value={setUser}>
+            <UserSetContext.Provider value={updateUser}>
                 {children}
             </UserSetContext.Provider>
         </UserContext.Provider>

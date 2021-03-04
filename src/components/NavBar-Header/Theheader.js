@@ -16,7 +16,7 @@ function Theheader() {
                     <FontAwesomeIcon icon={['fas','bars']}/>
                     </span>
                 </div>
-                <div onClick={() => {window.location.href="/"}} className="logo"> ShowOfHands </div>
+                <Link to="/" className="logo"> ShowOfHands </Link>
                 <div className="search"><SearchBar/></div>
                 <div className="menuItems">
                     <li><Link to="/">Home</Link> </li>

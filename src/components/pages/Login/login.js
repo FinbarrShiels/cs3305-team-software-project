@@ -5,13 +5,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { firebaseTwitterLogIn, firebaseFacebookLogIn, firebaseGoogleLogIn, firebaseRegularLogIn } from '../../../firebaseFunctions/auth';
 import { useInput } from '../../../customHooks/form-input.js';
 import FormError from '../../formError';
+import { useHistory } from 'react-router-dom';
+import { useUserSet } from '../../../context/UserContext'
 
 function LogIn() {
   const [ formErrors, setFormErrors ] = useState(() => ({
     username: "",
     password: ""
   }))
-
+  
+  const history = useHistory();
+  const userSet = useUserSet();
+  
   const { value:username, bind:bindUsername, reset:resetUsername } = useInput('');
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput('');
 
@@ -19,13 +24,23 @@ function LogIn() {
     e.preventDefault();
     setFormErrors({
       ...formErrors,
-      username: username.trim() === "" && "Please enter your username",
-      password: password.trim() === "" && "Please enter your password"
+      username: username.trim() === "" ? "Please enter your username" : "",
+      password: password.trim() === "" ? "Please enter your password" : ""
     })
-    firebaseRegularLogIn(username, password);
-    alert(`DEBUG:\nUsername: ${username}, Password: ${password}`) 
-    resetUsername();
-    resetPassword();
+    if (formErrors.username === "" & formErrors.password === "") {
+      console.log(`Attempt login:\nUsername: ${username}, Password: ${password}`) 
+      firebaseRegularLogIn(username, password)
+      .then(userOBJ => {
+        console.log("Successful login!");
+        userSet({
+          email: userOBJ.email,
+          verified: userOBJ.emailVerified,
+          uid: userOBJ.uid,
+          anon: userOBJ.isAnonymous
+        })
+        history.push("/");
+      })
+    }
   }
 
   return(
