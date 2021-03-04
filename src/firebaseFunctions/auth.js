@@ -55,13 +55,15 @@ export var firebaseRegister = function(fname, sname, email, pass) {
     });
 }
 
-export function firebaseRegularLogIn(email, pass) {
-    auth.signInWithEmailAndPassword(email, pass)
-    .then(userCred => {
-            return userCred.user;
-        }).catch(error => {
-            return error.code
-        })
+export var firebaseRegularLogIn = function(email, pass) {
+    return new Promise(function(resolve, reject) {
+        auth.signInWithEmailAndPassword(email, pass)
+        .then(userCred => {
+                resolve(userCred.user);
+            }).catch(error => {
+                reject(error.code);
+            })})
+    
 }
 
 function addNewUserToFirestore(uid, fname, sname, email) {
@@ -75,41 +77,56 @@ function addNewUserToFirestore(uid, fname, sname, email) {
   
 }
 
-export function firebaseGoogleLogIn() {
-    let provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider)
-        .then((userCred) => {
-            addNewUserToFirestore(userCred.user.uid, userCred.user.email);
-            return userCred
-        }).catch((error) => {
-            return error.code;
-        });  
+export var firebaseGoogleLogIn= function() {
+    return new Promise(function(resolve, reject) {
+        let provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider)
+            .then((userCred) => {
+                addNewUserToFirestore(userCred.user.uid, userCred.user.email);
+                resolve(userCred);
+            }).catch((error) => {
+                reject(error.code);
+            });  
+
+    })
+    
 }
 
-export function firebaseTwitterLogIn() {
-    let provider = new firebase.auth.TwitterAuthProvider(); // this won't work until I sign up for developer account with Twitter
-    auth.signInWithPopup(provider)
-        .then((result) => {
-            addNewUserToFirestore(result.user.uid, result.user.email);
-            return result
-        }).catch((error) => {
-            return error.code;
-        });  
-}
-
-export function firebaseFacebookLogIn() {
-  let provider = new firebase.auth.FacebookAuthProvider(); // this won't work until I sign up for developer account with Facebook
+export var firebaseTwitterLogIn= function() {
+    return new Promise(function(resolve, reject){
+    let provider = new firebase.auth.TwitterAuthProvider(); 
     auth.signInWithPopup(provider)
         .then((result) => {
             addNewUserToFirestore(result.user.uid, result.user.email);
-            return result
+            resolve(result)
         }).catch((error) => {
-            return error.code;
-        });  
+            reject(error.code);
+        }); 
+    })
 }
 
-export function Logout() {
-    auth.signOut().catch(error => {
-        return error.code
+export var firebaseFacebookLogIn= function() {
+    return new Promise(function(resolve, reject){
+        let provider = new firebase.auth.FacebookAuthProvider();
+        auth.signInWithPopup(provider)
+        .then((result) => {
+            addNewUserToFirestore(result.user.uid, result.user.email);
+            resolve(result)
+        }).catch((error) => {
+            reject(error.code);
+        }); 
+
+    })
+}
+
+export var Logout= function() {
+    return new Promise(function(resolve, reject){
+        auth.signOut().then(() => {
+            resolve(true);
+        })
+        .catch(error =>{
+            reject(error.code);
+        })
+
     })
 }
