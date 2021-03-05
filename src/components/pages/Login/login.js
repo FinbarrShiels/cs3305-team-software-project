@@ -11,34 +11,52 @@ import { useUserSet } from '../../../context/UserContext'
 function LogIn() {
   const [ formErrors, setFormErrors ] = useState(() => ({
     username: "",
-    password: ""
+    password: "",
+    loginFail: ""
   }))
   
   const history = useHistory();
   const userSet = useUserSet();
   
-  const { value:username, bind:bindUsername, reset:resetUsername } = useInput('');
-  const { value:password, bind:bindPassword, reset:resetPassword } = useInput('');
+  const { value:username, bind:bindUsername, reset:resetUsername } = useInput("");
+  const { value:password, bind:bindPassword, reset:resetPassword } = useInput("");
+
+  const invalidDetails = () => {
+    setFormErrors({
+      loginFail: "Username or password was incorrect"
+    })
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors({
-      ...formErrors,
       username: username.trim() === "" ? "Please enter your username" : "",
       password: password.trim() === "" ? "Please enter your password" : ""
     })
-    if (formErrors.username === "" & formErrors.password === "") {
+    if (username.trim() !== "" & password.trim() !== "") {
       console.log(`Attempt login:\nUsername: ${username}, Password: ${password}`) 
       firebaseRegularLogIn(username, password)
-      .then(userOBJ => {
+      .then(userObj => {
         console.log("Successful login!");
         userSet({
-          email: userOBJ.email,
-          verified: userOBJ.emailVerified,
-          uid: userOBJ.uid,
-          anon: userOBJ.isAnonymous
+          email: userObj.email,
+          verified: userObj.emailVerified,
+          uid: userObj.uid,
+          anon: userObj.isAnonymous
         })
         history.push("/");
+      })
+      .catch(error => {
+        console.log(`LOGIN ERROR: ${error}`);
+        resetUsername();
+        resetPassword();
+        switch(error) {
+          case 'auth/invalid-email':
+            invalidDetails();
+            break;
+          default:
+            console.log("UNEXPECTED ERROR");
+        }
       })
     }
   }
@@ -65,6 +83,7 @@ function LogIn() {
             placeholder="Password"
             {...bindPassword} />
           <br/>
+          <FormError errorMsg={formErrors.loginFail}/>
           <input 
             className="submitButton"
             type="submit" 
