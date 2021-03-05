@@ -6,7 +6,6 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
-
 const firebaseConfig = {
   apiKey: "AIzaSyBsRA7R4Wbf_M2aKmJeDdf421UsSkVAT0g",
   authDomain: "project-970041699397464178.firebaseapp.com",
@@ -19,99 +18,115 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
-
-
-
-export function firebaseRegister(fname, sname, email, pass) {
-  const recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
-  recaptcha.verify().then(promise => {auth.createUserWithEmailAndPassword(email, pass)
-    .then(userCred => {
-        console.log(userCred.user.email, userCred.user.emailVerified);
-        addNewUserToFirestore(userCred.user.uid, fname, sname, userCred.user.email);
-        userCred.user.sendEmailVerification()
-          .then(() =>{
-            console.log('verifaction email sent');
-          })
-    }).catch(error => {
-        switch (error.code) {
-          case 'auth/email-already-in-use':
-            console.log(`Email address ${email} already in use.`);
-            break;
-          case 'auth/invalid-email':
-            console.log(`Email address ${email} is invalid.`);
-            break;
-          case 'auth/operation-not-allowed':
-            console.log(`Error during sign up.`);
-            break;
-          case 'auth/weak-password':
-            console.log('Password is not strong enough. Add additional characters including special characters and numbers.');
-            break;
-          default:
-            console.log(error.message);
-            break; 
-        }
-    })
-  })
-  
+const actionCodeSettings = {
+    url: "https://project-970041699397464178.web.app/Login",
+    handleCodeInApp: false,
 }
 
-export function firebaseRegularLogIn(email, pass) {
-  auth.signInWithEmailAndPassword(email, pass)
-  .then(userCred => {
-    let emailVerification = userCred.user.emailVerified;
-    console.log(`${userCred.user.email} is logged in` );
-    console.log(`Email address verified: ${emailVerification}` );
+export var firebaseRegister = function(fname, sname, email, pass) {
+    return new Promise(function(resolve, reject)
+    {
+    let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
+    recaptcha.verify().then(() => {
+        //console.log("reCAPTCHA verified")
+        auth.createUserWithEmailAndPassword(email, pass).then(userCred => {
+            //console.log("User created successfully");
+            //console.log(userCred.user.email, userCred.user.emailVerified);
+            addNewUserToFirestore(userCred.user.uid, fname, sname, userCred.user.email);
+            userCred.user.sendEmailVerification(actionCodeSettings).then(() => {
+                //console.log("Verification email sent");
+                recaptcha.clear();
+                resolve(true)
+            }).catch(error => {
+                //console.log("Send email verification error catch", error.code);
+                recaptcha.clear();
+                reject(error.code);
+            })
+        }).catch(error => {
+            //console.log("Create user error catch", error.code);
+            recaptcha.clear();
+            reject(error.code);
+        })
+    }).catch(error => {
+        //console.log("Outermost verify error catch", error.code);
+        recaptcha.clear();
+        reject(error.code);
+    })
+    });
+}
 
-  }).catch(error => {
-      console.log('incorrect email or password');
-
-  })
+export var firebaseRegularLogIn = function(email, pass) {
+    return new Promise(function(resolve, reject) {
+        auth.signInWithEmailAndPassword(email, pass)
+        .then(userCred => {
+                resolve(userCred.user);
+            }).catch(error => {
+                reject(error.code);
+            })})
+    
 }
 
 function addNewUserToFirestore(uid, fname, sname, email) {
+    console.log("Registering user:", uid, email);
     db.collection('users').doc(uid).set({ // the 'users/userID' in firestore will
     // later be used to track what elections a user has voted in, and the ones they've organised
       email: email,
       fname: fname,
       sname: sname
-    })
+    }).catch(error => {return error.code})
   
 }
 
+export var firebaseGoogleLogIn= function() {
+    return new Promise(function(resolve, reject) {
+        let provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider)
+            .then((userCred) => {
+                addNewUserToFirestore(userCred.user.uid, userCred.user.email);
+                resolve(userCred);
+            }).catch((error) => {
+                reject(error.code);
+            });  
 
-export function firebaseGoogleLogIn() {
-    let provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider)
-        .then((userCred) => {
-            addNewUserToFirestore(userCred.user.uid, userCred.user.email);
-            console.log(userCred.user.email);
-            console.log(`Email address verified: ${userCred.user.emailVerified}`);
-        }).catch((error) => {
-            console.log('fail');
-        });  
+    })
+    
 }
 
-export function firebaseTwitterLogIn() {
-    let provider = new firebase.auth.TwitterAuthProvider(); // this won't work until I sign up for developer account with Twitter
-    auth.signInWithPopup(provider)
-        .then((result) => {
-            addNewUserToFirestore(result.user.uid, result.user.email);
-        }).catch((error) => {
-            console.log('fail');
-        });  
-}
-
-export function firebaseFacebookLogIn() {
-  let provider = new firebase.auth.FacebookAuthProvider(); // this won't work until I sign up for developer account with Facebook
+export var firebaseTwitterLogIn= function() {
+    return new Promise(function(resolve, reject){
+    let provider = new firebase.auth.TwitterAuthProvider(); 
     auth.signInWithPopup(provider)
         .then((result) => {
             addNewUserToFirestore(result.user.uid, result.user.email);
+            resolve(result)
         }).catch((error) => {
-            console.log('fail');
-        });  
+            reject(error.code);
+        }); 
+    })
 }
 
-export function Logout() {
-    auth.signOut().catch(error => {console.log(error.message)});
-    console.log("Logged out");
+export var firebaseFacebookLogIn= function() {
+    return new Promise(function(resolve, reject){
+        let provider = new firebase.auth.FacebookAuthProvider();
+        auth.signInWithPopup(provider)
+        .then((result) => {
+            addNewUserToFirestore(result.user.uid, result.user.email);
+            resolve(result)
+        }).catch((error) => {
+            reject(error.code);
+        }); 
+
+    })
+}
+
+export var Logout= function() {
+    return new Promise(function(resolve, reject){
+        auth.signOut().then(() => {
+            resolve(true);
+        })
+        .catch(error =>{
+            reject(error.code);
+        })
+
+    })
 }

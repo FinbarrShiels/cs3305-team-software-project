@@ -27,6 +27,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    color: #fff;
 }
 
 .title img{
@@ -37,40 +38,41 @@
 }
 
 .loginFormInput{
-    color: #000;
+    background-color: #6a51ff;
+    outline: none;
+    border: none;
+    color: #fff;
     text-align: center;
     font-size: 15px;
     font-weight: 600;
     max-width:380px;
-    width: 100%;
-    height: 55px;
-    border-radius: 49px;
-    display: grid;
-    grid-template-columns: 15% 85%;
-    padding: 0 .4rem;
+    width: 60%;
+    height: 49px;
+    border-radius: 50px;
 }
 
-.btn{
-    width: 380px;
-    height: 49px;
-    border: none;
+
+.submitButton{
     outline: none;
-    border-radius: 49px;
+    width: 60%;
+    height: 49px;
     cursor: pointer;
-    background-color: grey;
-    color: white;
-    text-transform: uppercase;
     font-weight: 600;
     transition: 0.5s;
+    border-radius: 50px;
 }
 
-.btn:hover{
+.submitButton:hover{
     background-color: darkgrey;
 }
 
 .thirdPartyLogins{
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.loginOptionBreak{
+    margin-top: 20px;
 }
 
 .loginOptionBreak p{
@@ -126,13 +128,14 @@
 }
 
 .bottomOptionButtons{
-    /* margin-top: 10px; */
+
     display: flex;
     justify-content: center;
 
 }
 
 .bottomOptionButtons a{
+    color: #fff;
     display: inline-block;
     padding: 50px;
 }

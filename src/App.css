@@ -1,6 +1,7 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
   *{
     margin:0;
+    font-family: 'Poppins', sans-serif;
   }
   
 
@@ -19,5 +20,6 @@
   .body{
     text-align: center;
     padding-bottom: 80px;
+    overflow: hidden;
 
   }

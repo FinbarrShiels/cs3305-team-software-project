@@ -1,5 +1,4 @@
 import avatar from "../../Images/avatar.png";
-import TeamMemberCard from "../AboutUs/TeamMemberCard";
 import "./ResultProfile.css";
 
 function ProfileCard(props) {

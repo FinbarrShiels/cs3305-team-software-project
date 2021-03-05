@@ -12,7 +12,7 @@ nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  #justify-content: space-between;
   height: 80px;
   padding: 0 100px;
 }
@@ -31,6 +31,7 @@ nav {
   list-style: none;
   padding: 0 0 0 40px;
   flex:1;
+  justify-content: flex-end;
 }
 
 .menuItems li {
@@ -46,16 +47,25 @@ nav {
 .menuItems li a:hover {
   color: orange;
 }
-
-.SearchBar{
-  display: flex;
-  height: 40px;
-  background: bisque;
-  min-width: 18% !important;
-  border: 1px solid;
+.searchIcon{
+  width:40px;
+  color: #fff;
+  text-align: center;
+  margin: 0 10px;
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
 }
-
-.menuIcon, .searchIcon, .cancelIcon{
+.cancelIcon{
+  width:40px;
+  color: #fff;
+  text-align: center;
+  margin: 0 10px;
+  font-size: 18px;
+  cursor: pointer;
+  display: none;
+}
+.menuIcon{
   width:40px;
   color: #fff;
   text-align: center;
@@ -65,8 +75,63 @@ nav {
   display: none;
 }
 
-.menuIcon span, .searchIcon, .cancelIcon{
+.menuIcon span{
   display: none;
+}
+.search{
+  position: absolute;
+  top: 80px;
+  right:170px;
+  opacity: 0;
+  pointer-events: none;
+  transition: top 0.3s ease, opacity 0.1s ease;
+}
+.search.active{
+  opacity: 1;
+  top:95px;
+  pointer-events: auto;
+}
+
+.searchIcon{
+  display: block;
+}
+
+.searchIcon.hide{
+  display: none;
+}
+
+.cancelIcon.show{
+  display: block;
+}
+
+.loginButton {
+  color: #1BBAFf;
+  border: #fff solid 1px;
+  padding: 12px 24px;
+  #background-color: #1BBAFF;
+  border-radius: 8px;
+}
+
+.loginButton:hover {
+  color: #000;
+  background-color: #fff;
+}
+
+.loginButton:active{
+  background-color: #fff;
+}
+
+.signUpButton {
+  color: #1BBAFF;
+  border: #fff solid 1px;
+  padding: 12px 24px;
+  #background-color: #1BBAFF;
+  border-radius: 8px;
+}
+
+.signUpButton:hover {
+  color: #000;
+  background-color: #fff;
 }
 
 @media (max-width: 1200px){
@@ -96,6 +161,43 @@ nav {
     text-align: center;
     transition: left 0.3s ease;
 
+  }
+  .searchIcon{
+    width:40px;
+    color: #fff;
+    text-align: center;
+    margin: 0 50px;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+  }
+
+  .searchIcon{
+    width:40px;
+    color: #fff;
+    text-align: center;
+    margin: 0 50px;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+  }
+  .cancelIcon{
+    width:40px;
+    color: #fff;
+    text-align: center;
+    margin: 0 50px;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+  }
+  .menuIcon{
+    width:40px;
+    color: #fff;
+    text-align: center;
+    margin: 0 50px;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
   }
   .menuItems.active{
     left: 0%;
@@ -167,8 +269,6 @@ nav {
     display: block;
   }
 }
-
-
 
 
 

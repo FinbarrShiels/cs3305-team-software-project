@@ -1,31 +1,41 @@
-import './Theheader.css';
-import SearchBar from './SearchBar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './Theheader.css'
+import SearchBar from './SearchBar'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "./menuSelector.js"
+import { Link } from 'react-router-dom'
+import { useUser, useUserLogOut } from "../../context/UserContext"
 
 function Theheader() {
+
+    const user = useUser();
+    const userLogOut = useUserLogOut();
+
     return(
         <header>
             <nav>
-                <div class="menuIcon"><span>
+                <div className="menuIcon"><span>
                     <FontAwesomeIcon icon={['fas','bars']}/>
                     </span>
                 </div>
-                <div onClick={() => {window.location.href="/"}} class="logo"> ShowOfHands </div>
-                <div class="menuItems">
-                    <li><a href="/login"> Log In  </a></li>
-                    <li><a href="/signUp"> Sign Up </a></li>
-                    <li><a href="/AboutUs"> About Us  </a></li>
+                <Link to="/" className="logo"> ShowOfHands </Link>
+                <div className="search"><SearchBar/></div>
+                <div className="menuItems">
+                    <li><Link to="/">Home</Link> </li>
+                    {user !== null && <li><Link to="/profile"> Profile</Link></li>}
+                    <li><Link to="/voting"> Voting </Link></li>
+                    <li><Link to="/aboutUs"> About Us </Link></li>
+                    {user === null && <li><Link className="loginButton" to="/login">Log In</Link></li>}
+                    {user === null && <li><Link className="signUpButton" to="/signUp"> Sign Up </Link></li>}
+                    {user !== null && <li className="logOutButton" onClick={() => userLogOut()}> Log Out </li>}
                 </div>
-                <div class="searchIcon"><span>
+                <div className="searchIcon"><span>
                     <FontAwesomeIcon icon={['fas', 'search']}/>
                     </span>
                 </div>
-                <div class="cancelIcon"><span>
+                <div className="cancelIcon"><span>
                     <FontAwesomeIcon icon={['fas', 'times']}/>
                     </span>
                 </div>
-                <div class="search"><SearchBar/></div>
             </nav>
         </header>
     );

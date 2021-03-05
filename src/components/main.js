@@ -1,7 +1,7 @@
 import React from 'react';                            /*used instead of BrowserRouter to switch between pages */
 import { Switch, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage/LandingPage.js';
-import Anon from './pages/AnonymousVoting/AnonymousV.js';
+import AnonymousV from './pages/AnonymousVoting/AnonymousV.js';
 import Voting from './pages/Voting/Voting';
 import LogIn from './pages/Login/login';
 import signUp from './pages/SignUp/signUp';
@@ -13,6 +13,9 @@ import Profile from './pages/Profile/Profile';
 import ChangePassword from './pages/ChangePassword/ChangePassword';
 import ContactUs from './pages/ContactUs/ContactUs';
 import VotingAlt from "./pages/Voting/VotingAlt";
+import LatchPage from "./pages/latchPage";
+import PasswordChanged from "./pages/PasswordReset/PasswordChanged";
+import SignUpComplete from "./pages/SignUp/SignUpComplete";
 
 const Main = () => (
   <Switch>
@@ -24,11 +27,14 @@ const Main = () => (
     <Route path="/ForgotPassword" component={ForgotPassword} />
     <Route path="/RequestSent" component={RequestSent} />
     <Route path="/ChangePassword" component={ChangePassword} />
-    <Route path="/AnonymousV" component={Anon}/>
+    <Route path="/AnonymousV" component={AnonymousV}/>
     <Route path="/Search" component={Search}/>
     <Route path="/Profile" component={Profile}/>
     <Route path="/ContactUs" component={ContactUs}/>
     <Route path="/VotingAlt" component={VotingAlt}/>
+    <Route path="/latch" component={LatchPage}/>
+    <Route path="/PasswordChanged" component={PasswordChanged}/>
+    <Route path="/SignUpComplete" component={SignUpComplete}/>
   </Switch>
 )
 
