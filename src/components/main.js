@@ -32,7 +32,7 @@ const Main = () => (
     <Route path="/Profile" component={Profile}/>
     <Route path="/ContactUs" component={ContactUs}/>
     <Route path="/VotingAlt" component={VotingAlt}/>
-    <Route path="/latch" component={LatchPage}/>
+    <Route path="/latchPage" component={LatchPage}/>
     <Route path="/PasswordChanged" component={PasswordChanged}/>
     <Route path="/SignUpComplete" component={SignUpComplete}/>
   </Switch>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './signUp.css';
-import { firebaseRegister } from '../../../firebaseFunctions/auth';
+import {firebaseRegister, firebaseRegularLogIn} from '../../../firebaseFunctions/auth';
 import { useInput } from '../../../customHooks/form-input.js';
 import FormError from '../../formError';
 import { useHistory } from 'react-router-dom';
@@ -42,7 +42,8 @@ function SignUp() {
         //Temp code to handle return
         switch (outcome) {
           case true:
-            //console.log("Register fully successful");
+            console.log("Register fully successful");
+            firebaseRegularLogIn(email, password);
             resetUsername();
             resetFname();
             resetSname();
@@ -52,7 +53,8 @@ function SignUp() {
             history.push("/SignUpComplete");
             break;
           default:
-            //console.log("Default > Temp Error handling");
+            console.log("Default > Temp Error handling");
+            console.log("Outcome: >", outcome);
             //Handle error
             break;
         }
