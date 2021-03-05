@@ -130,3 +130,12 @@ export var Logout= function() {
 
     })
 }
+
+export function userState() {
+    if (auth.currentUser) {
+        return auth.currentUser
+    }
+    else {
+        return false
+    }
+}
