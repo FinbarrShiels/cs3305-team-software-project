@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react"
+import { useHistory } from "react-router";
 import { Logout } from "../firebaseFunctions/auth";
 
 const UserContext = React.createContext();
@@ -19,15 +20,17 @@ export function useUserLogOut() {
 
 export default function UserProvider({ children }) {
     const [ user, setUser ] = useState(null);
+    const history = useHistory();
 
     const userLogOut = () => {
         Logout()
         .then(() => {
             setUser(null);
             console.log("User successfully logged out")
+            history.push("/login")
         })
         .catch(error => {
-            console.log("Error logging out of firebase: ", error);
+            console.log("Error logging out of firebase: ", error)
         })
     }
 
