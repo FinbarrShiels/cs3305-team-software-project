@@ -3,11 +3,12 @@ import SearchBar from './SearchBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "./menuSelector.js"
 import { Link } from 'react-router-dom'
-import { useUser } from "../../context/UserContext"
+import { useUser, useUserLogOut } from "../../context/UserContext"
 
 function Theheader() {
 
     const user = useUser();
+    const userLogOut = useUserLogOut();
 
     return(
         <header>
@@ -16,7 +17,7 @@ function Theheader() {
                     <FontAwesomeIcon icon={['fas','bars']}/>
                     </span>
                 </div>
-                <div onClick={() => {window.location.href="/"}} className="logo"> ShowOfHands </div>
+                <Link to="/" className="logo"> ShowOfHands </Link>
                 <div className="search"><SearchBar/></div>
                 <div className="menuItems">
                     <li><Link to="/">Home</Link> </li>
@@ -25,6 +26,7 @@ function Theheader() {
                     <li><Link to="/aboutUs"> About Us </Link></li>
                     {user === null && <li><Link className="loginButton" to="/login">Log In</Link></li>}
                     {user === null && <li><Link className="signUpButton" to="/signUp"> Sign Up </Link></li>}
+                    {user !== null && <li className="logOutButton" onClick={() => userLogOut()}> Log Out </li>}
                 </div>
                 <div className="searchIcon"><span>
                     <FontAwesomeIcon icon={['fas', 'search']}/>

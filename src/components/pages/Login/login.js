@@ -5,27 +5,60 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { firebaseTwitterLogIn, firebaseFacebookLogIn, firebaseGoogleLogIn, firebaseRegularLogIn } from '../../../firebaseFunctions/auth';
 import { useInput } from '../../../customHooks/form-input.js';
 import FormError from '../../formError';
+import { useHistory } from 'react-router-dom';
+import { useUserSet } from '../../../context/UserContext'
 
 function LogIn() {
   const [ formErrors, setFormErrors ] = useState(() => ({
     username: "",
-    password: ""
+    password: "",
+    loginFail: ""
   }))
+  
+  const history = useHistory();
+  const userSet = useUserSet();
+  
+  const { value:username, bind:bindUsername, reset:resetUsername } = useInput("");
+  const { value:password, bind:bindPassword, reset:resetPassword } = useInput("");
 
-  const { value:username, bind:bindUsername, reset:resetUsername } = useInput('');
-  const { value:password, bind:bindPassword, reset:resetPassword } = useInput('');
+  const invalidDetails = () => {
+    setFormErrors({
+      loginFail: "Username or password was incorrect"
+    })
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormErrors({
-      ...formErrors,
-      username: username.trim() === "" && "Please enter your username",
-      password: password.trim() === "" && "Please enter your password"
+      username: username.trim() === "" ? "Please enter your username" : "",
+      password: password.trim() === "" ? "Please enter your password" : ""
     })
-    firebaseRegularLogIn(username, password);
-    alert(`DEBUG:\nUsername: ${username}, Password: ${password}`) 
-    resetUsername();
-    resetPassword();
+    if (username.trim() !== "" & password.trim() !== "") {
+      console.log(`Attempt login:\nUsername: ${username}, Password: ${password}`) 
+      firebaseRegularLogIn(username, password)
+      .then(userObj => {
+        console.log("Successful login!");
+        userSet({
+          email: userObj.email,
+          verified: userObj.emailVerified,
+          uid: userObj.uid,
+          anon: userObj.isAnonymous
+        })
+        history.push("/");
+      })
+      .catch(error => {
+        console.log(`LOGIN ERROR: ${error}`);
+        resetUsername();
+        resetPassword();
+        switch(error) {
+          case 'auth/invalid-email':
+            invalidDetails();
+            break;
+          default:
+            console.log("UNEXPECTED ERROR");
+        }
+      })
+    }
   }
 
   return(
@@ -50,6 +83,7 @@ function LogIn() {
             placeholder="Password"
             {...bindPassword} />
           <br/>
+          <FormError errorMsg={formErrors.loginFail}/>
           <input 
             className="submitButton"
             type="submit" 
