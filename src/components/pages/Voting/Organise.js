@@ -1,9 +1,12 @@
+import React from 'react';
+import "./Organise.css";
+import clipboard from "../../Images/clipboard.png";
 import { useState } from "react";
-import { CardTitle } from "react-mdl";
 import Switch from "react-switch";
 import { useInput } from "../../../customHooks/form-input"
 
-function OrganiseVote() {
+function Organise() {
+
     const { value:title, bind:bindTitle, reset:resetTitle } = useInput("");
     const { value:desc, bind:bindDesc, reset:resetDesc } = useInput("");
     const { value:startTime, bind:bindStartTime, reset:resetStartTime } = useInput("");
@@ -18,21 +21,14 @@ function OrganiseVote() {
     }
 
     return (
-        <div className="organiseVote">
-            <div className="left">
-                <h2>Organise your poll</h2>
-                {title}<br/>
-                {desc}<br/>
-                {anonChecked ? "Y" : "N"}<br/>
-                {startDate}<br/>
-                {startTime}<br/>
-                {endDate}<br/>
-                {endTime}
 
+        <div className="votingContainer">
+            <div className="leftTab">
+                <h2>Organise your <span>poll</span></h2>
                 <h4>Vote Code: <span className="voteCode">#SAMPLE</span></h4>
-                
+                <img src={clipboard} alt="img"/>
             </div>
-            <div className="right">
+            <div className="rightTab">
                 <form className="voteOptions" onSubmit={createVote}>
                     <label className="title">
                         Title:
@@ -56,13 +52,10 @@ function OrganiseVote() {
                         <input type="date" {...bindEndDate}/>
                         <input type="time" {...bindEndTime}/>
                     </label>
-                    <div className="invite">
-                        <button>Invite</button>
-                    </div>
                     <input type="submit" className="createVote" value="Create"/>
                 </form>
             </div>
         </div>
     )
 }
-export default OrganiseVote
+export default Organise;
