@@ -99,7 +99,6 @@ export function verifyResetCode(actionCode) {
 }
 export function recoverEmail(actionCode, continueURL) {}
 export function verifyEmail(actionCode, continueURL) {
-    alert("Called verifyEmail()");
     console.log("User: ", auth.currentUser);
     if (auth.currentUser != null) {
         auth.currentUser.sendEmailVerification(actionCodeSettings).then(() => {

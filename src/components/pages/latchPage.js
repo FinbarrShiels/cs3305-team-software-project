@@ -4,7 +4,6 @@ import {useHistory} from 'react-router-dom';
 function LatchPage() {
     const history = useHistory()
     document.addEventListener('DOMContentLoaded', () => {
-        alert("Latch page loaded");
         let values = handleUserParams()
         console.log("Values: ", values);
         let mode = values[0];
