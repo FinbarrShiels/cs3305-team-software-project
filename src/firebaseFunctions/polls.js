@@ -40,10 +40,12 @@ export function createPoll( name, description, anon, ) {
 
 }
 export function searchPoll(searchString) {
-    var results = []
-    var count = 0
-    db.collection('polls/').where('poll_name', '>=', searchString).where('poll_name', '<=', searchString+'~').get()
+    return new Promise((resolve, reject) => {
+        var results = []
+        var count = 0
+        db.collection('polls/').where('poll_name', '>=', searchString).where('poll_name', '<=', searchString+'~').get()
         .then((snapshot) =>{
+            console.log("AUTH-THEN")
             snapshot.docs.forEach(doc => {
                 var poll = {
                     type: doc.data().type,
@@ -56,8 +58,13 @@ export function searchPoll(searchString) {
                 }
                 count = count + 1;
                 results.push(poll);
-            });
+            })
+            resolve(results)
+        }).catch(error => {
+            console.log("AUTH-ERROR CATCH")
+            console.log(results)
+            reject(error)
         })
-    return results;
+    })
 }
 
