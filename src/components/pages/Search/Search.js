@@ -3,126 +3,8 @@ import "./Search.css";
 import { useState } from 'react'
 import { useInput } from '../../../customHooks/form-input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-const fakeResults = [
-  {
-    type: "vote",
-    data: {
-      title: "Some cool title",
-      organiser: "The man himself",
-      winner: "ME!",
-      voteCode: "gf7hd8"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "Another cool title",
-      organiser: "The woman herself",
-      winner: "them...",
-      voteCode: "sd4jh7"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "Definitely a cool title",
-      organiser: "No idea",
-      winner: "Doesn't matter",
-      voteCode: "odiuyg22"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "A vote for testing",
-      organiser: "Nobody",
-      winner: "I don't have to say it again",
-      voteCode: "1"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "A vote for testing",
-      organiser: "Nobody",
-      winner: "I don't have to say it again",
-      voteCode: "2"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "A vote for testing",
-      organiser: "Nobody",
-      winner: "I don't have to say it again",
-      voteCode: "3"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "A vote for testing",
-      organiser: "Nobody",
-      winner: "I don't have to say it again",
-      voteCode: "4"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "A vote for testing",
-      organiser: "Nobody",
-      winner: "I don't have to say it again",
-      voteCode: "5"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "A vote for testing",
-      organiser: "Nobody",
-      winner: "I don't have to say it again",
-      voteCode: "6"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "A vote for testing",
-      organiser: "Nobody",
-      winner: "I don't have to say it again",
-      voteCode: "7"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "A vote for testing",
-      organiser: "Nobody",
-      winner: "I don't have to say it again",
-      voteCode: "8"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "A vote for testing",
-      organiser: "Nobody",
-      winner: "I don't have to say it again",
-      voteCode: "9"
-    }
-  },
-  {
-    type: "vote",
-    data: {
-      title: "A vote for testing",
-      organiser: "Nobody",
-      winner: "I don't have to say it again",
-      voteCode: "10"
-    }
-  }
-]
+import { Link } from 'react-router-dom';
+import { searchPoll } from '../../../firebaseFunctions/polls'
 
 function Search() {
   
@@ -139,35 +21,41 @@ function Search() {
       // Wait for response from server with search results
       // Then use reducer to render components based on returned array of polls
       // pass result of query into reducer as payload
-      setTimeout(() => {
-        setResults(fakeResults)
-      }, 2000)
+      searchPoll(search)
+      .then(output => {
+        if (output.length !== 0) {
+          setSearchMsg("")
+          setResults(output)
+        }
+        else {
+          setSearchMsg("Nothing was found")
+        }
+      })
+      .catch(error => {
+        setSearchMsg("There was an error while searching, please try again")
+        console.log(error)
+      })
     }
     else {
-      console.log('Search field was empty')
+      setSearchMsg("Please give us something to search for")
     }
     resetSearch()
   }
   
   return(
     <div className="searchContainer" onSubmit={handleSearch}>
-        <div className="mainSearchBar">
-          <form className="searchBar">
-              <input type="search" placeholder="Search for a vote..." {...bindSearch}/>
-              <FontAwesomeIcon icon={['fas', 'search']} onClick={handleSearch}/>
-          </form>
-        </div>
+      <span className="searchMessage"> {searchMsg} </span>
+      <div className="mainSearchBar">
+        <form className="searchBar">
+            <input type="search" placeholder="Search for a vote..." {...bindSearch}/>
+            <FontAwesomeIcon icon={['fas', 'search']} onClick={handleSearch}/>
+        </form>
+        <Link to='/organise' className="organiseButton">Organise a Vote</Link>
+      </div>
       <div className="profileResultGrid">
-        {console.log("RESULTS:")}
-        {console.log(results)}
-        {
-        (results.length === 0) ?
-          <h2 className="searchMessage"> {searchMsg} </h2>
-        :
-          results.map(result => {
-            return <ResultVote key={result.data.voteCode} title={result.data.title} organiser={result.data.organiser} winner={result.data.winner}/>
-          })
-        }
+        {results.map(result => {
+        return <ResultVote key={result.data.voteCode} title={result.data.title} organiser={result.data.organiser} winner={result.data.winner}/>
+        })}
       </div>
     </div>
   )
