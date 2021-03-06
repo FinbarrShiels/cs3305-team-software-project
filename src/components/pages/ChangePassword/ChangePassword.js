@@ -3,6 +3,7 @@ import { useInput } from '../../../customHooks/form-input.js';
 import "./ChangePassword.css";
 import FormError from '../../formError';
 import { useHistory } from "react-router-dom"
+import {resetPassword} from "../../../firebaseFunctions/custom-landing";
 
 function ChangePassword() {
 
@@ -20,10 +21,18 @@ function ChangePassword() {
           password1: password1.trim() === "" && "Please enter a new password",
           password2: password2.trim() === "" && "Please confirm your password"
         })
-        alert(`Username: ${password1}, Password: ${password2}`) 
-        resetPassword1();
-        resetPassword2();
-        history.push("/PasswordChanged");
+        alert(`Username: ${password1}, Password: ${password2}`)
+        let actCode = new URL(document.URL).search.replace("?", "");
+        console.log("actCode: >", actCode, "<");
+        let r = resetPassword(actCode);
+        if (r) {
+            console.log("Password changed successfully");
+            resetPassword1();
+            resetPassword2();
+            history.push("/PasswordChanged");
+        } else {
+            console.log(r);
+        }
       }
     
     return (

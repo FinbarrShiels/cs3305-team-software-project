@@ -8,11 +8,8 @@ const actionCodeSettings = {
     handleCodeInApp: false
 }
 
-//Reset password from landing page is user has forgotten their password and cannot login
+//Reset password from landing page if user has forgotten their password and cannot login
 export function forgotPassword(email) {
-    //let signUpForm = document.querySelector('#regular')
-    //let email = signUpForm['resetEmail'].value;
-    //console.log(email);
     auth.sendPasswordResetEmail(email, actionCodeSettings)
     .catch(error => {
         switch (error.code) {
@@ -54,7 +51,7 @@ export function resetPassword() {
     // Not working
     console.log(provider);
     auth.signInWithPopup(provider).then(cred => {
-        user.reauthenticateWithCredential(cred.credential).then(r => {
+        user.reauthenticateWithCredential(cred.credential).then(() => {
             if (newPass === newPassConfirm) {
                 user.updatePassword("newPass").catch(error => {
                     switch (error.code) {

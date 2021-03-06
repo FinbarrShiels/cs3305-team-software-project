@@ -1,9 +1,9 @@
 import './Theheader.css'
-import SearchBar from './SearchBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "./menuSelector.js"
 import { Link } from 'react-router-dom'
 import { useUser, useUserLogOut } from "../../context/UserContext"
+import "../pages/Search/SearchBar.css"
 
 function Theheader() {
 
@@ -18,11 +18,16 @@ function Theheader() {
                     </span>
                 </div>
                 <Link to="/" className="logo"> ShowOfHands </Link>
-                <div className="search"><SearchBar/></div>
+                <div className="search">
+                    <div className="searchBar">
+                        <input type="search" placeholder="Search by Name..."/>
+                        <a href="/Search"><FontAwesomeIcon icon={['fas', 'search']}/></a>
+                    </div>
+                </div>
                 <div className="menuItems">
                     <li><Link to="/">Home</Link> </li>
                     {user !== null && <li><Link to="/profile"> Profile</Link></li>}
-                    <li><Link to="/voting"> Voting </Link></li>
+                    <li><Link to="/search"> Voting </Link></li>
                     <li><Link to="/aboutUs"> About Us </Link></li>
                     {user === null && <li><Link className="loginButton" to="/login">Log In</Link></li>}
                     {user === null && <li><Link className="signUpButton" to="/signUp"> Sign Up </Link></li>}
