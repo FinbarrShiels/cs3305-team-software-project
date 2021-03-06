@@ -1,52 +1,124 @@
 .votingContainer{
-    padding: 10px;
-}
-
-.tabContainer{
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
-    align-content: center;
     justify-content: center;
+    align-content: center;
     padding: 10px;
-    text-decoration: none;
-}
-.organiser, .candidate, .voter{
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    margin: 5px;
-    width: 200px;
-    box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
-    color: #fff;
-    cursor: pointer;
-
 }
 
-.informationContainer{
+.voteSections{
     background-color: #203079;
-    padding: 2em 2em 3em;
+    padding: 2em 2em 2em 2em;
     display: flex;
     box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
     border-radius: 25px;
+    max-width: 1200px;
 }
 
-.activeSelector h2{
+.rightTab{
+    display: flex;
+    flex: 70%;
+    padding: 10px;
+}
+
+.leftTab{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex: 30%;
+    padding: 10px;
+
+}
+.voteOptions{
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    height: 300px;
+}
+
+
+.voteOptions label{
+    margin-right: 5px;
+    font-size: 18px;
+    font-weight: 500;
+}
+.title{
+    flex-basis: 50%;
+    display: block;
+}
+
+.title input{
+    background-color: #1F3079;
+    border: 2px solid #4440bc ;
+    border-radius: 10px;
     color: #fff;
 }
 
-.activeSelector h2 span{
-    color: #1BBAFF;
+.desc{
+    flex-basis: 50%;
 }
 
-.activeSelector img{
-    height: 200px;
+.desc input{
+    background-color: #1F3079;
+    border: 2px solid #4440bc ;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.anonToggle{
+    flex-basis: 100%;
+}
+
+.anonToggle switch{
+    margin-top: 5px;
+}
+
+.scheduleStart{
+    flex-basis: 50%;
+}
+.scheduleStart input{
+    background-color: #1F3079;
+    border: 2px solid #4440bc ;
+    border-radius: 10px;
+    color: #fff;
+}
+
+
+.scheduleEnd{
+    flex-basis: 50%;
+}
+
+.scheduleEnd input{
+    background-color: #1F3079;
+    border: 2px solid #4440bc ;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.createVote{
+    flex-basis: 100%;
+    align-items: baseline;
+}
+
+.createVote input{
+    background-color: #6951FF;
+    color: #fff;
+    border-radius: 8px;
+}
+
+
+.leftTab img{
     width: 200px;
+    height: 200px;
 }
 
 
-@media screen and (max-width: 800px){
-    .tabContainer{
+@media screen and (max-width: 990px){
+    .voteSections{
         display: inline-block;
         position: relative;
     }

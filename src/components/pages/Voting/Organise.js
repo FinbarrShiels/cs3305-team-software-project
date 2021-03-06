@@ -25,37 +25,40 @@ function Organise() {
     return (
 
         <div className="votingContainer">
+            <div className="voteSections">
             <div className="leftTab">
                 <h2>Organise your <span>poll</span></h2>
-                <h4>Vote Code: <span className="voteCode">#SAMPLE</span></h4>
                 <img src={clipboard} alt="img"/>
             </div>
             <div className="rightTab">
                 <form className="voteOptions" onSubmit={createVote}>
-                    <label className="title">
-                        Title:
+                    <div className="title">
+                    <label>Title:</label>
                         <input type="text" {...bindTitle}/>
-                    </label>
-                    <label className="desc">
-                        Description:
-                        <textarea {...bindDesc}/>
-                    </label>
-                    <label className="anonToggle">
-                        Allow Anonymous Voters:
+                    </div>
+                    <div className="desc" >
+                        <label>Description:</label>
+                        <input type="text" {...bindDesc}/>
+                    </div>
+                    <div className="anonToggle" >
+                    <label>Allow Anonymous Voters:</label>
                         <Switch checked={anonChecked} onChange={setAnonChecked}/>
-                    </label>
-                    <label className="scheduleStart">
-                        Start:
+                    </div>
+                    <div className="scheduleStart">
+                    <label >Start:</label>
                         <input type="date" {...bindStartDate}/>
                         <input type="time" {...bindStartTime}/>
-                    </label>
-                    <label className="scheduleEnd">
-                        End:
+                    </div>
+                    <div className="scheduleEnd">
+                    <label>End:</label>
                         <input type="date" {...bindEndDate}/>
                         <input type="time" {...bindEndTime}/>
-                    </label>
-                    <input type="submit" className="createVote" value="Create"/>
+                    </div>
+                    <div className="createVote">
+                    <input type="submit" value="Create"/>
+                    </div>
                 </form>
+            </div>
             </div>
         </div>
     )
