@@ -23,6 +23,8 @@ function LogIn() {
 
   const invalidDetails = () => {
     setFormErrors({
+      username: "",
+      password: "",
       loginFail: "Username or password was incorrect"
     })
   }
