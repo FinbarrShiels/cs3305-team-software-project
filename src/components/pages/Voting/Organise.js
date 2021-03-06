@@ -4,6 +4,7 @@ import clipboard from "../../Images/clipboard.png";
 import { useState } from "react";
 import Switch from "react-switch";
 import { useInput } from "../../../customHooks/form-input"
+import {createPoll} from "../../../firebaseFunctions/polls";
 
 function Organise() {
 
@@ -18,6 +19,7 @@ function Organise() {
     const createVote = (e) => {
         e.preventDefault();
         console.log("Creating vote with the following options:")
+        createPoll(title, desc, anonChecked);
     }
 
     return (
