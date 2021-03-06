@@ -1,0 +1,19 @@
+.searchBar{
+    padding: 12px 48px;
+    background-color: #1A2A6C;
+    border-radius: 50px;
+    border: 2px solid #02b9d2;
+}
+
+.searchBar input[type=search] {
+    background-color: #1A2A6C;
+    border: none;
+    font-size: 17px;
+    margin-right: 5px;
+    color: #fff;
+    outline: none;
+}
+
+::placeholder{
+    color: #29649f;
+}

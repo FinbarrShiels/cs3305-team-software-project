@@ -22,7 +22,7 @@ function Theheader() {
                 <div className="menuItems">
                     <li><Link to="/">Home</Link> </li>
                     {user !== null && <li><Link to="/profile"> Profile</Link></li>}
-                    <li><Link to="/voting"> Voting </Link></li>
+                    <li><Link to="/search"> Voting </Link></li>
                     <li><Link to="/aboutUs"> About Us </Link></li>
                     {user === null && <li><Link className="loginButton" to="/login">Log In</Link></li>}
                     {user === null && <li><Link className="signUpButton" to="/signUp"> Sign Up </Link></li>}
