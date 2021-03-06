@@ -1,7 +1,6 @@
-import ResultProfile from './ResultProfile';
 import ResultVote from './ResultVote';
 import "./Search.css";
-import { useReducer, useState } from 'react'
+import { useState } from 'react'
 import { useInput } from '../../../customHooks/form-input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -125,22 +124,11 @@ const fakeResults = [
   }
 ]
 
-// const ACTIONS = {
-//   ADD_RESULT: 'add_result'
-// }
-
-// function reducer(results, action) {
-//   console.log(results)
-//   console.log(`Action type: ${action.type}`)
-//   console.log(`Payload: ${action.payload}`)
-//   return results
-// }
-
 function Search() {
   
   const [ results, setResults ] = useState([])
   const { value:search, bind:bindSearch, reset:resetSearch } = useInput('')
-  const [ searchMsg, setSearchMsg ] = useState('')
+  const [ searchMsg, setSearchMsg ] = useState('Type in the seach box and click the search icon, or press enter!')
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -174,7 +162,7 @@ function Search() {
         {console.log(results)}
         {
         (results.length === 0) ?
-          <h2> {searchMsg} </h2>
+          <h2 className="searchMessage"> {searchMsg} </h2>
         :
           results.map(result => {
             return <ResultVote key={result.data.voteCode} title={result.data.title} organiser={result.data.organiser} winner={result.data.winner}/>
