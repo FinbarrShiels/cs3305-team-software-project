@@ -15,10 +15,6 @@ function Theheader() {
                 <div onClick={() => {window.location.href="/"}} className="logo"> ShowOfHands </div>
                 <div className="search"><SearchBar/></div>
                 <div className="menuItems">
-                    <li><Link to="/">Home</Link> </li>
-                    <li><Link to="/profile"> Profile</Link></li>
-                    <li><Link to="/voting"> Voting </Link></li>
-                    <li><Link to="/aboutUs"> About Us </Link></li>
                     <li><Link className="loginButton" to="/login">Log In</Link></li>
                     <li><Link className="signUpButton" to="/signUp"> Sign Up </Link></li>
                 </div>
