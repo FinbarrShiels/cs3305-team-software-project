@@ -18,7 +18,7 @@ function Theheader() {
                     </span>
                 </div>
                 <Link to="/" className="logo">  
-                <svg version="1.1" width="75px" height="75px" viewBox="0 0 131.65 149.04" xmlns="http://www.w3.org/2000/svg">
+                <svg version="1.1" width="60px" height="60px" viewBox="0 0 131.65 149.04" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="linearGradient882" x1="79.005" x2="42.256" y1="207.72" y2="77.062" gradientUnits="userSpaceOnUse">
                         <stop stop-color="#0ff" offset="0"/>
