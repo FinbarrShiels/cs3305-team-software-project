@@ -17,7 +17,22 @@ function Theheader() {
                     <FontAwesomeIcon icon={['fas','bars']}/>
                     </span>
                 </div>
-                <Link to="/" className="logo"> ShowOfHands </Link>
+                <Link to="/" className="logo">  
+                <svg version="1.1" viewBox="0 0 131.65 149.04" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="linearGradient882" x1="79.005" x2="42.256" y1="207.72" y2="77.062" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#0ff" offset="0"/>
+                        <stop stop-color="#00f" offset="1"/>
+                        </linearGradient>
+                    </defs>
+                    <g transform="translate(-39.173 -73.98)" fill="none" stroke="url(#linearGradient882)" stroke-dashoffset="83.896" stroke-linecap="square" stroke-linejoin="round" stroke-miterlimit="3.8">
+                        <rect x="42.256" y="77.062" width="125.49" height="142.88" ry="6.4256" opacity=".997" stroke-width="6.166"/>
+                        <rect x="52.607" y="127.57" width="26.398" height="80.15" rx="1.1909" ry="0" opacity=".997" stroke-width="5.0274"/>
+                        <rect x="91.99" y="97.237" width="26.398" height="110.58" rx="1.1909" ry="0" opacity=".997" stroke-width="5.905"/>
+                        <rect x="131" y="151.01" width="26.398" height="56.42" rx="1.1909" ry="0" opacity=".997" stroke-width="4.218"/>
+                    </g>
+                </svg>
+                ShowOfHands </Link>
                 {/* <div className="search">
                     <div className="searchBar">
                         <input type="search" placeholder="Search by Name..."/>
