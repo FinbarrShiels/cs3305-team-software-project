@@ -36,7 +36,7 @@ function Profile() {
                         <div className="profileAvatar">
                             <img className="avatarImage" src={avatar} alt="avatar"/>
                         </div>
-                        <p className="profileName"> Name </p>
+                        <p className="profileName"> {user.email} </p>
                         <p className="profileOccupation"> Occupation </p>
                         <p className="profileLocation"> Location </p>
                         <div className="profileConnectedAccounts">
