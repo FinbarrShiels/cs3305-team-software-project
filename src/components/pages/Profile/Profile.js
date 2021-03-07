@@ -64,9 +64,10 @@ function Profile() {
                         <div className="profileAvatar">
                             <img className="avatarImage" src={avatar} alt="avatar"/>
                         </div>
-                        <p className="profileName"> {user.email} </p>
-                        <p className="profileOccupation"> Occupation </p>
-                        <p className="profileLocation"> Location </p>
+                        <p className="profileName"> {`${user.fname} ${user.sname}`} </p>
+                        <p className="profileEmail"> {user.email} </p>
+                        {/* <p className="profileOccupation"> Occupation </p>
+                        <p className="profileLocation"> Location </p> */}
                         <div className="profileConnectedAccounts">
                             <FontAwesomeIcon className="twitter" icon={['fab', 'twitter']}/>
                             <FontAwesomeIcon className="linkedIn" icon={['fab', 'linkedin']}/>

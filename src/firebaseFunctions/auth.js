@@ -57,29 +57,29 @@ export var firebaseRegister = function(fname, sname, email, pass) {
 
 export var firebaseRegularLogIn = function(email, pass) {
     return new Promise(function(resolve, reject) {
-        var returnValue = {
-            user: 0,
-            customData: 0
-        };
         auth.signInWithEmailAndPassword(email, pass)
         .then(userCred => {
-            returnValue.user = userCred.user;
-            var ref = db.doc('users/'+auth.currentUser.uid);
+            let auth_user = userCred.user
+            var ref = db.doc('users/'+auth.currentUser.uid)
             ref.get()
-                .then((userDoc) => {
-                    var customData = {
-                        email: userDoc.data().email,
-                        name: userDoc.data().fname + " " + userDoc.data().sname,
-                        bio: userDoc.data().bio
-                    }
-                    returnValue.customData = customData;    
+            .then((userDoc) => {
+                resolve({
+                    username: auth_user.displayName,
+                    email: auth_user.email,
+                    uid: auth_user.uid,
+                    verified: auth_user.emailVerified,
+                    fname: userDoc.data().fname,
+                    sname: userDoc.data().sname,
+                    bio: userDoc.data().bio
                 })
-            console.log(returnValue);
-            resolve(returnValue);
-            }).catch(error => {
-                reject(error.code);
-            })})
-    
+            })
+            .catch(error => {
+                console.log('Error getting userDocs')
+                console.log(error)
+            })
+        }).catch(error => {
+            reject(error.code);
+        })})
 }
 
 function addNewUserToFirestore(uid, fname, sname, email) {

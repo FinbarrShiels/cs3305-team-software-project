@@ -45,7 +45,8 @@ function LogIn() {
           email: userObj.email,
           verified: userObj.emailVerified,
           uid: userObj.uid,
-          anon: userObj.isAnonymous
+          fname: userObj.fname,
+          sname: userObj.sname
         })
         history.push("/");
       })
