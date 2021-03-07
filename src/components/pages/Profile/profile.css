@@ -21,7 +21,6 @@
     display: flex;
     align-items: center;
     flex: 50%;
-    #padding: 10px;
     margin: 0;
     border-radius: 25px;
     border: 2px solid #02b9d2;
@@ -40,8 +39,8 @@
 }
 
 .avatarImage{
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
 }
 .profileName{
     margin-top: 10px;
@@ -94,46 +93,40 @@
     list-style: none;
 }
 
-.button{
-    color: #fff;
-    font-size: 18px;
-    padding: 6px 12px;
-    border: none;
-    text-decoration: none;
-    background: transparent;
-    cursor: pointer;
-}
 .buttonBio{
+    padding: 12px 24px;
     text-decoration:none;
+    border: none;
     color:#FFF;
     text-align:center;
     cursor: pointer;
-    #border: #fff solid 1px;
-}
-
-.button.active{
-    padding: 12px 24px;
-    border: #02b9d2 solid 1px;
-    border-radius: 25px;
+    background-color: #203079;
+    outline: 0;
 }
 
 .buttonElection{
+    padding: 12px 24px;
     text-decoration:none;
+    border: none;
     color:#FFF;
     text-align:center;
     cursor: pointer;
-    #border: #fff solid 1px;
-
-
+    background-color: #203079;
+    outline: 0;
 }
 
 
-.buttonElection.active{
+
+.buttonInvites{
     padding: 12px 24px;
-    border: #02b9d2 solid 1px;
-    border-radius: 25px;
+    text-decoration:none;
+    border: none;
+    color:#FFF;
+    text-align:center;
+    cursor: pointer;
+    background-color: #203079;
+    outline: 0;
 }
-
 
 
 @media screen and (max-width: 900px){
@@ -142,12 +135,4 @@
         position: relative;
         max-width: 500px;
     }
-}
-
-/* Edit Bio */
-
-.editBio{
-    margin-top: 10px;
-    border-radius: 8px;
-    padding: 5px;
 }

@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import Elections from "./Elections"
 import Invites from "./Invites"
 import Bio from "./Bio"
-import "./activeButton"
+import "./activeButton.js"
 import { useUser } from '../../../context/UserContext'
 import { pollsForUser } from '../../../firebaseFunctions/polls'
 import { getBio, setBio } from '../../../firebaseFunctions/profile'
@@ -78,9 +78,9 @@ function Profile() {
                     <div className="right">
                         <div className="tabOptions">
                             <div className="buttonContainer">
-                                <button className="button" onClick={() => {setTab(1)}}> Invites </button>
-                                <button className="button" onClick={() => {setTab(2)}}> Elections </button>
-                                <button className="button" onClick={() => {setTab(3)}}> Bio </button>
+                                <button className="buttonInvites" onClick={() => {setTab(1)}}> Invites </button>
+                                <button className="buttonElection" onClick={() => {setTab(2)}}> Elections </button>
+                                <button className="buttonBio" onClick={() => {setTab(3)}}> Bio </button>
                             </div>
                         </div>
                         {currentTab(tab)}
