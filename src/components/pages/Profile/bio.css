@@ -1,0 +1,17 @@
+.bioTab textarea{
+    max-height: 200px;
+    max-width: 300px;
+}
+.bioTab input[type=submit]{
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.tabHeading{
+    color: #fff;
+}
+
+.editBio{
+    border-radius: 8px;
+    padding: 3px;
+}
