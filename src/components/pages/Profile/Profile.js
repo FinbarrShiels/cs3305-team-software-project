@@ -6,19 +6,24 @@ import Elections from "./Elections";
 import Invites from "./Invites";
 import Bio from "./Bio";
 
-function currentTab(tab) {
-    switch(tab) {
-        case 1:
-            return <Invites/>
-        case 2:
-            return <Elections/>
-        default:
-            return <Bio/>
-    }
-}
-
 function Profile() {
+    
+    const [ savedBio, setSavedBio ] = useState('')
     const [ tab, setTab ] = useState(() => {return 1});
+    const currentTab = tab => {
+        switch(tab) {
+            case 1:
+                return <Invites/>
+            case 2:
+                return <Elections/>
+            case 3:
+                return <Bio currentBio={savedBio} saveBio={setSavedBio}/>
+            default:
+                return <div>TAB ERROR</div>
+        }
+    }
+
+
 
     return(
         <div className="profileContainer">
