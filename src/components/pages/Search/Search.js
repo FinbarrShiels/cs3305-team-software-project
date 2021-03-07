@@ -16,7 +16,6 @@ function Search() {
     e.preventDefault()
     let trimmedSearch = search.trim()
     if (trimmedSearch !== '') {
-      console.log(`SEARCHING: ${trimmedSearch}`)
       setSearchMsg("Searching...")
       // Wait for response from server with search results
       // Then use reducer to render components based on returned array of polls

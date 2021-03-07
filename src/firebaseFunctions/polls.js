@@ -45,7 +45,6 @@ export function searchPoll(searchString) {
         var count = 0
         db.collection('polls/').where('poll_name', '>=', searchString).where('poll_name', '<=', searchString+'~').get()
         .then((snapshot) =>{
-            console.log("AUTH-THEN")
             snapshot.docs.forEach(doc => {
                 var poll = {
                     type: doc.data().type,
@@ -61,8 +60,6 @@ export function searchPoll(searchString) {
             })
             resolve(results)
         }).catch(error => {
-            console.log("AUTH-ERROR CATCH")
-            console.log(results)
             reject(error)
         })
     })
