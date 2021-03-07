@@ -9,24 +9,28 @@ function Elections(props) {
             ?
             <div className="electionList">
                 <table>
-                    <tr>
-                        <th> Type </th>
-                        <th> Title </th>
-                        <th> Winner </th>
-                        <th> Status </th>
-                        {/* <th> Start Date </th> */}
-                    </tr>
-                    {props.currentElections.map(election => {
-                        return (
-                            <tr className="electionItem">
-                                <td className="type"> {election.type} </td>
-                                <td className="title">{election.data.title} </td>
-                                <td className="winner"> {election.data.winner} </td>
-                                <td className="status"> {election.data.open ? "Open" : "Closed"} </td>
-                                {/* Should include start date of the poll */}
-                            </tr>
-                        )
-                    })}
+                    <thead>
+                        <tr>
+                            <th> Type </th>
+                            <th> Title </th>
+                            <th> Winner </th>
+                            <th> Status </th>
+                            {/* <th> Start Date </th> */}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {props.currentElections.map(election => {
+                            return (
+                                <tr className="electionItem">
+                                    <td className="type"> {election.type} </td>
+                                    <td className="title">{election.data.title} </td>
+                                    <td className="winner"> {election.data.winner} </td>
+                                    <td className="status"> {election.data.open ? "Open" : "Closed"} </td>
+                                    {/* Should include start date of the poll */}
+                                </tr>
+                            )
+                        })}
+                    </tbody>
                 </table>
             </div>
             :

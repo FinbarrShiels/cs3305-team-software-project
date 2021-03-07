@@ -5,16 +5,21 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 export function getBio() {
-    ref = db.doc("/users/"+auth.currentUser.uid);
-    ref.get()
+    return new Promise((resolve, reject) => {
+        let ref = db.doc("/users/"+auth.currentUser.uid);
+        ref.get()
         .then((userProfile) => {
-            return userProfile.data().bio
+            resolve(userProfile.data().bio)
         })
+        .catch(error => {
+            reject(error)
+        })
+    })
 
 }
 
 export function setBio(newBio) {
-    ref = db.doc("/users/"+auth.currentUser.uid);
+    let ref = db.doc("/users/"+auth.currentUser.uid);
     ref.update({
         bio: newBio
     });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./profile.css"
 import avatar from '../../Images/avatar.png'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
@@ -8,6 +8,7 @@ import Bio from "./Bio"
 import "./activeButton"
 import { useUser } from '../../../context/UserContext'
 import { pollsForUser } from '../../../firebaseFunctions/polls'
+import { getBio, setBio } from '../../../firebaseFunctions/profile'
 
 function Profile() {
     
@@ -23,8 +24,21 @@ function Profile() {
             console.log(error)
         })
     }
+    const getCurrentBio = () => {
+        getBio()
+        .then(currentBio => {
+            setSavedBio(currentBio)
+        })
+        .catch(error => {
+            console.log("there was an error while getting the bio")
+        })
+    }
+    const saveNewBio = newBio => {
+        setSavedBio(newBio)
+        setBio(newBio)
+    }
     const [ savedElections, setSavedElections ] = useState(() => getUserElections())
-    const [ savedBio, setSavedBio ] = useState('')
+    const [ savedBio, setSavedBio ] = useState(() => getCurrentBio())
     const [ electionMsg, setElectionMsg ] = useState('')
     const [ bioMsg, setBioMsg ] = useState('')
     const [ inviteMsg, setInviteMsg ] = useState('')
@@ -36,7 +50,7 @@ function Profile() {
             case 2:
                 return <Elections currentElections={savedElections} message={electionMsg}/>
             case 3:
-                return <Bio currentBio={savedBio} saveBio={setSavedBio} message={bioMsg}/>
+                return <Bio currentBio={savedBio} saveBio={saveNewBio} message={bioMsg}/>
             default:
                 return <h3> Sorry, something went wrong while changing tabs. Please refresh the page and try again. </h3>
         }
