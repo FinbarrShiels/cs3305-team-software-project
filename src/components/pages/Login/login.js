@@ -41,6 +41,7 @@ function LogIn() {
       .then(userObj => {
         console.log("Successful login!")
         userSet({
+          username: userObj.displayName,
           email: userObj.email,
           verified: userObj.emailVerified,
           uid: userObj.uid,
