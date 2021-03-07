@@ -1,7 +1,8 @@
 function Invites() {
     return (
         <div>
-            <h2>Invites</h2>
+            <h3>Invites</h3>
+            <p> ---- NOT IMPLEMENTED YET ---- </p>
         </div>
     )
 }

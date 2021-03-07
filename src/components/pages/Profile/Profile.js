@@ -7,10 +7,111 @@ import Invites from "./Invites"
 import Bio from "./Bio"
 import "./activeButton"
 import { useUser } from '../../../context/UserContext'
+import { pollsForUser } from '../../../firebaseFunctions/polls'
+
+// const fakeElections = [
+//     {
+//         type: "poll",
+//         data: {
+//             anonymousVoting: true,
+//             description: "I think it works",
+//             open: true,
+//             organiser: "Diarmuid Mckenna",
+//             owners: [
+//                 "bABFYblkaWWYgSJny11ygYkv1oR2"
+//             ],
+//             poll_name: "Test Poll: 1",
+//             winner: "None" 
+//         }       
+//     },
+//     {
+//         type: "election",
+//         data: {
+//             anonymousVoting: true,
+//             description: "Yep its working",
+//             open: true,
+//             organiser: "Luke Tynan",
+//             owners: [
+//                 "bABFYblkaWWYgSJny11ygYkv1oR2"
+//             ],
+//             poll_name: "Test Poll: 2",
+//             winner: "None"
+//         }       
+//     },
+//     {
+//         type: "poll",
+//         data: {
+//             anonymousVoting: true,
+//             description: "Its working alright",
+//             open: true,
+//             organiser: "Luke Tynan",
+//             owners: [
+//                 "bABFYblkaWWYgSJny11ygYkv1oR2"
+//             ],
+//             poll_name: "Test Poll: 3",
+//             winner: "None"
+//         }       
+//     },
+//     {
+//         type: "poll",
+//         data: {
+//             anonymousVoting: true,
+//             description: "Its definitely working",
+//             open: true,
+//             organiser: "Luke Tynan",
+//             owners: [
+//                 "bABFYblkaWWYgSJny11ygYkv1oR2"
+//             ],
+//             poll_name: "Test Poll: 4",
+//             winner: "None"
+//         }       
+//     },
+//     {
+//         type: "poll",
+//         data: {
+//             anonymousVoting: true,
+//             description: "Is it working?",
+//             open: true,
+//             organiser: "Luke Tynan",
+//             owners: [
+//                 "bABFYblkaWWYgSJny11ygYkv1oR2"
+//             ],
+//             poll_name: "Test Poll: 5",
+//             winner: "None"
+//         }       
+//     },
+//     {
+//         type: "election",
+//         data: {
+//             anonymousVoting: true,
+//             description: "i hope",
+//             open: true,
+//             organiser: "Luke Tynan",
+//             owners: [
+//                 "bABFYblkaWWYgSJny11ygYkv1oR2"
+//             ],
+//             poll_name: "Test Poll: 6",
+//             winner: "None"
+//         }       
+//     }
+// ]
 
 function Profile() {
     
     const user = useUser()
+    const getUserElections = () => {
+        pollsForUser()
+        .then(userPolls => {
+            console.log('Completed GET')
+            console.log(userPolls)
+            setSavedElections(userPolls)
+        })
+        .catch(error => {
+            console.log('Failed GET')
+            console.log(error)
+        })
+    }
+    const [ savedElections, setSavedElections ] = useState(() => getUserElections())
     const [ savedBio, setSavedBio ] = useState('')
     const [ tab, setTab ] = useState(() => {return 1});
     const currentTab = tab => {
@@ -18,15 +119,13 @@ function Profile() {
             case 1:
                 return <Invites/>
             case 2:
-                return <Elections/>
+                return <Elections currentElections={savedElections}/>
             case 3:
                 return <Bio currentBio={savedBio} saveBio={setSavedBio}/>
             default:
                 return <div>TAB ERROR</div>
         }
     }
-
-
 
     return(
         user !== null ? (
@@ -61,7 +160,7 @@ function Profile() {
         )
         :
         (
-            <h1>YOU MUST LOG IN FIRST</h1>
+            <h1> YOU MUST LOG IN FIRST </h1>
         )
     )
 }
