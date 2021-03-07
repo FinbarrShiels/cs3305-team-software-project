@@ -1,4 +1,4 @@
-if (window.location.pathname === "src/components/pages/Profile/ProfileCard.js"){
+if (window.location.pathname === "src/components/pages/Profile/Profile.js"){
     window.addEventListener ('DOMContentLoaded', () => {
         const buttonBio = document.querySelector(".buttonBio");
         const buttonElection = document.querySelector(".buttonElection");
