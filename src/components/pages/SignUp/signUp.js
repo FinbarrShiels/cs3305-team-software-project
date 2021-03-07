@@ -36,7 +36,7 @@ function SignUp() {
       formErrors.confirmPass === "" &&
       formErrors.tos === ""
     ) {
-      firebaseRegister(fname, sname, email, password)
+      firebaseRegister(fname, sname, email, password, username)
       .then((outcome) => {
         console.log("Registration complete: ", outcome);
         history.push("/SignUpComplete");
