@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-
+import "./elections.css"
 function Elections(props) {
     return (
         <div className="electionsTab">

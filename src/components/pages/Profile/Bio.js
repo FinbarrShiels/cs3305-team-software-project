@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-
+import "./bio.css"
 function Bio(props) {
 
     const [ currentText, setBioText ] = useState(props.currentBio)
@@ -19,7 +19,7 @@ function Bio(props) {
             <form onSubmit={handleSaveBio}>
                 <textarea value={currentText} onChange={e => {setBioText(e.target.value)}} autoFocus={true}/>
                 <br/>
-                <input type="submit" value="Save bio"/>
+                <input className="saveBio" type="submit" value="Save bio"/>
             </form>
             :
             <div>
