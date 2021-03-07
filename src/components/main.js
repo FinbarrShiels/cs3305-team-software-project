@@ -15,6 +15,7 @@ import Organise from "./pages/Voting/Organise";
 import LatchPage from "./pages/latchPage";
 import PasswordChanged from "./pages/PasswordReset/PasswordChanged";
 import SignUpComplete from "./pages/SignUp/SignUpComplete";
+import Vote from './pages/Voting/Vote.js';
 
 const Main = () => (
   <Switch>
@@ -33,6 +34,7 @@ const Main = () => (
     <Route path="/latchPage" component={LatchPage}/>
     <Route path="/PasswordChanged" component={PasswordChanged}/>
     <Route path="/SignUpComplete" component={SignUpComplete}/>
+    <Route path="/Vote" component={Vote}/>
   </Switch>
 )
 
