@@ -19,7 +19,6 @@ export function createPoll( name, description, anon, options) {
                 winner: "None",
                 organiser: organiserName,
                 open: true,
-                options: options,
                 createdAt: date.getDate()+"/"+date.getMonth()+1+"/"+date.getFullYear()
             })
             .then(() => {
