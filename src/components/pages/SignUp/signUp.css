@@ -1,6 +1,5 @@
 .signUpContainer{
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-content: center;
     padding: 10px;
@@ -9,7 +8,7 @@
 
 .sections{
     background-color: #203079;
-    padding: 2em 2em 2em 2em;
+    padding: 3em 2em 2em 2em;
     display: flex;
     box-shadow: 0 10px 40px -14px rgba(0,0,0,0.25);
     border-radius: 25px;
@@ -17,17 +16,16 @@
 }
 
 .rightTab{
-    height: 350px;
+    height: auto;
     display: flex;
-    justify-content: center;
     align-items: center;
     flex: 50%;
     padding: 10px;
-    margin: 0;
+    margin-bottom: 10px;
+    flex-direction: column;
  }
 
 .leftTab{
-    #height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,8 +44,16 @@
 
 .formInputSection{
     display: flex;
-    justify-content: flex-end;
+
     padding: .5em;
+    flex: 1;
+    flex-direction: column;
+    margin-left: auto;
+}
+
+.innerInput{
+    display: flex;
+    justify-content: flex-end;
 }
 
 .checkboxSection{
@@ -64,31 +70,42 @@
 .signUpForm input{
     box-sizing: border-box;
     padding: 5px;
+    background-color: #1F3079;
     border: 2px solid #4440bc ;
     border-radius: 10px;
+    color: #fff;
 }
 
 
 .existingMemberLogin{
     color: #fff;
-    padding-top: 60px;
-    margin-top: 300px;
-    position: absolute;
+    display: flex;
+    align-items: baseline;
+    flex: 2;
 }
 
 .existingMemberLogin button{
     background-color: #fff;
     border-radius: 8px;
     padding: 5px;
+    margin-left: 5px;
 }
 
 .formSubmitButton{
-    margin: 20px 0px 20px 0px;
+    margin: 20px 20px;
     font-size: 18px;
     color: #fff;
-    background-color: #6951FF;
+    cursor: pointer;
+    background-color: #6a51ff;
     border-radius: 8px;
-    padding: 12px 24px;
+    padding: 10px 20px;
+}
+
+
+/* Form Error Code below to style p element */
+
+.error{
+    color: red;
 }
 
 
