@@ -102,8 +102,7 @@ function Profile() {
     const getUserElections = () => {
         pollsForUser()
         .then(userPolls => {
-            console.log('Completed GET')
-            console.log(userPolls)
+            // console.log('Completed GET')
             setSavedElections(userPolls)
         })
         .catch(error => {

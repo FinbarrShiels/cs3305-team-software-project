@@ -78,6 +78,8 @@ export function pollsForUser() {
                         title: doc.data().poll_name,
                         organiser:  doc.data().organiser,
                         winner: doc.data().winner,
+                        open: doc.data().open,
+                        anon: doc.data().anonymousVoting,
                         voteCode: count
                     }
                 }
