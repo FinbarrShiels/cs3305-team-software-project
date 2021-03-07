@@ -18,15 +18,6 @@ nav {
   transition: background-color 0.25s ease 0s;
 }
 
-.logo{
-  font-size: 25px;
-  font-weight: 600;
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-
 .menuItems{
   display: flex;
   list-style: none;
