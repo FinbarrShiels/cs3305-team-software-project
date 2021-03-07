@@ -15,27 +15,30 @@ function Profile() {
     const getUserElections = () => {
         pollsForUser()
         .then(userPolls => {
-            // console.log('Completed GET')
             setSavedElections(userPolls)
         })
         .catch(error => {
+            setElectionMsg("Something went wrong when getting your elections. Try reloading the page.")
             console.log('Failed GET')
             console.log(error)
         })
     }
     const [ savedElections, setSavedElections ] = useState(() => getUserElections())
     const [ savedBio, setSavedBio ] = useState('')
-    const [ tab, setTab ] = useState(() => {return 1});
+    const [ electionMsg, setElectionMsg ] = useState('')
+    const [ bioMsg, setBioMsg ] = useState('')
+    const [ inviteMsg, setInviteMsg ] = useState('')
+    const [ tab, setTab ] = useState(1)
     const currentTab = tab => {
         switch(tab) {
             case 1:
-                return <Invites/>
+                return <Invites currentInvite={null} message={inviteMsg}/>
             case 2:
-                return <Elections currentElections={savedElections}/>
+                return <Elections currentElections={savedElections} message={electionMsg}/>
             case 3:
-                return <Bio currentBio={savedBio} saveBio={setSavedBio}/>
+                return <Bio currentBio={savedBio} saveBio={setSavedBio} message={bioMsg}/>
             default:
-                return <div>TAB ERROR</div>
+                return <h3> Sorry, something went wrong while changing tabs. Please refresh the page and try again. </h3>
         }
     }
 
@@ -72,7 +75,7 @@ function Profile() {
         )
         :
         (
-            <h1> YOU MUST LOG IN FIRST </h1>
+            <h1 className="forceLogInMessage"> YOU MUST LOG IN FIRST </h1>
         )
     )
 }

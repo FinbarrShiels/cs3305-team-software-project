@@ -1,21 +1,39 @@
+import { Link } from "react-router-dom"
+
 function Elections(props) {
     return (
         <div className="electionsTab">
-            <h3> Elections you've organised </h3>
+            <span className="tabMessage"> {props.message} </span>
+            <h3 className="tabHeading"> Your Elections </h3>
+            {props.currentElections.length !== 0
+            ?
             <div className="electionList">
-                {props.currentElections.map(election => {
-                return (
-                    <div className="electionItem">
-                        <hr/>
-                        <span className="electionType">{election.type}</span>
-                        <span className="electionTitle">{election.data.title}</span>
-                        <span className="electionWinner">{election.data.winner}</span>
-                        <span className="electionStatus">{election.data.open ? "Open" : "Closed"}</span>
-                        {/* Should include start date of the poll */}
-                    </div>
-                )
-                })}
+                <table>
+                    <tr>
+                        <th> Type </th>
+                        <th> Title </th>
+                        <th> Winner </th>
+                        <th> Status </th>
+                        {/* <th> Start Date </th> */}
+                    </tr>
+                    {props.currentElections.map(election => {
+                        return (
+                            <tr className="electionItem">
+                                <td className="type"> {election.type} </td>
+                                <td className="title">{election.data.title} </td>
+                                <td className="winner"> {election.data.winner} </td>
+                                <td className="status"> {election.data.open ? "Open" : "Closed"} </td>
+                                {/* Should include start date of the poll */}
+                            </tr>
+                        )
+                    })}
+                </table>
             </div>
+            :
+            <div className="electionsNotFound">
+                <h3> It doesn't look like you've organised any votes. <Link to="/organise"> Try it here! </Link> </h3>
+            </div>
+            }
         </div>
     )
 }
