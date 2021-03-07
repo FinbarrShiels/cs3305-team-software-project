@@ -5,6 +5,7 @@ const db = firebase.firestore();
 
 
 export function createPoll( name, description, anon, ) {
+    var date = new Date();
     if (auth.currentUser) {
         //var options=[];
         //options.push(option1,option2,option3);
@@ -20,7 +21,8 @@ export function createPoll( name, description, anon, ) {
                     type: "poll",
                     winner: "None",
                     organiser: organiserName,
-                    open: true
+                    open: true,
+                    createdAt: date.getDate()+"/"+date.getMonth()+1+"/"+date.getFullYear()
                 }).then(() => {
                     //for (var i=0; i < options.length; i++) {
                     //   db.collection('/polls').doc(auth.currentUser.uid+name).collection("options").doc('option'+i).set({
@@ -66,30 +68,30 @@ export function searchPoll(searchString) {
 }
 
 export function pollsForUser() {
-    var userPolls = [];
-    var count = 0;
     return new Promise((resolve, reject) => {
+        var userPolls = [];
+        var count = 0;
         db.collection('polls/').where("owners", "array-contains", auth.currentUser.uid).get()
-            .then((snapshot) => {
-                snapshot.forEach(doc => {
-                    var poll = {
-                        type: doc.data().type,
-                        data: {
-                            title: doc.data().poll_name,
-                            organiser:  doc.data().organiser,
-                            winner: doc.data().winner,
-                            voteCode: count
-                        }
+        .then((snapshot) => {
+            snapshot.forEach(doc => {
+                var poll = {
+                    type: doc.data().type,
+                    data: {
+                        title: doc.data().poll_name,
+                        organiser:  doc.data().organiser,
+                        winner: doc.data().winner,
+                        open: doc.data().open,
+                        anon: doc.data().anonymousVoting,
+                        voteCode: count
                     }
-                    count = count + 1;
-                    userPolls.push(poll);
-                })
-
-                }).catch((error) => {
-                    reject(false)
-                })
-            resolve(userPolls);
-
-            })
+                }
+            count = count + 1;
+            userPolls.push(poll);
+        })
+        }).catch((error) => {
+            reject(false)
+        })
+        resolve(userPolls);
+    })
 }
 
