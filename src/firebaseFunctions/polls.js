@@ -19,14 +19,15 @@ export function createPoll( name, description, anon, options) {
                 winner: "None",
                 organiser: organiserName,
                 open: true,
-                options: options,
                 createdAt: date.getDate()+"/"+date.getMonth()+1+"/"+date.getFullYear()
             })
             .then(() => {
-                //for (var i=0; i < options.length; i++) {
-                //   db.collection('/polls').doc(auth.currentUser.uid+name).collection("options").doc('option'+i).set({
-                //      option_name: options[i],
-                //     votes: 0
+                for (var i=0; i < options.length; i++) {
+                   db.collection('/polls').doc(auth.currentUser.uid+name).collection("options").doc('option'+i).set({
+                      option_name: options[i],
+                     votes: 0
+                   })
+                }
                 resolve(true)
             })
             .catch(error => {
