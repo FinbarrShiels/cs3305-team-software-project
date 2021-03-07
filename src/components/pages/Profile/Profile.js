@@ -63,7 +63,9 @@ function Profile() {
                     <div className="left">
                         <div className="profileAvatar">
                             <img className="avatarImage" src={avatar} alt="avatar"/>
+                            {/* <img className="verifiedBadge" src={} alt="user verification badge"/> */}
                         </div>
+                        <p> {user.verified ? "Verified" : "Not Verified"} </p>
                         <p className="profileName"> {`${user.fname} ${user.sname}`} </p>
                         <p className="profileEmail"> {user.email} </p>
                         {/* <p className="profileOccupation"> Occupation </p>
