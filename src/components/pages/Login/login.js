@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import './login.css';
-import loginLogo from '../../Images/id-card.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { firebaseTwitterLogIn, firebaseFacebookLogIn, firebaseGoogleLogIn, firebaseRegularLogIn } from '../../../firebaseFunctions/auth';
-import { useInput } from '../../../customHooks/form-input.js';
-import FormError from '../../formError';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react'
+import './login.css'
+import loginLogo from '../../Images/id-card.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { firebaseTwitterLogIn, firebaseFacebookLogIn, firebaseGoogleLogIn, firebaseRegularLogIn } from '../../../firebaseFunctions/auth'
+import { useInput } from '../../../customHooks/form-input.js'
+import FormError from '../../formError'
+import { useHistory } from 'react-router-dom'
 import { useUserSet } from '../../../context/UserContext'
 
 function LogIn() {
@@ -15,11 +15,11 @@ function LogIn() {
     loginFail: ""
   }))
   
-  const history = useHistory();
-  const userSet = useUserSet();
+  const history = useHistory()
+  const userSet = useUserSet()
   
-  const { value:username, bind:bindUsername, reset:resetUsername } = useInput("");
-  const { value:password, bind:bindPassword, reset:resetPassword } = useInput("");
+  const { value:username, bind:bindUsername, reset:resetUsername } = useInput("")
+  const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
 
   const invalidDetails = () => {
     setFormErrors({
@@ -36,20 +36,22 @@ function LogIn() {
       password: password.trim() === "" ? "Please enter your password" : ""
     })
     if (username.trim() !== "" & password.trim() !== "") {
-      console.log(`Attempt login:\nUsername: ${username}, Password: ${password}`) 
+      console.log(`Attempt login:\nUsername: ${username}\nPassword: ${password}`) 
       firebaseRegularLogIn(username, password)
       .then(userObj => {
-        console.log("Successful login!");
+        console.log("Successful login!")
         userSet({
+          username: userObj.displayName,
           email: userObj.email,
           verified: userObj.emailVerified,
           uid: userObj.uid,
-          anon: userObj.isAnonymous
+          fname: userObj.fname,
+          sname: userObj.sname
         })
         history.push("/");
       })
       .catch(error => {
-        console.log(`LOGIN ERROR: ${error}`);
+        console.log(`LOGIN ERROR: ${error}`)
         resetUsername();
         resetPassword();
         switch(error) {

@@ -23,7 +23,7 @@ const actionCodeSettings = {
     handleCodeInApp: false,
 }
 
-export var firebaseRegister = function(fname, sname, email, pass) {
+export var firebaseRegister = function(fname, sname, email, pass, username) {
     return new Promise(function(resolve, reject)
     {
     let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
@@ -32,7 +32,7 @@ export var firebaseRegister = function(fname, sname, email, pass) {
         auth.createUserWithEmailAndPassword(email, pass).then(userCred => {
             //console.log("User created successfully");
             //console.log(userCred.user.email, userCred.user.emailVerified);
-            addNewUserToFirestore(userCred.user.uid, fname, sname, userCred.user.email);
+            addNewUserToFirestore(userCred.user.uid, fname, sname, userCred.user.email, username);
             userCred.user.sendEmailVerification(actionCodeSettings).then(() => {
                 //console.log("Verification email sent");
                 recaptcha.clear();
@@ -59,17 +59,34 @@ export var firebaseRegularLogIn = function(email, pass) {
     return new Promise(function(resolve, reject) {
         auth.signInWithEmailAndPassword(email, pass)
         .then(userCred => {
-                resolve(userCred.user);
-            }).catch(error => {
-                reject(error.code);
-            })})
-    
+            let auth_user = userCred.user
+            var ref = db.doc('users/'+auth.currentUser.uid)
+            ref.get()
+            .then((userDoc) => {
+                resolve({
+                    username: auth_user.displayName,
+                    email: auth_user.email,
+                    uid: auth_user.uid,
+                    verified: auth_user.emailVerified,
+                    fname: userDoc.data().fname,
+                    sname: userDoc.data().sname,
+                    bio: userDoc.data().bio
+                })
+            })
+            .catch(error => {
+                console.log('Error getting userDocs')
+                console.log(error)
+            })
+        }).catch(error => {
+            reject(error.code);
+        })})
 }
 
-function addNewUserToFirestore(uid, fname, sname, email) {
+function addNewUserToFirestore(uid, fname, sname, email, username) {
     console.log("Registering user:", uid, email);
     db.collection('users').doc(uid).set({ // the 'users/userID' in firestore will
     // later be used to track what elections a user has voted in, and the ones they've organised
+      username: username,
       email: email,
       fname: fname,
       sname: sname

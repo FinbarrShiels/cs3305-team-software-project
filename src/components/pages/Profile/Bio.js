@@ -13,7 +13,8 @@ function Bio(props) {
 
     return (
         <div className="bioTab">
-            <h3 className="tabHeading">Your Bio</h3>
+            <span className="tabMessage"> {props.message} </span>
+            <h3 className="tabHeading"> Your Bio </h3>
             {editing ?
             <form onSubmit={handleSaveBio}>
                 <textarea value={currentText} onChange={e => {setBioText(e.target.value)}} autoFocus={true}/>

@@ -1,7 +1,8 @@
-function Invites() {
+function Invites(props) {
     return (
-        <div>
-            <h2>Invites</h2>
+        <div className="bioTab">
+            <span className="tabMessage"> {props.message} </span>
+            <h3 className="tabHeading"> Your Invites </h3>
         </div>
     )
 }
