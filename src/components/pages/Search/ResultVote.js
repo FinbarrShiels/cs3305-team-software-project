@@ -1,5 +1,5 @@
 import "./ResultsVote.css"
-
+import graph from '../../Images/chart.png'
 function ResultVote(props) {
     return (
         <div className="resultsVoteContainer">
@@ -10,7 +10,7 @@ function ResultVote(props) {
                 <button>View Vote</button>
             </div>
             <div className="graph">
-                Graph
+                <img src={graph} alt="graph" />
             </div>
         </div>
     )

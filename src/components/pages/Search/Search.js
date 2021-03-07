@@ -5,9 +5,11 @@ import { useInput } from '../../../customHooks/form-input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { searchPoll } from '../../../firebaseFunctions/polls'
+import { useUser } from '../../../context/UserContext';
 
 function Search() {
   
+  const user = useUser()
   const [ results, setResults ] = useState([])
   const { value:search, bind:bindSearch, reset:resetSearch } = useInput('')
   const [ searchMsg, setSearchMsg ] = useState('Type in the seach box and click the search icon, or press enter!')
@@ -49,7 +51,7 @@ function Search() {
             <input type="search" placeholder="Search for a vote..." {...bindSearch}/>
             <FontAwesomeIcon icon={['fas', 'search']} onClick={handleSearch}/>
         </form>
-        <Link to='/organise' className="organiseButton">Organise a Vote</Link>
+        { user !== null && <Link to='/organise' className="organiseButton">Organise a Vote</Link>}
       </div>
       <div className="profileResultGrid">
         {results.map(result => {

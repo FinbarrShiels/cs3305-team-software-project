@@ -4,43 +4,41 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 
-export function createPoll( name, description, anon, ) {
-    var date = new Date();
-    if (auth.currentUser) {
-        //var options=[];
-        //options.push(option1,option2,option3);
-        var user = db.doc('users/'+auth.currentUser.uid);
-        var user = user.get()
-            .then((userObj) => {
-                var organiserName = userObj.data().fname + " " + userObj.data().sname;
-                db.collection('/polls').doc(auth.currentUser.uid+name).set({
-                    poll_name: name,
-                    anonymousVoting: anon,
-                    description: description,
-                    owners: [auth.currentUser.uid],
-                    type: "poll",
-                    winner: "None",
-                    organiser: organiserName,
-                    open: true,
-                    createdAt: date.getDate()+"/"+date.getMonth()+1+"/"+date.getFullYear()
-                }).then(() => {
-                    //for (var i=0; i < options.length; i++) {
-                    //   db.collection('/polls').doc(auth.currentUser.uid+name).collection("options").doc('option'+i).set({
-                    //      option_name: options[i],
-                    //     votes: 0
-                    console.log("poll created successfully");
-                    })
-                    console.log("success");  
+export function createPoll( name, description, anon, options) {
+    return new Promise((resolve, reject) => {
+        var date = new Date()
+        db.doc('users/'+auth.currentUser.uid).get()
+        .then((userObj) => {
+            var organiserName = userObj.data().fname + " " + userObj.data().sname;
+            db.collection('/polls').doc(auth.currentUser.uid+name).set({
+                poll_name: name,
+                anonymousVoting: anon,
+                description: description,
+                owners: [auth.currentUser.uid],
+                type: "poll",
+                winner: "None",
+                organiser: organiserName,
+                open: true,
+                options: options,
+                createdAt: date.getDate()+"/"+date.getMonth()+1+"/"+date.getFullYear()
             })
-        
-                      
-        }
-    
-    else {
-        console.log("fill in the options")
+            .then(() => {
+                for (var i=0; i < options.length; i++) {
+                   db.collection('/polls').doc(auth.currentUser.uid+name).collection("options").doc('option'+i).set({
+                      option_name: options[i],
+                     votes: 0
+                   })
+                }
+                resolve(true)
+            })
+            .catch(error => {
+                console.log("something went wrong while creating the poll")
+                reject(error)
+            })
+        })           
     }
+)}
 
-}
 export function searchPoll(searchString) {
     return new Promise((resolve, reject) => {
         var results = []
