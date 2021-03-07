@@ -92,3 +92,23 @@ export function pollsForUser() {
     })
 }
 
+
+export function getPoll(pollID) {
+    var returnValue = {
+        poll: null,
+        options: null
+    }
+    db.doc('polls/'+pollID).get()
+        .then((poll) => {
+            returnValue.poll = poll
+        })
+    db.collection('polls/'+pollID+'/options').get()
+        .then((snapshot) => {
+            var optionArray = []
+            snapshot.forEach(option => {
+                optionArray.push(option);
+            })
+        returnValue.options = optionArray;
+        return returnValue;
+        })
+}
