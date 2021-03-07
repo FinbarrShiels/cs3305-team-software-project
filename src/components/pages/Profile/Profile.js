@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Elections from "./Elections";
 import Invites from "./Invites";
 import Bio from "./Bio";
-
+import "./activeButton";
 function currentTab(tab) {
     switch(tab) {
         case 1:
@@ -31,9 +31,9 @@ function Profile() {
                     <p className="profileOccupation"> Occupation </p>
                     <p className="profileLocation"> Location </p>
                     <div className="profileConnectedAccounts">
-                        <FontAwesomeIcon icon={['fab', 'twitter']}/>
-                        <FontAwesomeIcon icon={['fab', 'linkedin']}/>
-                        <FontAwesomeIcon icon={['fab', 'github']}/>
+                        <FontAwesomeIcon className="twitter" icon={['fab', 'twitter']}/>
+                        <FontAwesomeIcon className="linkedIn" icon={['fab', 'linkedin']}/>
+                        <FontAwesomeIcon className="git" icon={['fab', 'github']}/>
                     </div>
                     <button className="profileSettings"> Profile Settings </button>
                 </div>
