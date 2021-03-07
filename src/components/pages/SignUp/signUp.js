@@ -78,38 +78,37 @@ function SignUp() {
         <div className="leftTab">
           <h2>Cast Your <span>Vote</span> Now!</h2>
         </div>
-
         <div className="rightTab">
           <form className="signUpForm" onSubmit={handleSubmit}>
             <div className="formInputSection">
-              <FormError errorMsg={formErrors.username}/>
-              <label htmlFor="username"> Username: </label>
-              <input type="text" id="username" {...bindUsername}/>
+             <FormError errorMsg={formErrors.username}/>
+              <div className="innerInput"><label htmlFor="username"> Username: </label>
+              <input type="text" id="username" {...bindUsername}/></div>
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.fname}/>
-              <label htmlFor="fname"> First Name: </label>
-              <input type="text" id="fname" {...bindFname}/>
+              <div className="innerInput"><label htmlFor="fname"> First Name: </label>
+                <input type="text" id="fname" {...bindFname}/></div>
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.sname}/>
-              <label htmlFor="sname"> Second Name: </label>
-              <input type="text" id="sname" {...bindSname}/>
+             <div className="innerInput"><label htmlFor="sname"> Second Name: </label>
+              <input type="text" id="sname" {...bindSname}/></div>
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.email}/>
-              <label htmlFor="email"> Email: </label>
-              <input type="text" id="email" {...bindEmail}/>
+              <div className="innerInput"><label htmlFor="email"> Email: </label>
+              <input type="text" id="email" {...bindEmail}/></div>
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.password}/>
-              <label htmlFor="password"> Password: </label>
-              <input type="password" id="password" {...bindPassword}/>
+              <div className="innerInput"><label htmlFor="password"> Password: </label>
+              <input type="password" id="password" {...bindPassword}/></div>
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.confirmPass}/>
-              <label htmlFor="confirmPassword"> Confirm Password: </label>
-              <input type="password" id="confirmPassword" {...bindConfirmPass}/>
+              <div className="innerInput"><label htmlFor="confirmPassword"> Confirm Password: </label>
+              <input type="password" id="confirmPassword" {...bindConfirmPass}/></div>
             </div>
             <div className="checkboxSection">
               <FormError errorMsg={formErrors.tos}/>
@@ -120,9 +119,9 @@ function SignUp() {
               }}/>
               <label htmlFor="agreecheckbox"> I agree to terms of Service </label>
             </div>
-            <input className="formSubmitButton" type="submit" value="Create Account"/>
+            <button className="formSubmitButton" type="submit">Create Account</button>
           </form>
-          <div id='recaptcha' />
+          <div id='recaptcha'/>
           <div className="existingMemberLogin">
             <span>Already Have an Account?</span>
             <a href="/login"><button> Log In </button></a>
