@@ -5,6 +5,7 @@ const db = firebase.firestore();
 
 
 export function createPoll( name, description, anon, ) {
+    var date = new Date();
     if (auth.currentUser) {
         //var options=[];
         //options.push(option1,option2,option3);
@@ -20,7 +21,8 @@ export function createPoll( name, description, anon, ) {
                     type: "poll",
                     winner: "None",
                     organiser: organiserName,
-                    open: true
+                    open: true,
+                    createdAt: date.getDate()+"/"+date.getMonth()+1+"/"+date.getFullYear()
                 }).then(() => {
                     //for (var i=0; i < options.length; i++) {
                     //   db.collection('/polls').doc(auth.currentUser.uid+name).collection("options").doc('option'+i).set({
