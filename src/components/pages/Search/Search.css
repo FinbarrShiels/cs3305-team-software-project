@@ -3,16 +3,18 @@
     flex-direction: column;
     flex-wrap: wrap;
     align-content: center;
-    justify-content: center;
     padding: 10px;
+    margin-top: 40px;
+    height: 500px;
 
 }
 
 .mainSearchBar{
+    margin-top:10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-content: center;
+    align-content: baseline;
     justify-content: center;
     margin-bottom: 20px
 }
@@ -24,4 +26,30 @@
     align-content: center;
     justify-content: center;
     margin-bottom: 20px
+}
+
+.searchMessage{
+    color: #fff;
+}
+
+.organiseVote{
+    color: #fff;
+}
+
+.organiseButton{
+    padding: 10px 20px;
+    color: #fff;
+    margin-left: 5px;
+    text-decoration: none;
+    background-color: #6a51ff;
+    border-radius: 25px;
+    text-align: justify;
+
+}
+
+@media screen and (max-width: 990px) {
+    .searchContainer {
+        display: inline-block;
+        position: relative;
+    }
 }

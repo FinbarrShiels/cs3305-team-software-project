@@ -93,7 +93,6 @@ nav {
   color: #1BBAFf;
   border: #fff solid 1px;
   padding: 12px 24px;
-  #background-color: #1BBAFF;
   border-radius: 50px;
 }
 
@@ -110,11 +109,22 @@ nav {
   color: #1BBAFF;
   border: #fff solid 1px;
   padding: 12px 24px;
-  #background-color: #1BBAFF;
   border-radius: 50px;
 }
 
 .signUpButton:hover {
+  color: #000;
+  background-color: #fff;
+}
+
+.logOutButton{
+  color: #1BBAFF;
+  border: #fff solid 1px;
+  padding: 12px 24px;
+  border-radius: 50px;
+}
+
+.logOutButton:hover {
   color: #000;
   background-color: #fff;
 }
