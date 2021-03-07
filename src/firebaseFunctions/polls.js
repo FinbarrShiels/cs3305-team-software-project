@@ -68,3 +68,31 @@ export function searchPoll(searchString) {
     })
 }
 
+export function pollsForUser() {
+    var userPolls = [];
+    var count = 0;
+    return new Promise((resolve, reject) => {
+        db.collection('polls/').where("owners", "array-contains", auth.currentUser.uid).get()
+            .then((snapshot) => {
+                snapshot.forEach(doc => {
+                    var poll = {
+                        type: doc.data().type,
+                        data: {
+                            title: doc.data().poll_name,
+                            organiser:  doc.data().organiser,
+                            winner: doc.data().winner,
+                            voteCode: count
+                        }
+                    }
+                    count = count + 1;
+                    userPolls.push(poll);
+                })
+
+                }).catch((error) => {
+                    reject(false)
+                })
+            resolve(userPolls);
+
+            })
+}
+
