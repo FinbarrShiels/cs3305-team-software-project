@@ -30,7 +30,7 @@ function Profile() {
             setSavedBio(currentBio)
         })
         .catch(error => {
-            console.log("there was an error while getting the bio")
+            setBioMsg("We couldn't retrieve your bio. Try reloading the page and try again.")
         })
     }
     const saveNewBio = newBio => {

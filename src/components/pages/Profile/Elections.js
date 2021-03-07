@@ -21,7 +21,7 @@ function Elections(props) {
                     <tbody>
                         {props.currentElections.map(election => {
                             return (
-                                <tr className="electionItem">
+                                <tr className="electionItem" key={election.data.voteCode}>
                                     <td className="type"> {election.type} </td>
                                     <td className="title">{election.data.title} </td>
                                     <td className="winner"> {election.data.winner} </td>
