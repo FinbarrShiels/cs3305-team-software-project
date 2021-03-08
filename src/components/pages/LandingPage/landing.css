@@ -1,38 +1,75 @@
-.Avatar-img{                            /*Home page css */
-    position: relative;;
-    height:500px;
-}
-
 .whoops{
-    text-align: center;
+    #width: 100vw;
+    #height: 100vh;
 }
-.banner-text {
-    background-color: #6a51ff;
+
+.heroImage{
     position: relative;
-    opacity: .8;
-    width: 55%;
-    margin: auto;
-    border-radius: 10px;
+    height: 800px;
+    overflow: hidden;
+    background: url("../../Images/bg1.png") no-repeat center;
+    background-size: cover;
+}
 
-  }
+.heroText{
+    position: absolute;
+    top:40%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    text-align: center;
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
 
-  .banner-text h1 {
-    font-size: 66px;
-    font-weight: bold;
-    color: white;
-  }
+}
 
-  .banner-text hr {
-    border-top: 5px dotted white;
-    width: 50%;
-    margin: auto;
-  }
-
-
-  .banner-text p {
-    color: white;
-    font-size: 20px;
-    padding: 1em;
+.heroText h1{
+    font-size: 50px;
+    letter-spacing: 0.2em;
     margin: 0;
-  }
 
+}
+
+.heroText h1 span{
+    border: 10px solid #fff;
+    padding: 6px 14px;
+    display: inline-block;
+}
+
+.lowerText{
+    margin: 20px;
+    display: block;
+    font-size: 26px;
+    text-shadow: 0 0 10px #000;
+}
+
+.heroButton{
+    color: #fff;
+    background-color: #6951FF;
+    padding: 10px 24px;
+    font-size: 20px;
+    text-decoration: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s all;
+    border: none;
+    outline: 0;
+
+}
+
+.heroButton:hover{
+    opacity: 0.4;
+}
+
+.sectionOne{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.sectionTwo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

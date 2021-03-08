@@ -1,20 +1,24 @@
-import handsUp from '../../Images/handsUp.png';
+import handsUp from '../../Images/vote.jpg';
 import './landing.css'
 
 function LandingPage() {
   return(
     <main className="whoops">
-      <img src = {handsUp}
-        alt="Avatar"
-        className="Avatar-img"
-      />
-      <div className="banner-text">
-        <h1>Show Of Hands</h1>
-        <hr/>
-        <p>
-          Create your own election now!
-        </p>
+        <div className="heroImage">
+            <div className="heroText">
+                <h1><span>Show Of Hands</span></h1>
+                <span className="lowerText">Organise - Vote - Elect</span>
+                <a href="/signup"><button className="heroButton">Start Now</button></a>
+            </div>
+        </div>
+      <div className="sectionOne">
+          <div>Image</div>
+          <div>Text</div>
       </div>
+        <div className="sectionTwo">
+            <div>Text</div>
+            <div>Image</div>
+        </div>
     </main>
   )
 }
