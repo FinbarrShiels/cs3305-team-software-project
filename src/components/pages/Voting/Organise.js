@@ -82,6 +82,14 @@ function Organise() {
                     <label> Allow Anonymous Voters: </label>
                         <Switch checked={anonChecked} onChange={setAnonChecked}/>
                     </div>
+                    <div className="createOptions">
+                    <h3> Create Options </h3>
+                    <form onSubmit={addNewOption}>
+                        <label htmlFor="customOption"> New Option: </label>
+                        <input className="createOptionsInput" type="text" {...bindCustomOption} id="customOption"></input>
+                        <input className="createOptionsButton" type="submit" value="Add Option"></input>
+                    </form>
+                    </div>
                     {/* <div className="scheduleStart">
                     <label >Start:</label>
                         <input type="date" {...bindStartDate}/>
@@ -96,12 +104,6 @@ function Organise() {
                     <div className="createVote">
                         <input type="submit" value="Create"/>
                     </div>
-                </form>
-                <h3> Create Options </h3>
-                <form className="createOptions" onSubmit={addNewOption}>
-                    <label htmlFor="customOption"> New Option: </label>
-                    <input type="text" {...bindCustomOption} id="customOption"></input>
-                    <input type="submit" value="Add Option"></input>
                 </form>
                 <div className="optionsList">
                     {options.map(option => <OrganiseOption key={options.indexOf(option)} index={option.index} caption={option.caption} remove={removeOption}/>)}
