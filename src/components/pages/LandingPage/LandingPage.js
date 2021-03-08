@@ -9,10 +9,10 @@ function LandingPage() {
         className="Avatar-img"
       />
       <div className="banner-text">
-        <h1>Create and manage your own election.</h1>
+        <h1>Show Of Hands</h1>
         <hr/>
         <p>
-          Info on our product .
+          Create your own election now!
         </p>
       </div>
     </main>
