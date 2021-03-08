@@ -1,12 +1,12 @@
-import React, { useReducer } from 'react';
-import "./Organise.css";
-import clipboard from "../../Images/clipboard.png";
-import { useState } from "react";
-import Switch from "react-switch";
+import React, { useReducer } from 'react'
+import "./Organise.css"
+import clipboard from "../../Images/clipboard.png"
+import { useState } from "react"
+import Switch from "react-switch"
 import { useInput } from "../../../customHooks/form-input"
-import {createPoll} from "../../../firebaseFunctions/polls";
-import OrganiseOption from './OrganiseOption';
-import { useHistory } from 'react-router';
+import {createPoll} from "../../../firebaseFunctions/polls"
+import OrganiseOption from './OrganiseOption'
+import { useHistory } from 'react-router'
 
 function Organise() {
 
@@ -18,15 +18,22 @@ function Organise() {
     // const { value:endTime, bind:bindEndTime, reset:resetEndTime } = useInput("")
     // const { value:endDate, bind:bindEndDate, reset:resetEndDate } = useInput("")
     const {value:customOption, bind:bindCustomOption, reset:resetCustomOption } = useInput("")
+    const [ optionMsg, setOptionMsg ] = useState("")
     const [ anonChecked, setAnonChecked ] = useState(false)
     const [ options, setOptions ] = useState([])
     const [ nextIndex, setNextIndex ] = useState(0)
     
     const addNewOption = e => {
         e.preventDefault()
-        setOptions([ ...options,  { caption: customOption, index: nextIndex} ])
-        setNextIndex(prevNextIndex => prevNextIndex + 1)
-        resetCustomOption()
+        if (customOption.trim() !== "") {
+            setOptions([ ...options,  { caption: customOption, index: nextIndex} ])
+            setNextIndex(prevNextIndex => prevNextIndex + 1)
+            setOptionMsg("Option added!")
+            resetCustomOption()
+        }
+        else {
+            setOptionMsg("Please give the option a name")
+        }
     }
     
     const removeOption = indexToRemove => {
@@ -84,21 +91,21 @@ function Organise() {
                     </div>
                     <div className="createOptions">
                     <h3> Create Options </h3>
-                    <form onSubmit={addNewOption}>
+                    <div onClick={addNewOption}>
                         <label htmlFor="customOption"> New Option: </label>
                         <input className="createOptionsInput" type="text" {...bindCustomOption} id="customOption"></input>
                         <input className="createOptionsButton" type="submit" value="Add Option"></input>
-                    </form>
+                    </div>
                     </div>
                     {/* <div className="scheduleStart">
                     <label >Start:</label>
-                        <input type="date" {...bindStartDate}/>
-                        <input type="time" {...bindStartTime}/>
+                    <input type="date" {...bindStartDate}/>
+                    <input type="time" {...bindStartTime}/>
                     </div>
                     <div className="scheduleEnd">
                     <label>End:</label>
-                        <input type="date" {...bindEndDate}/>
-                        <input type="time" {...bindEndTime}/>
+                    <input type="date" {...bindEndDate}/>
+                    <input type="time" {...bindEndTime}/>
                     </div> */}
 
                     <div className="createVote">
