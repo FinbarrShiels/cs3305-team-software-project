@@ -112,3 +112,109 @@ export function getPoll(pollID) {
         return returnValue;
         })
 }
+
+export function vote(option, poll) {
+    return new Promise((resolve, reject) => {
+    var verifyVoters = poll.data().verify;
+    if (verifyVoters===true && auth.currentUser===null) {
+        reject(false);
+    }
+    else if (poll.data().open===false) {
+        reject(false);
+    }
+    else if (verifyVoters===false) {
+        var optionToInc = db.doc('/polls/'+poll.id+'/options/'+option.id);
+            optionToInc.update({
+            votes: firebase.firestore.FieldValue.increment(1)
+            });
+        calculateWinner(poll)
+        reject(false);
+        
+    }
+    else {
+        db.collection('users/'+auth.currentUser.uid+'/polls/')
+            .get()
+                .then((querySnapshot)=> {
+                    var hasUserVotedBefore = false;
+                    querySnapshot.forEach((pollVote) => {
+                        if (pollVote.id === poll.id && pollVote.data().option === option.id) {
+                            console.log("you've already voted in this election and for this candidate");
+                            hasUserVotedBefore = true;
+        
+                        }
+                        else if (pollVote.id === poll.id && pollVote.data().option != option.id ) {
+                            console.log("changed vote");
+                            db.collection('users/'+auth.currentUser.uid+'/polls/').doc(poll.id).set({
+                                option: option.id
+                            })
+                            var candidateToInc = db.doc('/polls/'+poll.id+'/options/'+option.id);
+                            candidateToInc.update({
+                                votes: firebase.firestore.FieldValue.increment(1)
+                            });
+                            var candidateToDec = db.doc('/polls/'+poll.id+'/options/'+pollVote.data().option);
+                            candidateToDec.update({
+                                votes: firebase.firestore.FieldValue.increment(-1)
+                            });
+                            
+                            hasUserVotedBefore = true;
+                                            
+                            } 
+                            calculateWinner(poll);
+                            resolve(true);
+                        })
+                    if (hasUserVotedBefore === false) {
+                            console.log('newVote')
+                            db.collection('users/'+auth.currentUser.uid+'/polls/').doc(poll.id).set({
+                                option: option.id
+                            })
+                            var optionToInc = db.doc('/polls/'+poll.id+'/options/'+option.id);
+                            optionToInc.update({
+                                votes: firebase.firestore.FieldValue.increment(1)
+                            });
+                            calculateWinner(poll);
+                            resolve(true);
+                    }
+        })
+        }
+    })
+}
+
+export function calculateWinner(poll) {
+    var maxVotes = 0; 
+    var winner;
+    var newWinner = false
+    db.collection('/polls/'+poll.id+'/options/').get()
+        .then((options)=> {
+            options.docs.forEach(option => {
+                if (option.data().votes>maxVotes) {
+                    console.log("success");
+                    maxVotes = option.data().votes;
+                    winner = option.data().option_name;
+                    newWinner = true;
+                }
+            })
+            console.log(newWinner)
+    if (newWinner) {
+        db.doc('polls/'+poll.id).update({
+            winner: winner
+        });
+}
+        })
+    
+}
+
+export function close(poll) {
+    db.doc('/polls/'+poll.id).get()
+    .then((queryPoll) => {
+        if (queryPoll.data().owners.includes(auth.currentUser.uid)) {
+            db.doc('/polls/'+poll.id).update({
+                open: false
+            })
+        }
+        else {
+            console.log("you lack privelege to do this");
+        }
+    })
+}
+
+
