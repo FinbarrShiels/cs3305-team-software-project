@@ -118,6 +118,26 @@
     height: 200px;
 }
 
+.createOptions h3{
+    color: #fff;
+
+}
+
+.createOptionsInput{
+    background-color: #1F3079;
+    border: 2px solid #4440bc ;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.createOptionsButton{
+    background-color: #1BBAFf;
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-left: 10px;
+}
 
 @media screen and (max-width: 990px){
     .voteSections{
