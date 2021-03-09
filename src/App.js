@@ -4,7 +4,7 @@ import Theheader from './components/NavBar-Header/Theheader'
 import Thefooter from './components/Footer/Thefooter'
 import initFontAwesome from "./components/FontAwesome/FontAwesome"
 import UserProvider from "./context/UserContext"
-initFontAwesome();
+initFontAwesome()
 
 
 function App() {

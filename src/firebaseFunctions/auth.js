@@ -90,7 +90,12 @@ export function getUserByUid(uid) {
     return new Promise((resolve, reject) => {
         db.doc('users/'+uid).get()
         .then((userDoc) => {
-            resolve(userDoc.data())
+            resolve({
+                email: userDoc.data().email,
+                fname: userDoc.data().fname,
+                sname: userDoc.data().sname,
+                bio: userDoc.data().bio
+            })
         })
         .catch(error => {
             console.log('Error getting userDocs')
@@ -102,13 +107,27 @@ export function getUserByUid(uid) {
 
 function addNewUserToFirestore(uid, fname, sname, email, username) {
     console.log("Registering user:", uid, email);
-    db.collection('users').doc(uid).set({ // the 'users/userID' in firestore will
-    // later be used to track what elections a user has voted in, and the ones they've organised
-      username: username,
-      email: email,
-      fname: fname,
-      sname: sname
-    }).catch(error => {return error.code})
+    var alreadyExists = false;
+    var query = db.doc('users/'+uid);
+    query.get()
+        .then((user) => {
+            alreadyExists = true;
+        }).catch((error) => {
+            alreadyExists = false
+        })
+    if (alreadyExists === false) {
+        db.collection('users').doc(uid).set({ // the 'users/userID' in firestore will
+        // later be used to track what elections a user has voted in, and the ones they've organised
+        username: username,
+        email: email,
+        fname: fname,
+        sname: sname
+        })
+        return true;
+    }
+    else {
+        return uid
+    }
   
 }
 
@@ -117,25 +136,26 @@ export var firebaseGoogleLogIn= function() {
         let provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider)
             .then((userCred) => {
-                addNewUserToFirestore(userCred.user.uid, userCred.user.email)
-                resolve(userCred)
+                var result = addNewUserToFirestore(userCred.user.uid, userCred.user.email);
+                resolve(result);
             }).catch((error) => {
-                reject(error.code)
-            })
+                reject(error.code);
+            });  
 
-    })  
+    })
+    
 }
 
 export var firebaseTwitterLogIn= function() {
     return new Promise(function(resolve, reject){
     let provider = new firebase.auth.TwitterAuthProvider(); 
     auth.signInWithPopup(provider)
-        .then((result) => {
-            addNewUserToFirestore(result.user.uid, result.user.email)
+        .then((userCred) => {
+            var result = addNewUserToFirestore(userCred.user.uid, userCred.user.email);
             resolve(result)
         }).catch((error) => {
-            reject(error.code)
-        }) 
+            reject(error.code);
+        }); 
     })
 }
 
@@ -143,12 +163,13 @@ export var firebaseFacebookLogIn= function() {
     return new Promise(function(resolve, reject){
         let provider = new firebase.auth.FacebookAuthProvider();
         auth.signInWithPopup(provider)
-        .then((result) => {
-            addNewUserToFirestore(result.user.uid, result.user.email);
+        .then((userCred) => {
+            var result = addNewUserToFirestore(userCred.user.uid, userCred.user.email);
             resolve(result)
         }).catch((error) => {
-            reject(error.code)
-        });
+            reject(error.code);
+        }); 
+
     })
 }
 
@@ -162,4 +183,13 @@ export var Logout= function() {
         })
 
     })
+}
+
+export function userState() {
+    if (auth.currentUser) {
+        return auth.currentUser
+    }
+    else {
+        return false
+    }
 }

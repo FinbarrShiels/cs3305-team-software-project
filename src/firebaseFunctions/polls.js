@@ -94,23 +94,31 @@ export function pollsForUser() {
 
 
 export function getPoll(pollID) {
-    var returnValue = {
-        poll: null,
-        options: null
-    }
-    db.doc('polls/'+pollID).get()
+    return new Promise((resolve, reject) => {
+        var returnValue = {
+            poll: null,
+            options: null
+        }
+        db.doc('polls/'+pollID).get()
         .then((poll) => {
             returnValue.poll = poll
         })
-    db.collection('polls/'+pollID+'/options').get()
+        .catch(error => {
+            reject(error)
+        })
+        db.collection('polls/'+pollID+'/options').get()
         .then((snapshot) => {
             var optionArray = []
             snapshot.forEach(option => {
                 optionArray.push(option);
             })
-        returnValue.options = optionArray;
-        return returnValue;
+            returnValue.options = optionArray;
+            resolve(returnValue);
         })
+        .catch(error => {
+            reject(error)
+        })
+    })
 }
 
 export function vote(option, poll) {

@@ -9,47 +9,71 @@ import { useUserLogin } from '../../../context/UserContext'
 
 function LogIn() {
   const [ formErrors, setFormErrors ] = useState(() => ({
-    username: null,
-    password: null,
-    loginFail: null
+    email: "",
+    password: "",
+    loginFail: ""
   }))
 
   const userLogin = useUserLogin()
   
-  const { value:username, bind:bindUsername } = useInput("")
-  const { value:password, bind:bindPassword } = useInput("")
+  const { value:email, bind:bindEmail } = useInput("")
+  const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
+  const [ loginMsg, setLoginMsg ] = useState("")
+  const [ submitting, setSubmitting ] = useState(false)
 
   const invalidDetails = () => {
     setFormErrors({
-      username: "",
+      email: "",
       password: "",
-      loginFail: "Username or password was incorrect"
+      loginFail: "Email or password was incorrect"
     })
   }
 
   useEffect(() => {
-    if (formErrors.username === "" && formErrors.password === "") {
-      userLogin(username, password)
-      .then()
+    if (formErrors.email === "" && formErrors.password === "" && submitting) {
+      setLoginMsg("Logging you in...")
+      userLogin(email, password)
+      .then(result => {
+        setFormErrors({
+          email: "",
+          password: "",
+          loginFail: "",
+        })
+        setLoginMsg("Finished logging in... Redirecting you now...")
+      }
+      )
       .catch(error => {
+        setLoginMsg("")
         switch(error) {
           case 'auth/invalid-email':
             invalidDetails()
-            break;
+            break
+          case 'auth/user-not-found':
+            invalidDetails()
+            break
+          case 'auth/wrong-password':
+            invalidDetails()
+            break
           default:
             console.log("UNEXPECTED ERROR")
             console.log(error)
+            setLoginMsg("Sorry, we've had an unexpected error. Please contact us to help fix it!")
         }
       })
     }
-  }, [ formErrors ])
+    else {
+      resetPassword()
+    }
+    setSubmitting(false)
+  }, [ submitting ])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setFormErrors({
-      username: username.trim() === "" ? "Please enter your username" : "",
+      email: email.trim() === "" ? "Please enter your email" : "",
       password: password.trim() === "" ? "Please enter your password" : ""
     })
+    setSubmitting(true)
   }
 
   return(
@@ -58,14 +82,14 @@ function LogIn() {
         <div className="title">
             <img src={loginLogo} alt="loginLogo"/>
         </div>
-
+        <p className="loginMsg"> {loginMsg} </p>
         <form className="loginForm" onSubmit={handleSubmit}>
-          <FormError errorMsg={formErrors.username}/>
+          <FormError errorMsg={formErrors.email}/>
           <input 
             className="loginFormInput" 
             type="text" 
-            placeholder="Username" 
-            {...bindUsername} />
+            placeholder="Email" 
+            {...bindEmail} />
           <br/>
           <FormError errorMsg={formErrors.password}/>
           <input 
