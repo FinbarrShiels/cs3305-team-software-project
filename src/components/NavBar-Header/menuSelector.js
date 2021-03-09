@@ -3,7 +3,7 @@ window.addEventListener ('DOMContentLoaded', () => {
     //const searchBtn = document.querySelector(".searchIcon");
     const canBtn = document.querySelector(".cancelIcon");
     const items = document.querySelector(".menuItems");
-    const search = document.querySelector(".search");
+    // const search = document.querySelector(".search");
     mBtn.onclick = () => {
         items.classList.add("active");
         mBtn.classList.add("hide");
@@ -14,8 +14,8 @@ window.addEventListener ('DOMContentLoaded', () => {
         items.classList.remove("active");
         mBtn.classList.remove("hide");
         //searchBtn.classList.remove("hide");
+        // search.classList.remove("active");
         canBtn.classList.remove("show")
-        search.classList.remove("active");
     }
     /*
     searchBtn.onclick = () => {
