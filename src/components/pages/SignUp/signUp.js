@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import './signUp.css';
-import { firebaseRegister } from '../../../firebaseFunctions/auth';
-import { useInput } from '../../../customHooks/form-input.js';
-import FormError from '../../formError';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import './signUp.css'
+import { useInput } from '../../../customHooks/form-input.js'
+import FormError from '../../formError'
+import { useHistory } from 'react-router-dom'
+import { useUserSignUp } from '../../../context/UserContext'
 
 function SignUp() {
   const [ formErrors, setFormErrors ] = useState({
@@ -16,14 +16,14 @@ function SignUp() {
     tos: null
   })
 
-  const history = useHistory();
+  const userSignUp = useUserSignUp()
 
-  const { value:username, bind:bindUsername, reset:resetUsername } = useInput("");
-  const { value:fname, bind:bindFname, reset:resetFname } = useInput("");
-  const { value:sname, bind:bindSname, reset:resetSname } = useInput("");
-  const { value:email, bind:bindEmail, reset:resetEmail } = useInput("");
-  const { value:password, bind:bindPassword, reset:resetPassword } = useInput("");
-  const { value:confirmPass, bind:bindConfirmPass, reset:resetConfirmPass } = useInput("");
+  const { value:username, bind:bindUsername, reset:resetUsername } = useInput("")
+  const { value:fname, bind:bindFname } = useInput("")
+  const { value:sname, bind:bindSname } = useInput("")
+  const { value:email, bind:bindEmail, reset:resetEmail } = useInput("")
+  const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
+  const { value:confirmPass, bind:bindConfirmPass, reset:resetConfirmPass } = useInput("")
   const [tosChecked, setTosChecked] = useState(false);
 
   useEffect(() => {
@@ -36,25 +36,7 @@ function SignUp() {
       formErrors.confirmPass === "" &&
       formErrors.tos === ""
     ) {
-      firebaseRegister(fname, sname, email, password, username)
-      .then((outcome) => {
-        console.log("Registration complete: ", outcome);
-        history.push("/SignUpComplete");
-      })
-      .catch((error) => {
-        switch (error) {
-          default:
-            console.log("UNEXPECTED ERROR");
-            resetUsername();
-            resetFname();
-            resetSname();
-            resetEmail();
-            resetPassword();
-            resetConfirmPass();
-            setTosChecked(false);
-            break;
-        }
-      })
+      userSignUp(fname, sname, email, password, username).then().catch()
     }
   }, [ formErrors ])
 

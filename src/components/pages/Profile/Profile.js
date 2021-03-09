@@ -14,31 +14,49 @@ function Profile() {
     
     const user = useUser()
     const getUserElections = () => {
-        pollsForUser()
-        .then(userPolls => {
-            setSavedElections(userPolls)
-        })
-        .catch(error => {
-            setElectionMsg("Something went wrong when getting your elections. Try reloading the page.")
-            console.log('Failed GET')
-            console.log(error)
-        })
+        if (user) {
+            pollsForUser()
+            .then(userPolls => {
+                setElectionMsg("")
+                setSavedElections(userPolls)
+            })
+            .catch(error => {
+                setElectionMsg("Something went wrong when getting your elections. Try reloading the page.")
+                console.log('Failed GET')
+                console.log(error)
+            })
+        }
+        else {
+            setElectionMsg("Please wait while we fetch your voting data...")
+        }
     }
     const getCurrentBio = () => {
-        getBio()
+        if (user) {
+            getBio()
         .then(currentBio => {
+            setBioMsg("")
             setSavedBio(currentBio)
         })
         .catch(error => {
             setBioMsg("We couldn't retrieve your bio. Try reloading the page and try again.")
         })
+        }
+        else {
+            setBioMsg("Please wait while we fetch your bio...")
+        }
     }
     const saveNewBio = newBio => {
         setSavedBio(newBio)
         setBio(newBio)
     }
-    const [ savedElections, setSavedElections ] = useState(() => getUserElections())
-    const [ savedBio, setSavedBio ] = useState(() => getCurrentBio())
+
+    useEffect(() => {
+        getUserElections()
+        getCurrentBio()
+    }, [ user ])
+
+    const [ savedElections, setSavedElections ] = useState(null)
+    const [ savedBio, setSavedBio ] = useState('')
     const [ electionMsg, setElectionMsg ] = useState('')
     const [ bioMsg, setBioMsg ] = useState('')
     const [ inviteMsg, setInviteMsg ] = useState('')

@@ -5,7 +5,7 @@ function Elections(props) {
         <div className="electionsTab">
             <span className="tabMessage"> {props.message} </span>
             <h3 className="tabHeading"> Your Elections </h3>
-            {props.currentElections.length !== 0
+            {props.currentElections && props.currentElections.length !== 0
             ?
             <div className="electionList">
                 <table>

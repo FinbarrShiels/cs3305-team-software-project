@@ -1,10 +1,10 @@
 // Firebase App (the core Firebase SDK) is always required and must be listed first
-import firebase from "firebase/app";
+import firebase from "firebase/app"
 // If you are using v7 or any earlier version of the JS SDK, you should import firebase using namespace import
 // import * as firebase from "firebase/app"
 // Add the Firebase products that you want to use
-import "firebase/auth";
-import "firebase/firestore";
+import "firebase/auth"
+import "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyBsRA7R4Wbf_M2aKmJeDdf421UsSkVAT0g",
@@ -13,14 +13,18 @@ const firebaseConfig = {
   storageBucket: "project-970041699397464178.appspot.com",
   messagingSenderId: "485046157660",
   appId: "1:485046157660:web:b5bb4607c80d94b1b18199"
-};
+}
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const auth = firebase.auth();
+firebase.initializeApp(firebaseConfig)
+const db = firebase.firestore()
+const auth = firebase.auth()
 const actionCodeSettings = {
     url: "https://project-970041699397464178.web.app/Login",
     handleCodeInApp: false,
+}
+
+export function authSubscribe(setUser) {
+    auth.onAuthStateChanged(setUser)
 }
 
 export var firebaseRegister = function(fname, sname, email, pass, username) {
@@ -35,24 +39,24 @@ export var firebaseRegister = function(fname, sname, email, pass, username) {
             addNewUserToFirestore(userCred.user.uid, fname, sname, userCred.user.email, username);
             userCred.user.sendEmailVerification(actionCodeSettings).then(() => {
                 //console.log("Verification email sent");
-                recaptcha.clear();
+                recaptcha.clear()
                 resolve(true)
             }).catch(error => {
                 //console.log("Send email verification error catch", error.code);
-                recaptcha.clear();
-                reject(error.code);
+                recaptcha.clear()
+                reject(error.code)
             })
         }).catch(error => {
             //console.log("Create user error catch", error.code);
-            recaptcha.clear();
-            reject(error.code);
+            recaptcha.clear()
+            reject(error.code)
         })
     }).catch(error => {
         //console.log("Outermost verify error catch", error.code);
-        recaptcha.clear();
-        reject(error.code);
+        recaptcha.clear()
+        reject(error.code)
     })
-    });
+    })
 }
 
 export var firebaseRegularLogIn = function(email, pass) {
@@ -78,8 +82,22 @@ export var firebaseRegularLogIn = function(email, pass) {
                 console.log(error)
             })
         }).catch(error => {
-            reject(error.code);
+            reject(error.code)
         })})
+}
+
+export function getUserByUid(uid) {
+    return new Promise((resolve, reject) => {
+        db.doc('users/'+uid).get()
+        .then((userDoc) => {
+            resolve(userDoc.data())
+        })
+        .catch(error => {
+            console.log('Error getting userDocs')
+            console.log(error)
+            reject(error)
+        })
+    })
 }
 
 function addNewUserToFirestore(uid, fname, sname, email, username) {
@@ -99,14 +117,13 @@ export var firebaseGoogleLogIn= function() {
         let provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider)
             .then((userCred) => {
-                addNewUserToFirestore(userCred.user.uid, userCred.user.email);
-                resolve(userCred);
+                addNewUserToFirestore(userCred.user.uid, userCred.user.email)
+                resolve(userCred)
             }).catch((error) => {
-                reject(error.code);
-            });  
+                reject(error.code)
+            })
 
-    })
-    
+    })  
 }
 
 export var firebaseTwitterLogIn= function() {
@@ -114,11 +131,11 @@ export var firebaseTwitterLogIn= function() {
     let provider = new firebase.auth.TwitterAuthProvider(); 
     auth.signInWithPopup(provider)
         .then((result) => {
-            addNewUserToFirestore(result.user.uid, result.user.email);
+            addNewUserToFirestore(result.user.uid, result.user.email)
             resolve(result)
         }).catch((error) => {
-            reject(error.code);
-        }); 
+            reject(error.code)
+        }) 
     })
 }
 
@@ -130,29 +147,19 @@ export var firebaseFacebookLogIn= function() {
             addNewUserToFirestore(result.user.uid, result.user.email);
             resolve(result)
         }).catch((error) => {
-            reject(error.code);
-        }); 
-
+            reject(error.code)
+        });
     })
 }
 
 export var Logout= function() {
     return new Promise(function(resolve, reject){
         auth.signOut().then(() => {
-            resolve(true);
+            resolve(true)
         })
         .catch(error =>{
-            reject(error.code);
+            reject(error.code)
         })
 
     })
-}
-
-export function userState() {
-    if (auth.currentUser) {
-        return auth.currentUser
-    }
-    else {
-        return false
-    }
 }
