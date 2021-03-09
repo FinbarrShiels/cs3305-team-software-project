@@ -77,30 +77,11 @@ export function verifyResetCode(actionCode) {
         })
     })
 }
- export function sendResetEmail() {
-    return new Promise(((resolve, reject) => {
-        auth.sendPasswordResetEmail(auth.currentUser.email).then(() => {resolve(true)}).catch(error => {
-            switch (error.code) {
-                case 'auth/invalid-email':
-                    console.log("Not a valid email address");
-                    reject(error.code);
-                    break;
-                case 'auth/user-not-found':
-                    console.log("User does not exist, please enter a valid user");
-                    reject(error.code);
-                    break;
-                default:
-                    console.log(error.message);
-                    reject(error.code);
-                    break;
-            }
-        });
-    }))
-}
+
 export function recoverEmail(actionCode, continueURL) {}
-export function verifyEmail(actionCode, continueURL) {
-    console.log("User: ", auth.currentUser);
-    if (auth.currentUser != null) {
+export function verifyEmail(user, actionCode, continueURL) {
+    console.log("User: ", user);
+    if (user) {
         auth.currentUser.sendEmailVerification(actionCodeSettings).then(() => {
             console.log("Verification email sent");
         }).catch(error => {
@@ -123,4 +104,8 @@ export function verifyEmail(actionCode, continueURL) {
     } else {
         console.log("User is not currently logged in");
     }
+}
+
+export function resendVer() {
+    auth.currentUser.sendEmailVerification().then(() => console.log("Email sent")).catch(e => {console.log(e)})
 }
