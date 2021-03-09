@@ -1,4 +1,7 @@
-
+footer{
+    padding-top:5px;
+    border-top: 1px solid #fff;
+}
 p{
     text-align: center;
     color: #fff;
