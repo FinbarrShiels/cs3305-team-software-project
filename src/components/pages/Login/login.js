@@ -48,6 +48,7 @@ function LogIn() {
               ...formErrors,
               email: "Make sure you've typed a valid email"
             })
+            setLoginMsg("Finished logging in... Redirecting now...")
             break
           case 'auth/user-not-found':
             invalidDetails()
@@ -62,7 +63,6 @@ function LogIn() {
         }
       })
     }
-    setLoginMsg("")
     setSubmitting(false)
   }, [ submitting ])
 
