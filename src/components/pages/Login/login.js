@@ -17,7 +17,7 @@ function LogIn() {
   const userLogin = useUserLogin()
   
   const { value:email, bind:bindEmail } = useInput("")
-  const { value:password, bind:bindPassword } = useInput("")
+  const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
   const [ loginMsg, setLoginMsg ] = useState("")
   const [ submitting, setSubmitting ] = useState(false)
 
@@ -33,19 +33,20 @@ function LogIn() {
     if (formErrors.email === "" && formErrors.password === "" && submitting) {
       setLoginMsg("Logging you in...")
       userLogin(email, password)
-      .then(
+      .then(result => {
         setFormErrors({
           email: "",
           password: "",
           loginFail: "",
         })
+        setLoginMsg("Finished logging in... Redirecting you now...")
+      }
       )
       .catch(error => {
-        console.log(error)
+        setLoginMsg("")
         switch(error) {
           case 'auth/invalid-email':
             setFormErrors({
-              ...formErrors,
               email: "Make sure you've typed a valid email"
             })
             break
@@ -62,14 +63,16 @@ function LogIn() {
         }
       })
     }
-    setLoginMsg("")
+    else {
+      resetPassword()
+    }
     setSubmitting(false)
   }, [ submitting ])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     setFormErrors({
-      email: email.trim() === "" ? "Please enter your username" : "",
+      email: email.trim() === "" ? "Please enter your email" : "",
       password: password.trim() === "" ? "Please enter your password" : ""
     })
     setSubmitting(true)
