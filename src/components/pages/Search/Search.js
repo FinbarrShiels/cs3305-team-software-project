@@ -33,8 +33,14 @@ function Search() {
         }
       })
       .catch(error => {
-        setSearchMsg("There was an error while searching, please try again")
         console.log(error)
+        switch(error.code) {
+          case 'permission-denied':
+            setSearchMsg("You must log in before searching")
+            break
+          default:
+            setSearchMsg("There was an unexpected error while searching, please refresh the page and try again")
+        }
       })
     }
     else {
