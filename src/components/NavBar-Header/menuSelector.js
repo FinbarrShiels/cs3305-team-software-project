@@ -23,7 +23,3 @@
 //         canBtn.classList.add("show");
 //     }
 // });
-
-
-
-
