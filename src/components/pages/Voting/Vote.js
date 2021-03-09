@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router'
 import { useState } from 'react/cjs/react.development'
 import { useUser } from '../../../context/UserContext'
-import { findUser } from '../../../firebaseFunctions/auth'
+import { getUserByUid } from '../../../firebaseFunctions/auth'
 import { getPoll } from '../../../firebaseFunctions/polls'
 
 function Vote() {
@@ -13,7 +13,7 @@ function Vote() {
     const getCurrentPoll = () => {
         getPoll(pollId)
         .then(newPoll => {
-            findUser(newPoll.poll.data().owners[0])
+            getUserByUid(newPoll.poll.data().owners[0])
             .then(userObj => {
                 setCurrentPoll({
                     options: newPoll.options.map(option => { return{ caption: option.data().option_name }}),

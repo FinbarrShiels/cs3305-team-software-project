@@ -90,7 +90,12 @@ export function getUserByUid(uid) {
     return new Promise((resolve, reject) => {
         db.doc('users/'+uid).get()
         .then((userDoc) => {
-            resolve(userDoc.data())
+            resolve({
+                email: userDoc.data().email,
+                fname: userDoc.data().fname,
+                sname: userDoc.data().sname,
+                bio: userDoc.data().bio
+            })
         })
         .catch(error => {
             console.log('Error getting userDocs')
@@ -187,24 +192,4 @@ export function userState() {
     else {
         return false
     }
-}
-
-export function findUser(uid) {
-    return new Promise((resolve, reject) => {
-        var ref = db.doc('users/'+uid)
-        ref.get()
-        .then((userDoc) => {
-            resolve({
-                email: userDoc.data().email,
-                fname: userDoc.data().fname,
-                sname: userDoc.data().sname,
-                bio: userDoc.data().bio
-            })
-        })
-        .catch(error => {
-            console.log('Error getting userDocs')
-            console.log(error)
-            reject(error)
-        })
-    })
 }

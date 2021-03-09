@@ -26,7 +26,7 @@ function LandingPage() {
           <div className="leftImage">
               <img src={computer_vote} alt="computer_vote"/>
           </div>
-          <div class="leftText">
+          <div className="leftText">
               <h3>Vote for your candidate</h3>
               <p>Vote for your candidate from any connected device. Secure and simple. </p>
           </div>
