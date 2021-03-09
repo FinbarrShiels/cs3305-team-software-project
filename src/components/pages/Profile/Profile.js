@@ -9,6 +9,7 @@ import "./activeButton.js"
 import { useUser } from '../../../context/UserContext'
 import { pollsForUser } from '../../../firebaseFunctions/polls'
 import { getBio, setBio } from '../../../firebaseFunctions/profile'
+import {sendVerifyEmail} from "../../../firebaseFunctions/custom-landing";
 
 function Profile() {
     
@@ -94,6 +95,7 @@ function Profile() {
                             <FontAwesomeIcon className="git" icon={['fab', 'github']}/>
                         </div>
                         <button className="profileSettings"> Profile Settings </button>
+                        <button onClick={sendVerifyEmail}> Verify email </button>
                     </div>
                     <div className="right">
                         <div className="tabOptions">

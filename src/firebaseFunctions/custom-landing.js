@@ -22,7 +22,7 @@ export function handleUserParams() {
 export function resetPassword(actionCode, continueURL) {
     let newPass = document.querySelector('#password').value;
     let newPassConfirm = document.querySelector('#password2').value;
-    console.log("Pass: ", newPass, newPassConfirm);
+    console.log("Pass: ", newPass, newPassConfirm, auth.currentUser);
     return new Promise(((resolve, reject) => {
         if ((newPass === newPassConfirm) && (newPass !== "")) {
             auth.confirmPasswordReset(actionCode, newPass).then(() => {
@@ -46,7 +46,6 @@ export function resetPassword(actionCode, continueURL) {
 }
 
 export function verifyResetCode(actionCode) {
-    console.log("Called resetPassword()");
     return new Promise((resolve, reject) => {
         auth.verifyPasswordResetCode(actionCode).then(() => {
             console.log("Pass reset code verified");
@@ -79,33 +78,45 @@ export function verifyResetCode(actionCode) {
 }
 
 export function recoverEmail(actionCode, continueURL) {}
-export function verifyEmail(user, actionCode, continueURL) {
-    console.log("User: ", user);
-    if (user) {
-        auth.currentUser.sendEmailVerification(actionCodeSettings).then(() => {
-            console.log("Verification email sent");
+export function verifyEmail(actionCode, continueURL) {
+    return new Promise((resolve, reject) => {
+        auth.applyActionCode(actionCode).then(() => {
+            console.log("Email verified successfully")
+            resolve(true)
         }).catch(error => {
-            switch (error.code) {
-                case 'auth/unauthorized-continue-uri':
-                    console.log("Unauthorised continue URL. (authorise in Firebase console");
+            switch (error) {
+                case 'auth/expired-action-code':
+                    console.log("The action code has expired.")
+                    reject(error)
                     break;
-                case 'auth/invalid-continue-uri':
-                    console.log("Invalid continue URL. Please check the request");
+                case 'auth/invalid-action-code':
+                    console.log("The action code is invalid")
+                    reject(error)
                     break;
-                case 'auth/missing-continue-uri':
-                    console.log("Continue URL must be provided. Please check the request");
+                case 'auth/user-disabled':
+                    console.log("The user corresponding to the given action code has been disabled")
+                    reject(error)
+                    break;
+                case 'auth/user-not-found':
+                    console.log("User does note exist");
+                    reject(error)
                     break;
                 default:
-                    console.log(error.message);
+                    console.log(error)
+                    reject(error)
                     break;
             }
-
-        });
-    } else {
-        console.log("User is not currently logged in");
-    }
+        })
+    })
 }
 
-export function resendVer() {
-    auth.currentUser.sendEmailVerification().then(() => console.log("Email sent")).catch(e => {console.log(e)})
+export function sendVerifyEmail() {
+    // Temp fix to stop email spam
+    if (!auth.currentUser.emailVerified) {
+        auth.currentUser.sendEmailVerification().then(() => console.log("Email sent")).catch(e => {
+            console.log(e)
+        })
+    } else {
+        alert("Account already verified");
+    }
 }

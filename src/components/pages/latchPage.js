@@ -29,8 +29,12 @@ function LatchPage() {
                 break;
             case 'verifyEmail':
                 //Verify email
-                verifyEmail(user, actCode, cURL);
-                console.log("Verify email");
+                let ver = verifyEmail(actCode, cURL);
+                if (ver) {
+                    history.push("/Profile");
+                } else {
+                    console.log("Verify email failed", ver)
+                }
                 break;
             default:
                 throw new Error('Malformed query').catch(console.log("malformed query"));
