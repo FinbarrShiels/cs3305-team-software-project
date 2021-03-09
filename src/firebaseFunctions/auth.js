@@ -163,3 +163,32 @@ export var Logout= function() {
 
     })
 }
+
+export function userState() {
+    if (auth.currentUser) {
+        return auth.currentUser
+    }
+    else {
+        return false
+    }
+}
+
+export function findUser(uid) {
+    return new Promise((resolve, reject) => {
+        var ref = db.doc('users/'+uid)
+        ref.get()
+        .then((userDoc) => {
+            resolve({
+                email: userDoc.data().email,
+                fname: userDoc.data().fname,
+                sname: userDoc.data().sname,
+                bio: userDoc.data().bio
+            })
+        })
+        .catch(error => {
+            console.log('Error getting userDocs')
+            console.log(error)
+            reject(error)
+        })
+    })
+}
