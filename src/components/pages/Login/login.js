@@ -46,9 +46,7 @@ function LogIn() {
         setLoginMsg("")
         switch(error) {
           case 'auth/invalid-email':
-            setFormErrors({
-              email: "Make sure you've typed a valid email"
-            })
+            invalidDetails()
             break
           case 'auth/user-not-found':
             invalidDetails()
