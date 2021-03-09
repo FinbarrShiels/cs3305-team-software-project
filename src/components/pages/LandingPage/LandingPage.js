@@ -17,7 +17,7 @@ function LandingPage() {
                 <div>
                   { user === null && <Link to="/signup"><button className="heroButton"> Start Now </button></Link> }
                   { user !== null && <Link to="/organise"><button className="heroButton"> Organise your own vote </button></Link> }
-                  { user !== null && <Link to="/voting"><button className="heroButton"> Find a vote </button></Link> }
+                  { user !== null && <Link to="/search"><button className="heroButton"> Find a vote </button></Link> }
                 </div>
             </div>
         </div>
