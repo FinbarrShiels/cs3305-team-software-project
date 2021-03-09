@@ -142,7 +142,7 @@ export function vote(option, poll) {
                             hasUserVotedBefore = true;
         
                         }
-                        else if (pollVote.id === poll.id && pollVote.data().option != option.id ) {
+                        else if (pollVote.id === poll.id && pollVote.data().option !== option.id ) {
                             console.log("changed vote");
                             db.collection('users/'+auth.currentUser.uid+'/polls/').doc(poll.id).set({
                                 option: option.id
