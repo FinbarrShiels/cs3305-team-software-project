@@ -48,10 +48,10 @@ function Theheader() {
                     {user === null && <li><Link className="signUpButton" to="/signUp"> Sign Up </Link></li>}
                     {user !== null && <li><Link className="logOutButton" to="/login" onClick={() => userLogOut()}> Log Out </Link></li>}
                 </div>
-                <div className="searchIcon"><span>
+                {/* <div className="searchIcon"><span>
                     <FontAwesomeIcon icon={['fas', 'search']}/>
                     </span>
-                </div>
+                </div> */}
                 <div className="cancelIcon"><span>
                     <FontAwesomeIcon icon={['fas', 'times']}/>
                     </span>
