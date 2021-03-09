@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useState } from 'react/cjs/react.development'
 import { useUser } from '../../../context/UserContext'
@@ -16,7 +16,11 @@ function Vote() {
             getUserByUid(newPoll.poll.data().owners[0])
             .then(userObj => {
                 setCurrentPoll({
-                    options: newPoll.options.map(option => { return{ caption: option.data().option_name }}),
+                    options: newPoll.options.map(option => { 
+                        return { 
+                            caption: option.data().option_name
+                        }
+                    }),
                     anon: newPoll.poll.data().anonymousVoters,
                     createdDate: newPoll.poll.data().createdAt,
                     desc: newPoll.poll.data().description,
@@ -39,6 +43,16 @@ function Vote() {
     const [ findingPoll, setFindingPoll ] = useState(true)
     const [ getPollError, setGetPollError ] = useState(false)
     const [ currentPoll, setCurrentPoll ] = useState(() => getCurrentPoll())
+    const [ selectedOption, setSelectedOption ] = useState(null)
+
+    const voteForOption = option => {
+        console.log(`Voting for option: ${option.caption} (${option.index})`)
+        setSelectedOption(option)
+    }
+
+    useEffect(() => {
+        currentPoll && console.log(currentPoll.options)
+    }, [ currentPoll ])
 
     if (findingPoll) {
         return <h1> Please wait while we find the vote you're looking for... </h1>
@@ -51,14 +65,16 @@ function Vote() {
             <div className="voteContainer">
                 <h3> {currentPoll.title} </h3>
                 <div className="optionList">
-                    {currentPoll.options.map(option => {
+                    {currentPoll.options.map((option, index) => {
                         return (
-                            <div className="voteOption">
+                            <div className="voteOption" key={index} onClick={() => voteForOption(option)}>
                                 <p className="optionCaption"> {option.caption} </p>
+                                <p className="optionNumber"> {currentPoll.options.indexOf(option)} </p>
                             </div>
                         )
                     })}
                 </div>
+                <button onClick={() => console.log(`Confirming Vote: ${selectedOption.caption}`)}> Confirm Vote </button>
                 <div className="pollInfo">
                     <div className="organiser">
                         <p className="organiserName"> {currentPoll.organiser.fname} {currentPoll.organiser.sname} </p>
