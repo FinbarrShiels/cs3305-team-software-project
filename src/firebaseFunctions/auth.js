@@ -193,3 +193,57 @@ export function userState() {
         return false
     }
 }
+
+export function findUser(uid) {
+    return new Promise((resolve, reject) => {
+        var ref = db.doc('users/'+uid)
+        ref.get()
+        .then((userDoc) => {
+            resolve({
+                email: userDoc.data().email,
+                fname: userDoc.data().fname,
+                sname: userDoc.data().sname,
+                bio: userDoc.data().bio
+            })
+        })
+        .catch(error => {
+            console.log('Error getting userDocs')
+            console.log(error)
+            reject(error)
+        })
+    })
+}
+
+export function isUsernameUnique(username) {
+    db.collection('users/').where("username", "==", username).get()
+        .then(() => {
+            return false;
+
+        })
+        .catch((error) => {
+            return true;
+        })
+}
+
+export function logInWithUsername(username, password) {
+    return new Promise(function(resolve, reject){
+        var ref = db.collection('users/').where("username", "==", username);
+    ref.get()
+        .then((userDoc) => {
+            var email = userDoc.data().email
+            firebaseRegularLogIn(email, password)
+                .then((success) => {
+                    resolve(success)
+                })
+                .catch((errorCode) => {
+                    reject(errorCode)
+                })
+            
+        })
+        .catch((error)=>{
+            reject(error.code)
+
+        })
+    })  
+    
+}
