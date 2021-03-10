@@ -210,14 +210,25 @@ export function findUser(uid) {
 }
 
 export function isUsernameUnique(username) {
-    db.collection('users/').where("username", "==", username).get()
-        .then(() => {
-            return false;
+    return new Promise(function(resolve, reject) {
+        var isUnique = true;
+        var ref = db.collection('users/').where("username", "==", username);
+        ref.get()
+            .then((querySnapshot) => {
+                if (querySnapshot.size===0) {
+                    resolve(isUnique);
 
-        })
-        .catch((error) => {
-            return true;
-        })
+                }
+                else {
+                    reject(isUnique)
+
+                }
+                
+            })
+            .catch((error) => {
+                console.log("error in isUSernameUnique")
+            })
+    })
 }
 export function logInWithUsername(username, password) {
     return new Promise(function(resolve, reject){
@@ -227,7 +238,7 @@ export function logInWithUsername(username, password) {
             var email = userDoc.data().email
             firebaseRegularLogIn(email, password)
                 .then((success) => {
-                    resolve(sucess)
+                    resolve(success)
                 })
                 .catch((errorCode) => {
                     reject(errorCode)
