@@ -208,3 +208,14 @@ export function findUser(uid) {
         })
     })
 }
+
+export function isUsernameUnique(username) {
+    db.collection('users/').where("username", "==", username).get()
+        .then(() => {
+            return false;
+
+        })
+        .catch((error) => {
+            return true;
+        })
+}
