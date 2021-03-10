@@ -219,3 +219,25 @@ export function isUsernameUnique(username) {
             return true;
         })
 }
+export function logInWithUsername(username, password) {
+    return new Promise(function(resolve, reject){
+        var ref = db.collection('users/').where("username", "==", username);
+    ref.get()
+        .then((userDoc) => {
+            var email = userDoc.data().email
+            firebaseRegularLogIn(email, password)
+                .then((success) => {
+                    resolve(sucess)
+                })
+                .catch((errorCode) => {
+                    reject(errorCode)
+                })
+            
+        })
+        .catch((error)=>{
+            reject(error.code)
+
+        })
+    })  
+    
+}
