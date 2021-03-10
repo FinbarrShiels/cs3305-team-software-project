@@ -4,6 +4,7 @@ import { useInput } from '../../../customHooks/form-input.js'
 import FormError from '../../formError'
 import { useHistory } from 'react-router-dom'
 import { useUserSignUp } from '../../../context/UserContext'
+import { isUsernameUnique } from '../../../firebaseFunctions/auth'
 
 function SignUp() {
   const [ formErrors, setFormErrors ] = useState({
@@ -26,6 +27,27 @@ function SignUp() {
   const { value:confirmPass, bind:bindConfirmPass, reset:resetConfirmPass } = useInput("")
   const [tosChecked, setTosChecked] = useState(false);
 
+  const getUsernameErrors = () => {
+    return new Promise((resolve, reject) => {
+      console.log("finding username");
+      let trimmed = username.trim();
+      if (trimmed ==="") {
+        resolve("Please choose a username")
+      }
+      else {
+        isUsernameUnique(trimmed)
+          .then((unique) => {
+              resolve("")
+          })
+          .catch(error =>{
+            resolve("Sorry, this username is already taken")
+            console.log("error");
+          })
+      }
+
+    })
+  }
+
   useEffect(() => {
     if (
       formErrors.username === "" &&
@@ -43,15 +65,20 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormErrors({
-      username: username.trim() === "" ? "Please choose a username" : "",
-      fname: fname.trim() === "" ? "Please enter your first name" : "",
-      sname: sname.trim() === "" ? "Please enter your second name" : "",
-      email: email.trim() === "" ? "Please enter your email" : "",
-      password: password.trim() === "" ? "Please enter your password" : "",
-      confirmPass: (confirmPass.trim() !== password.trim()) ? "Please make sure both passwords are the same" : "",
-      tos: !tosChecked ? "Please agree to the Terms of Service" : ""
-    })
+    getUsernameErrors()
+      .then(userNameError => {
+        setFormErrors({
+          username: userNameError,
+          fname: fname.trim() === "" ? "Please enter your first name" : "",
+          sname: sname.trim() === "" ? "Please enter your second name" : "",
+          email: email.trim() === "" ? "Please enter your email" : "",
+          password: password.trim() === "" ? "Please enter your password" : "",
+          confirmPass: (confirmPass.trim() !== password.trim()) ? "Please make sure both passwords are the same" : "",
+          tos: !tosChecked ? "Please agree to the Terms of Service" : ""
+        })
+
+      })
+    
   }
 
   return(
