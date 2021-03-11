@@ -4,7 +4,7 @@ import { useState } from 'react/cjs/react.development'
 import { useUser } from '../../../context/UserContext'
 import { getUserByUid } from '../../../firebaseFunctions/auth'
 import { getPoll } from '../../../firebaseFunctions/polls'
-
+import "./vote.css"
 function Vote() {
 
     const user = useUser()
