@@ -17,20 +17,15 @@ function Theheader() {
                     <FontAwesomeIcon icon={['fas','bars']}/>
                     </span>
                 </div>
-                <Link to="/" className="logo">  
-                <svg version="1.1" width="60px" height="60px" viewBox="0 0 131.65 149.04" xmlns="http://www.w3.org/2000/svg">
+                <Link to="/">  
+                <svg className="logo" width="50" height="60" data-name="Layer 1" version="1.1" viewBox="0 0 63.546 95.922" xmlns="http://www.w3.org/2000/svg">
                     <defs>
-                        <linearGradient id="linearGradient882" x1="79.005" x2="42.256" y1="207.72" y2="77.062" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#0ff" offset="0"/>
-                        <stop stopColor="#00f" offset="1"/>
-                        </linearGradient>
+                    <linearGradient id="linear-gradient" x1="149.07" x2="149.07" y1="71.303" y2="167.15" gradientTransform="translate(-117.3 -84.928)" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#04ecfb" offset="0"/>
+                        <stop stop-color="#9346c7" offset="1"/>
+                    </linearGradient>
                     </defs>
-                    <g transform="translate(-39.173 -73.98)" fill="none" stroke="url(#linearGradient882)" strokeDashoffset="83.896" strokeLinecap="square" strokeLinejoin="round" strokeMiterlimit="3.8">
-                        <rect x="42.256" y="77.062" width="125.49" height="142.88" ry="6.4256" opacity=".997" strokeWidth="6.166"/>
-                        <rect x="52.607" y="127.57" width="26.398" height="80.15" rx="1.1909" ry="0" opacity=".997" strokeWidth="5.0274"/>
-                        <rect x="91.99" y="97.237" width="26.398" height="110.58" rx="1.1909" ry="0" opacity=".997" strokeWidth="5.905"/>
-                        <rect x="131" y="151.01" width="26.398" height="56.42" rx="1.1909" ry="0" opacity=".997" strokeWidth="4.218"/>
-                    </g>
+                    <path class="cls-1" d="m27.898 3.8748a3.886 3.886 0 0 1 3.8747-3.8748 3.886 3.886 0 0 1 3.8747 3.8748v60.331a3.886 3.886 0 0 1-3.8747 3.8745 3.886 3.886 0 0 1-3.8747-3.8745zm-13.949 6.6663a3.8747 3.8747 0 0 1 7.7494 0v53.512a10.174 10.174 0 0 0 9.9179 10.226c0.0522 7e-4 0.1045 1e-3 0.1565 1e-3a10.086 10.086 0 0 0 10.074-10.074v-53.665a3.8747 3.8747 0 0 1 7.7494 0v53.468a17.951 17.951 0 0 1-17.72 18.02h-0.104a17.843 17.843 0 0 1-17.824-17.824zm49.597 53.665a31.773 31.773 0 0 1-63.546 0v-20.97a3.8748 3.8748 0 1 1 7.7495 0v20.97a24.05 24.05 0 0 0 24.023 24.023h0.068a24.174 24.174 0 0 0 23.955-24.256v-39.328a3.875 3.875 0 1 1 7.75 0z" fill="url(#linear-gradient)"/>
                 </svg>
                 </Link>
                 {/* <div className="search">
