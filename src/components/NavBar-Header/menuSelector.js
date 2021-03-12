@@ -17,6 +17,14 @@ window.addEventListener ('DOMContentLoaded', () => {
         // search.classList.remove("active");
         canBtn.classList.remove("show")
     }
+
+    items.onclick = () =>{
+        items.classList.remove("active");
+        mBtn.classList.remove("hide");
+        //searchBtn.classList.remove("hide");
+        // search.classList.remove("active");
+        canBtn.classList.remove("show")
+    }
     /*
     searchBtn.onclick = () => {
         search.classList.add("active");
