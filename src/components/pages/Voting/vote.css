@@ -33,7 +33,6 @@
 .voteOption{
     display: flex;
     box-sizing: border-box;
-    background-color: #1BBAFf;
     height: 200px;
     width: 200px;
     margin: 5px;
@@ -44,15 +43,11 @@
     flex-direction: column;
 }
 
-.voteOption:hover{
-    background-color: orange;
+.voteOption.show{
+    background-color: #1BBAFf;
 }
 
-.voteOption:active{
-    background-color: orange;
-}
-
-.voteOption:focus{
+.voteOption.active{
     background-color: orange;
 }
 
