@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import "./bio.css"
+import { useState } from "react"
+import "./biotab.css"
 function Bio(props) {
 
     const [ currentText, setBioText ] = useState(props.currentBio)

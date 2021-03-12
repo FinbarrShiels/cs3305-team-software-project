@@ -50,6 +50,7 @@ export function searchPoll(searchString) {
                     data: {
                         title: doc.data().poll_name,
                         organiser:  doc.data().organiser,
+                        ownerId: doc.data().owners[0],
                         winner: doc.data().winner,
                         voteCode: count
                     }
@@ -76,6 +77,7 @@ export function pollsForUser() {
                     data: {
                         title: doc.data().poll_name,
                         organiser:  doc.data().organiser,
+                        ownerId: doc.data().owners[0],
                         winner: doc.data().winner,
                         open: doc.data().open,
                         anon: doc.data().anonymousVoting,
@@ -226,3 +228,9 @@ export function close(poll) {
 }
 
 
+export function createPollLink(ownerId, pollName) {
+    let base = '/vote/'
+    base = base.concat(ownerId)
+    base = base.concat(pollName)
+    return base
+}
