@@ -95,7 +95,7 @@ function Vote() {
                 </div>
 
                 <div className="pollInfo">
-                    <h3> Poll Information</h3>
+                    <h3> Vote Information</h3>
                     <div className="organiser">
                         <p className="organiserName">Organiser: {currentPoll.organiser.fname} {currentPoll.organiser.sname} </p>
                         <p className="organiserEmail">Contact Email: {currentPoll.organiser.email} </p>
