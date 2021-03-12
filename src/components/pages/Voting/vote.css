@@ -90,3 +90,14 @@
     font-size: 18px;
 }
 
+.optionCaption{
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #6951FF;
+}
+
+.optionNumber{
+    color: #6951FF;
+    font-weight: 600;
+}
+
