@@ -95,17 +95,18 @@ function Vote() {
                 </div>
 
                 <div className="pollInfo">
+                    <h3> Poll Information</h3>
                     <div className="organiser">
-                        <p className="organiserName"> {currentPoll.organiser.fname} {currentPoll.organiser.sname} </p>
-                        <p className="organiserEmail"> {currentPoll.organiser.email} </p>
+                        <p className="organiserName">Organiser: {currentPoll.organiser.fname} {currentPoll.organiser.sname} </p>
+                        <p className="organiserEmail">Contact Email: {currentPoll.organiser.email} </p>
                         <div className="organiserSocials">
                             {/* <p className="organiserTwitter"> {currentPoll.organiser} </p> */}
                             {/* <p className="organiserGitHub"> {currentPoll.organiser} </p> */}
                             {/* <p className="organiserLinkedIn"> {currentPoll.organiser} </p> */}
                         </div>
-                    </div>
-                    <div className="pollDesc">
-                        <p> {currentPoll.desc} </p>
+                        <div className="pollDesc">
+                            <p> {currentPoll.desc} </p>
+                        </div>
                     </div>
                 </div>
             </div>

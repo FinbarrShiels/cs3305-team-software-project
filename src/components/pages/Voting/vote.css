@@ -16,7 +16,8 @@
 
 
 .voteSections h3{
-    color: #fff;
+    font-weight: 500;
+    color: #1BBAFf;
     text-transform: uppercase;
 }
 
@@ -69,18 +70,15 @@
 }
 
 .pollInfo{
-
     border-top: 2px solid #fff;
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
 }
 
 .organiser{
     margin-top:10px;
-    flex-direction: column;
+    flex-direction: row;
 }
 
 .organiser p{
@@ -89,6 +87,7 @@
 
 .pollDesc p{
     font-size: 18px;
+    color: #6951FF;
 }
 
 .optionCaption{
