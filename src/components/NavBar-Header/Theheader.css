@@ -42,6 +42,10 @@ nav {
   color: orange;
 }
 
+.menuItems li a:focus{
+  color: orange;
+}
+
 .cancelIcon{
   width:40px;
   color: #fff;
