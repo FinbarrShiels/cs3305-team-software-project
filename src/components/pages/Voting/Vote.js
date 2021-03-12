@@ -71,10 +71,11 @@ function Vote() {
     else {
         return (
             <div className="voteContainer">
+            <div className="voteSections">
                 <h3> {currentPoll.title} </h3>
                 <p className="voteMsg"> {voteMsg} </p>
                 { !voteConfirmed.status
-                ? 
+                ?
                     <div className="optionList">
                         {currentPoll.options.map((option, index) => {
                             return (
@@ -84,11 +85,15 @@ function Vote() {
                                 </div>
                             )
                         })}
-                        <button onClick={() => confirmVote()}> Confirm Vote </button>
                     </div>
                 :
+
                     <p className="alreadyVoted"> Your vote has been confirmed! You voted for: {voteConfirmed.option.caption} </p>
                 }
+                <div className="castVote">
+                    <button onClick={() => confirmVote()}> Confirm Vote </button>
+                </div>
+
                 <div className="pollInfo">
                     <div className="organiser">
                         <p className="organiserName"> {currentPoll.organiser.fname} {currentPoll.organiser.sname} </p>
@@ -103,6 +108,7 @@ function Vote() {
                         <p> {currentPoll.desc} </p>
                     </div>
                 </div>
+            </div>
             </div>
         )
     }
