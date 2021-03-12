@@ -30,15 +30,21 @@
 
 
 .voteOption{
+    display: flex;
+    box-sizing: border-box;
     background-color: #1BBAFf;
-    padding: 50px 50px;
-    margin: 25px;
+    height: 200px;
+    width: 200px;
+    margin: 5px;
     border-radius: 5px;
     cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .voteOption:hover{
-    opacity: 0.2;
+    background-color: orange;
 }
 
 .voteOption:active{
@@ -58,10 +64,29 @@
 }
 
 .castVote button:hover{
-    background-color: greenyellow;
+    opacity: 0.2;
 }
 
 .pollInfo{
+
+    border-top: 2px solid #fff;
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.organiser{
+    margin-top:10px;
+    flex-direction: column;
+}
+
+.organiser p{
+    font-size: 18px;
+}
+
+.pollDesc p{
+    font-size: 18px;
 }
 
