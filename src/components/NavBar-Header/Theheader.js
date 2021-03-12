@@ -13,12 +13,8 @@ function Theheader() {
     return(
         <header>
             <nav>
-                <div className="menuIcon"><span>
-                    <FontAwesomeIcon icon={['fas','bars']}/>
-                    </span>
-                </div>
                 <Link to="/">  
-                <svg className="logo" width="50" height="60" data-name="Layer 1" version="1.1" viewBox="0 0 63.546 95.922" xmlns="http://www.w3.org/2000/svg">
+                <svg className="logo" width="80" height="80" data-name="Layer 1" version="1.1" viewBox="0 0 63.546 95.922" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                     <linearGradient id="linear-gradient" x1="149.07" x2="149.07" y1="71.303" y2="167.15" gradientTransform="translate(-117.3 -84.928)" gradientUnits="userSpaceOnUse">
                         <stop stop-color="#04ecfb" offset="0"/>
@@ -34,6 +30,10 @@ function Theheader() {
                         <a href="/Search"><FontAwesomeIcon icon={['fas', 'search']}/></a>
                     </div>
                 </div> */}
+                <div className="menuIcon"><span>
+                    <FontAwesomeIcon icon={['fas','bars']} size="2x"/>
+                    </span>
+                </div>
                 <div className="menuItems">
                     <li><Link to="/">Home</Link> </li>
                     {user !== null && <li><Link to="/profile"> Profile</Link></li>}
@@ -48,7 +48,7 @@ function Theheader() {
                     </span>
                 </div> */}
                 <div className="cancelIcon"><span>
-                    <FontAwesomeIcon icon={['fas', 'times']}/>
+                    <FontAwesomeIcon icon={['fas', 'times']} size="2x"/>
                     </span>
                 </div>
             </nav>
