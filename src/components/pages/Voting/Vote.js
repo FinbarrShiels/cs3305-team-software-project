@@ -5,6 +5,7 @@ import { useUser } from '../../../context/UserContext'
 import { getUserByUid } from '../../../firebaseFunctions/auth'
 import { getPoll } from '../../../firebaseFunctions/polls'
 import "./vote.css"
+import "./activePanel.js"
 function Vote() {
 
     const user = useUser()
