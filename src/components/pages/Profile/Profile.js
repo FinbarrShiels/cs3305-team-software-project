@@ -95,7 +95,7 @@ function Profile() {
                             <FontAwesomeIcon className="git" icon={['fab', 'github']}/>
                         </div>
                         <button className="profileSettings"> Profile Settings </button>
-                        <button onClick={sendVerifyEmail}> Verify email </button>
+                        { user !== null && !user.verified && <button onClick={sendVerifyEmail}> Verify email </button>}
                     </div>
                     <div className="right">
                         <div className="tabOptions">
