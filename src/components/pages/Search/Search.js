@@ -61,7 +61,7 @@ function Search() {
       </div>
       <div className="profileResultGrid">
         {results.map(result => {
-        return <ResultVote key={result.data.voteCode} title={result.data.title} organiser={result.data.organiser} winner={result.data.winner}/>
+        return <ResultVote key={result.data.voteCode} result={result.data}/>
         })}
       </div>
     </div>

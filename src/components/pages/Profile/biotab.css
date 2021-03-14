@@ -12,6 +12,9 @@
 }
 
 .editBio{
-    border-radius: 8px;
-    padding: 3px;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 25px;
+    cursor: pointer;
+    background-color: #1BBAFf;
 }

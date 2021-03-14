@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import "./profile.css"
 import avatar from '../../Images/avatar.png'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import Elections from "./Elections"
+import Elections from "./VotesTab"
 import Invites from "./Invites"
-import Bio from "./Bio"
+import Bio from "./BioTab"
 import "./activeButton.js"
 import { useUser } from '../../../context/UserContext'
 import { pollsForUser } from '../../../firebaseFunctions/polls'
@@ -95,13 +95,13 @@ function Profile() {
                             <FontAwesomeIcon className="git" icon={['fab', 'github']}/>
                         </div>
                         <button className="profileSettings"> Profile Settings </button>
-                        <button onClick={sendVerifyEmail}> Verify email </button>
+                        { user !== null && !user.verified && <button className="verifyEmail" onClick={sendVerifyEmail}> Verify email </button>}
                     </div>
                     <div className="right">
                         <div className="tabOptions">
                             <div className="buttonContainer">
                                 <button className="buttonInvites" onClick={() => {setTab(1)}}> Invites </button>
-                                <button className="buttonElection" onClick={() => {setTab(2)}}> Elections </button>
+                                <button className="buttonElection" onClick={() => {setTab(2)}}> Votes </button>
                                 <button className="buttonBio" onClick={() => {setTab(3)}}> Bio </button>
                             </div>
                         </div>

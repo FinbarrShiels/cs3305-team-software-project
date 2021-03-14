@@ -108,4 +108,12 @@
         display: inline-block;
         position: relative;
     }
+
+    .lowerText{
+        margin: 20px;
+        display: block;
+        font-size: 18px;
+        text-shadow: 0 0 10px #000;
+    }
+
 }

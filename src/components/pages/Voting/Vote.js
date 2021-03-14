@@ -4,7 +4,8 @@ import { useState } from 'react/cjs/react.development'
 import { useUser } from '../../../context/UserContext'
 import { getUserByUid } from '../../../firebaseFunctions/auth'
 import { getPoll } from '../../../firebaseFunctions/polls'
-
+import "./vote.css"
+import "./activePanel.js"
 function Vote() {
 
     const user = useUser()
@@ -71,10 +72,11 @@ function Vote() {
     else {
         return (
             <div className="voteContainer">
+            <div className="voteSections">
                 <h3> {currentPoll.title} </h3>
                 <p className="voteMsg"> {voteMsg} </p>
                 { !voteConfirmed.status
-                ? 
+                ?
                     <div className="optionList">
                         {currentPoll.options.map((option, index) => {
                             return (
@@ -84,25 +86,31 @@ function Vote() {
                                 </div>
                             )
                         })}
-                        <button onClick={() => confirmVote()}> Confirm Vote </button>
                     </div>
                 :
+
                     <p className="alreadyVoted"> Your vote has been confirmed! You voted for: {voteConfirmed.option.caption} </p>
                 }
+                <div className="castVote">
+                    <button onClick={() => confirmVote()}> Confirm Vote </button>
+                </div>
+
                 <div className="pollInfo">
+                    <h3> Vote Information</h3>
                     <div className="organiser">
-                        <p className="organiserName"> {currentPoll.organiser.fname} {currentPoll.organiser.sname} </p>
-                        <p className="organiserEmail"> {currentPoll.organiser.email} </p>
+                        <p className="organiserName">Organiser: {currentPoll.organiser.fname} {currentPoll.organiser.sname} </p>
+                        <p className="organiserEmail">Contact Email: {currentPoll.organiser.email} </p>
                         <div className="organiserSocials">
                             {/* <p className="organiserTwitter"> {currentPoll.organiser} </p> */}
                             {/* <p className="organiserGitHub"> {currentPoll.organiser} </p> */}
                             {/* <p className="organiserLinkedIn"> {currentPoll.organiser} </p> */}
                         </div>
-                    </div>
-                    <div className="pollDesc">
-                        <p> {currentPoll.desc} </p>
+                        <div className="pollDesc">
+                            <p> {currentPoll.desc} </p>
+                        </div>
                     </div>
                 </div>
+            </div>
             </div>
         )
     }
