@@ -36,13 +36,13 @@ function Theheader() {
                 </div>
                 <div className="menuItems">
                     <li><Link to="/">Home</Link></li>
-                    {user !== null && <li><Link to="/profile"> Profile</Link></li>}
+                    {user !== null && <li><Link to="/profile"> Profile </Link></li>}
                     <li><Link to="/search"> Voting </Link></li>
                     <li><Link to="/aboutUs"> About Us </Link></li>
                     {user === null && <li><Link className="loginButton" to="/login">Log In</Link></li>}
                     {user === null && <li><Link className="signUpButton" to="/signUp"> Sign Up </Link></li>}
                     {user !== null && <li><Link className="logOutButton" to="/login" onClick={() => userLogOut()}> Log Out </Link></li>}
-                    { user !== null && <p> {`${user.fname[0]} ${user.sname[0]}`} </p> }
+                    { user !== null && <p><Link to="/profile"> {`${user.fname} ${user.sname}`} </Link></p> }
                 </div>
                 {/* <div className="searchIcon"><span>
                     <FontAwesomeIcon icon={['fas', 'search']}/>
