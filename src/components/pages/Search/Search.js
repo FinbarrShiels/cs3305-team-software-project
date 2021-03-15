@@ -34,13 +34,7 @@ function Search() {
       })
       .catch(error => {
         console.log(error)
-        switch(error.code) {
-          case 'permission-denied':
-            setSearchMsg("You must log in before searching")
-            break
-          default:
-            setSearchMsg("There was an unexpected error while searching, please refresh the page and try again")
-        }
+        setSearchMsg("There was an unexpected error while searching, please refresh the page and try again")
       })
     }
     else {
@@ -57,7 +51,7 @@ function Search() {
             <input type="search" placeholder="Search for a vote..." {...bindSearch}/>
             <FontAwesomeIcon icon={['fas', 'search']} onClick={handleSearch}/>
         </form>
-        { user !== null && <Link to='/organise' className="organiseButton">Organise a Vote</Link>}
+        {user !== null && <Link to='/organise' className="organiseButton">Organise a Vote</Link>}
       </div>
       <div className="profileResultGrid">
         {results.map(result => {
