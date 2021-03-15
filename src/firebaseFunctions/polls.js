@@ -130,7 +130,7 @@ export function vote(optionName, pollId) {
     db.doc('polls/'+pollId).get()
         .then((pollDoc) => {
             poll= pollDoc;
-            var verifyVoters = poll.data().verify;
+            var verifyVoters = poll.data().anonymousVoting;
             db.collection('polls/'+pollId+'/options/').where('option_name', '==', optionName).get()
             .then((querySnapshot) => {
                 option = querySnapshot.docs[0];
