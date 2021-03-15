@@ -9,39 +9,38 @@ import { useUserLogin } from '../../../context/UserContext'
 
 function LogIn() {
   const [ formErrors, setFormErrors ] = useState(() => ({
-    email: "",
+    username: "",
     password: "",
     loginFail: ""
   }))
 
   const userLogin = useUserLogin()
   
-  const { value:email, bind:bindEmail } = useInput("")
+  const { value:username, bind:bindUsername } = useInput("")
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
   const [ loginMsg, setLoginMsg ] = useState("")
   const [ submitting, setSubmitting ] = useState(false)
 
   const invalidDetails = () => {
     setFormErrors({
-      email: "",
+      username: "",
       password: "",
-      loginFail: "Email or password was incorrect"
+      loginFail: "Username or password was incorrect"
     })
   }
 
   useEffect(() => {
-    if (formErrors.email === "" && formErrors.password === "" && submitting) {
-      setLoginMsg("Logging you in...")
-      userLogin(email, password)
-      .then(result => {
+    if (formErrors.username === "" && formErrors.password === "" && submitting) {
+      setLoginMsg("Logging in...")
+      userLogin(username, password)
+      .then(() => {
         setFormErrors({
-          email: "",
+          username: "",
           password: "",
           loginFail: "",
         })
-        setLoginMsg("Finished logging in... Redirecting you now...")
-      }
-      )
+        setLoginMsg("Finished logging in... Redirecting now...")
+      })
       .catch(error => {
         setLoginMsg("")
         switch(error) {
@@ -55,9 +54,9 @@ function LogIn() {
             invalidDetails()
             break
           default:
-            console.log("UNEXPECTED ERROR")
+            console.log("UNEXPECTED LOGIN ERROR")
             console.log(error)
-            setLoginMsg("Sorry, we've had an unexpected error. Please contact us to help fix it!")
+            setLoginMsg("Sorry, we've had an unexpected error while trying to log you in")
         }
       })
     }
@@ -70,7 +69,7 @@ function LogIn() {
   const handleSubmit = (e) => {
     e.preventDefault()
     setFormErrors({
-      email: email.trim() === "" ? "Please enter your email" : "",
+      username: username.trim() === "" ? "Please enter your username" : "",
       password: password.trim() === "" ? "Please enter your password" : ""
     })
     setSubmitting(true)
@@ -84,12 +83,12 @@ function LogIn() {
         </div>
         <p className="loginMsg"> {loginMsg} </p>
         <form className="loginForm" onSubmit={handleSubmit}>
-          <FormError errorMsg={formErrors.email}/>
+          <FormError errorMsg={formErrors.username}/>
           <input 
             className="loginFormInput" 
             type="text" 
-            placeholder="Email" 
-            {...bindEmail} />
+            placeholder="Username / Email" 
+            {...bindUsername} />
           <br/>
           <FormError errorMsg={formErrors.password}/>
           <input 

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { useHistory } from "react-router"
-import { Logout, firebaseRegularLogIn, firebaseRegister, authSubscribe, getUserByUid } from "../firebaseFunctions/auth"
+import { Logout, firebaseRegularLogIn, firebaseRegister, authSubscribe, getUserByUid, logInWithUsername } from "../firebaseFunctions/auth"
 
 const UserContext = React.createContext()
 const UserLoginContext = React.createContext()
@@ -66,21 +66,45 @@ export default function UserProvider({ children }) {
 
     const userLogIn = (username, password) => {
         return new Promise((resolve, reject) => {
-            firebaseRegularLogIn(username, password)
-            .then(userObj => {
-                console.log("Successful login!")
-                setUser({
-                    username: userObj.displayName,
-                    email: userObj.email,
-                    verified: userObj.emailVerified,
-                    uid: userObj.uid,
-                    fname: userObj.fname,
-                    sname: userObj.sname
+            if (username.includes('@')) {
+                firebaseRegularLogIn(username, password)
+                .then(userObj => {
+                    console.log("Successful login!")
+                    setUser({
+                        username: userObj.displayName,
+                        email: userObj.email,
+                        verified: userObj.emailVerified,
+                        uid: userObj.uid,
+                        fname: userObj.fname,
+                        sname: userObj.sname
+                    })
+                    history.push("/")
+                    resolve()
                 })
-                history.push("/")
-                resolve(userObj)
-            })
-            .catch(error => reject(error))
+                .catch(error => reject(error))
+            }
+            else {
+                console.log("logging in with username")
+                logInWithUsername(username, password)
+                .then(userObj => {
+                    console.log("Successful login!")
+                    setUser({
+                        username: userObj.displayName,
+                        email: userObj.email,
+                        verified: userObj.emailVerified,
+                        uid: userObj.uid,
+                        fname: userObj.fname,
+                        sname: userObj.sname
+                    })
+                    history.push("/")
+                    resolve()
+                })
+                .catch(error => {
+                    console.log("ERROR LOGGING IN WITH USERNAME")
+                    console.log(error)
+                    reject(error)
+                })
+            }
         })
     }
 

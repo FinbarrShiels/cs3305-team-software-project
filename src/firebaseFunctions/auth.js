@@ -59,14 +59,13 @@ export var firebaseRegister = function(fname, sname, email, pass, username) {
     })
 }
 
-export var firebaseRegularLogIn = function(email, pass) {
-    return new Promise(function(resolve, reject) {
+export var firebaseRegularLogIn = (email, pass) => {
+    return new Promise((resolve, reject) => {
         auth.signInWithEmailAndPassword(email, pass)
         .then(userCred => {
             let auth_user = userCred.user
-            var ref = db.doc('users/'+auth.currentUser.uid)
-            ref.get()
-            .then((userDoc) => {
+            db.doc('users/'+auth.currentUser.uid).get()
+            .then(userDoc => {
                 resolve({
                     username: auth_user.displayName,
                     email: auth_user.email,
@@ -80,6 +79,7 @@ export var firebaseRegularLogIn = function(email, pass) {
             .catch(error => {
                 console.log('Error getting userDocs')
                 console.log(error)
+                reject(error)
             })
         }).catch(error => {
             reject(error.code)
@@ -196,8 +196,7 @@ export function userState() {
 
 export function findUser(uid) {
     return new Promise((resolve, reject) => {
-        var ref = db.doc('users/'+uid)
-        ref.get()
+        db.doc('users/'+uid).get()
         .then((userDoc) => {
             resolve({
                 email: userDoc.data().email,
@@ -216,45 +215,36 @@ export function findUser(uid) {
 
 export function isUsernameUnique(username) {
     return new Promise(function(resolve, reject) {
-        var isUnique = true;
-        var ref = db.collection('users/').where("username", "==", username);
-        ref.get()
-            .then((querySnapshot) => {
-                if (querySnapshot.size===0) {
-                    resolve(isUnique);
-
-                }
-                else {
-                    reject(isUnique)
-
-                }
-                
-            })
-            .catch((error) => {
-                console.log("error in isUSernameUnique")
-            })
+        var isUnique = true
+        db.collection('users/').where("username", "==", username).get()
+        .then((querySnapshot) => {
+            if (querySnapshot.size===0) {
+                resolve(isUnique)
+            }
+            else {
+                reject(isUnique)
+            }
+        })
+        .catch((error) => {
+            console.log("error in isUSernameUnique")
+        })
     })
 }
 
 export function logInWithUsername(username, password) {
     return new Promise(function(resolve, reject){
-        var ref = db.collection('users/').where("username", "==", username);
-    ref.get()
-        .then((userDoc) => {
-            var email = userDoc.data().email
-            firebaseRegularLogIn(email, password)
-                .then((success) => {
-                    resolve(success)
-                })
-                .catch((errorCode) => {
-                    reject(errorCode)
-                })
-            
-        })
-        .catch((error)=>{
-            reject(error.code)
-
-        })
-    })  
-    
+    db.collection('users/').where("username", "==", username).get()
+    .then((querySnapshot) => {
+        firebaseRegularLogIn(querySnapshot.docs[0].data().email, password)
+            .then((userObj) => {
+                resolve(userObj)
+            })
+            .catch((error) => {
+                reject(error)
+            })
+    })
+    .catch((error)=>{
+        reject(error)
+    })
+    })
 }
