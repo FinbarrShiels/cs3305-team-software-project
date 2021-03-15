@@ -83,8 +83,20 @@ function Profile() {
                         <div className="profileAvatar">
                             <img className="avatarImage" src={avatar} alt="avatar"/>
                             {/* <img className="verifiedBadge" src={} alt="user verification badge"/> */}
+                            <> {user.verified ? 
+                                <svg width="10mm" height="10mm" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <g transform="translate(-55,-98.5)">
+                                        <path fill="#0f0" transform="matrix(.26458 0 0 .26458 55 98.5)" d="m188.98 0a188.98 188.98 0 0 0-188.98 188.98 188.98 188.98 0 0 0 188.98 188.98 188.98 188.98 0 0 0 188.98-188.98 188.98 188.98 0 0 0-188.98-188.98zm88.508 86.691 37.906 37.904-166.67 166.67-86.16-85.869 37.881-37.881 48.109 48.109z"/>
+                                    </g>
+                                </svg>
+                            : 
+                                <svg width="10mm" height="10mm" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                    <g transform="translate(-55,-98.5)">
+                                    <path  fill="#f00" transform="matrix(.26458 0 0 .26458 55 98.5)" d="m188.98 0a188.98 188.98 0 0 0-188.98 188.98 188.98 188.98 0 0 0 188.98 188.98 188.98 188.98 0 0 0 188.98-188.98 188.98 188.98 0 0 0-188.98-188.98zm-57.963 103.45 57.963 58.305 57.963-58.305 27.223 27.062-58.123 58.465 58.121 58.465-27.221 27.062-57.963-58.305-57.963 58.305-27.223-27.062 58.123-58.465-58.123-58.465z"/>
+                                    </g>
+                                </svg>
+                             } </>
                         </div>
-                        <p> {user.verified ? "Verified" : "Not Verified"} </p>
                         <p className="profileName"> {`${user.fname} ${user.sname}`} </p>
                         <p className="profileEmail"> {user.email} </p>
                         {/* <p className="profileOccupation"> Occupation </p>
