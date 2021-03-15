@@ -6,18 +6,16 @@
   
 
   .container{
+    background-color: #1A2A6C;;
     min-height: 100vh;
-    background: #1A2A6C;
-    #background: -webkit-linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c);
-    #background: linear-gradient(to left, #fdbb2d, #b21f1f, #1a2a6c);
     display: flex;
     flex-direction: column;
     justify-content:space-between;
     margin:0;
-    overflow: auto;
   }
 
   .body{
+    background-color: #1A2A6C;
     text-align: center;
     padding-bottom: 80px;
 

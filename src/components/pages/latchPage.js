@@ -1,23 +1,23 @@
-import {handleUserParams, resetPassword, verifyEmail, verifyResetCode} from "../../firebaseFunctions/custom-landing";
+import {handleUserParams, verifyEmail, verifyResetCode} from "../../firebaseFunctions/custom-landing";
 import {useHistory} from 'react-router-dom';
+import {useUser} from "../../context/UserContext";
+import React from "react";
 
 function LatchPage() {
     const history = useHistory()
+    const user = useUser()
     document.addEventListener('DOMContentLoaded', () => {
         let values = handleUserParams()
         console.log("Values: ", values);
         let mode = values[0];
         let actCode = values[1];
-        let temp = values[3].toString().split("%2f");
-        let cURL = temp.split
-        console.log("cURL = => " + cURL);
+        let cURL = values[3].toString().split("%2f");
         switch (mode) {
             case 'resetPassword':
                 //Reset password
                 console.log("Mode: Resetting password");
                 let v = verifyResetCode(actCode);
                 if (v) {
-                    console.log("Changing password > ChangePassword.js")
                     history.push("/ChangePassword?" + actCode);
                 } else {
                     console.log("V: ", v);
@@ -29,15 +29,25 @@ function LatchPage() {
                 break;
             case 'verifyEmail':
                 //Verify email
-                verifyEmail(actCode, cURL);
-                console.log("Verify email");
+                let ver = verifyEmail(actCode, cURL);
+                if (ver) {
+                    history.push("/Profile");
+                } else {
+                    console.log("Verify email failed", ver)
+                }
                 break;
             default:
                 throw new Error('Malformed query').catch(console.log("malformed query"));
         }
     })
-    return (
+    return(
+        user !== null ? (
         <h1 onLoad={handleUserParams}>Please wait while we redirect you. This shouldn't take long!</h1>
-    )
+        )
+        :
+        (
+            <h1 className="forceLogInMessage"> You do not have access to this page </h1>
+        )
+)
 }
 export default LatchPage

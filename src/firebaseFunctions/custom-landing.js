@@ -22,7 +22,7 @@ export function handleUserParams() {
 export function resetPassword(actionCode, continueURL) {
     let newPass = document.querySelector('#password').value;
     let newPassConfirm = document.querySelector('#password2').value;
-    console.log("Pass: ", newPass, newPassConfirm);
+    console.log("Pass: ", newPass, newPassConfirm, auth.currentUser);
     return new Promise(((resolve, reject) => {
         if ((newPass === newPassConfirm) && (newPass !== "")) {
             auth.confirmPasswordReset(actionCode, newPass).then(() => {
@@ -46,7 +46,6 @@ export function resetPassword(actionCode, continueURL) {
 }
 
 export function verifyResetCode(actionCode) {
-    console.log("Called resetPassword()");
     return new Promise((resolve, reject) => {
         auth.verifyPasswordResetCode(actionCode).then(() => {
             console.log("Pass reset code verified");
@@ -77,50 +76,47 @@ export function verifyResetCode(actionCode) {
         })
     })
 }
- export function sendResetEmail() {
-    return new Promise(((resolve, reject) => {
-        auth.sendPasswordResetEmail(auth.currentUser.email).then(() => {resolve(true)}).catch(error => {
-            switch (error.code) {
-                case 'auth/invalid-email':
-                    console.log("Not a valid email address");
-                    reject(error.code);
-                    break;
-                case 'auth/user-not-found':
-                    console.log("User does not exist, please enter a valid user");
-                    reject(error.code);
-                    break;
-                default:
-                    console.log(error.message);
-                    reject(error.code);
-                    break;
-            }
-        });
-    }))
-}
+
 export function recoverEmail(actionCode, continueURL) {}
 export function verifyEmail(actionCode, continueURL) {
-    console.log("User: ", auth.currentUser);
-    if (auth.currentUser != null) {
-        auth.currentUser.sendEmailVerification(actionCodeSettings).then(() => {
-            console.log("Verification email sent");
+    return new Promise((resolve, reject) => {
+        auth.applyActionCode(actionCode).then(() => {
+            console.log("Email verified successfully")
+            resolve(true)
         }).catch(error => {
-            switch (error.code) {
-                case 'auth/unauthorized-continue-uri':
-                    console.log("Unauthorised continue URL. (authorise in Firebase console");
+            switch (error) {
+                case 'auth/expired-action-code':
+                    console.log("The action code has expired.")
+                    reject(error)
                     break;
-                case 'auth/invalid-continue-uri':
-                    console.log("Invalid continue URL. Please check the request");
+                case 'auth/invalid-action-code':
+                    console.log("The action code is invalid")
+                    reject(error)
                     break;
-                case 'auth/missing-continue-uri':
-                    console.log("Continue URL must be provided. Please check the request");
+                case 'auth/user-disabled':
+                    console.log("The user corresponding to the given action code has been disabled")
+                    reject(error)
+                    break;
+                case 'auth/user-not-found':
+                    console.log("User does note exist");
+                    reject(error)
                     break;
                 default:
-                    console.log(error.message);
+                    console.log(error)
+                    reject(error)
                     break;
             }
+        })
+    })
+}
 
-        });
+export function sendVerifyEmail() {
+    // Temp fix to stop email spam
+    if (!auth.currentUser.emailVerified) {
+        auth.currentUser.sendEmailVerification().then(() => console.log("Email sent")).catch(e => {
+            console.log(e)
+        })
     } else {
-        console.log("User is not currently logged in");
+        alert("Account already verified");
     }
 }

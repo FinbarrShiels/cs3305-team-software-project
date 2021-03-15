@@ -4,12 +4,14 @@ import clipboard from "../../Images/clipboard.png"
 import { useState } from "react"
 import Switch from "react-switch"
 import { useInput } from "../../../customHooks/form-input"
-import {createPoll} from "../../../firebaseFunctions/polls"
+import {createPoll, createPollLink} from "../../../firebaseFunctions/polls"
 import OrganiseOption from './OrganiseOption'
 import { useHistory } from 'react-router'
+import { useUser } from '../../../context/UserContext'
 
 function Organise() {
 
+    const user = useUser()
     const history = useHistory()
     const { value:title, bind:bindTitle, reset:resetTitle } = useInput("")
     const { value:desc, bind:bindDesc, reset:resetDesc } = useInput("")
@@ -59,7 +61,7 @@ function Organise() {
         createPoll(title, desc, anonChecked, optionCaptions)
         .then(response => {
             console.log(`SUCCESS CREATING POLL: ${response}`)
-            history.push('/vote')
+            history.push(createPollLink(user.uid, title))
         })
         .catch(error => {
             console.log('ERROR CREATING POLL:')

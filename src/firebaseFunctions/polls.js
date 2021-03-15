@@ -50,6 +50,7 @@ export function searchPoll(searchString) {
                     data: {
                         title: doc.data().poll_name,
                         organiser:  doc.data().organiser,
+                        ownerId: doc.data().owners[0],
                         winner: doc.data().winner,
                         voteCode: count
                     }
@@ -76,6 +77,7 @@ export function pollsForUser() {
                     data: {
                         title: doc.data().poll_name,
                         organiser:  doc.data().organiser,
+                        ownerId: doc.data().owners[0],
                         winner: doc.data().winner,
                         open: doc.data().open,
                         anon: doc.data().anonymousVoting,
@@ -94,88 +96,108 @@ export function pollsForUser() {
 
 
 export function getPoll(pollID) {
-    var returnValue = {
-        poll: null,
-        options: null
-    }
-    db.doc('polls/'+pollID).get()
+    return new Promise((resolve, reject) => {
+        var returnValue = {
+            poll: null,
+            options: null
+        }
+        db.doc('polls/'+pollID).get()
         .then((poll) => {
             returnValue.poll = poll
         })
-    db.collection('polls/'+pollID+'/options').get()
+        .catch(error => {
+            reject(error)
+        })
+        db.collection('polls/'+pollID+'/options').get()
         .then((snapshot) => {
             var optionArray = []
             snapshot.forEach(option => {
                 optionArray.push(option);
             })
-        returnValue.options = optionArray;
-        return returnValue;
+            returnValue.options = optionArray;
+            resolve(returnValue);
         })
+        .catch(error => {
+            reject(error)
+        })
+    })
 }
 
-export function vote(option, poll) {
+export function vote(optionName, pollId) {
     return new Promise((resolve, reject) => {
-    var verifyVoters = poll.data().verify;
-    if (verifyVoters===true && auth.currentUser===null) {
-        reject(false);
-    }
-    else if (poll.data().open===false) {
-        reject(false);
-    }
-    else if (verifyVoters===false) {
-        var optionToInc = db.doc('/polls/'+poll.id+'/options/'+option.id);
-            optionToInc.update({
-            votes: firebase.firestore.FieldValue.increment(1)
-            });
-        calculateWinner(poll)
-        reject(false);
-        
-    }
-    else {
-        db.collection('users/'+auth.currentUser.uid+'/polls/')
-            .get()
-                .then((querySnapshot)=> {
-                    var hasUserVotedBefore = false;
-                    querySnapshot.forEach((pollVote) => {
-                        if (pollVote.id === poll.id && pollVote.data().option === option.id) {
-                            console.log("you've already voted in this election and for this candidate");
-                            hasUserVotedBefore = true;
-        
-                        }
-                        else if (pollVote.id === poll.id && pollVote.data().option != option.id ) {
-                            console.log("changed vote");
-                            db.collection('users/'+auth.currentUser.uid+'/polls/').doc(poll.id).set({
-                                option: option.id
-                            })
-                            var candidateToInc = db.doc('/polls/'+poll.id+'/options/'+option.id);
-                            candidateToInc.update({
-                                votes: firebase.firestore.FieldValue.increment(1)
-                            });
-                            var candidateToDec = db.doc('/polls/'+poll.id+'/options/'+pollVote.data().option);
-                            candidateToDec.update({
-                                votes: firebase.firestore.FieldValue.increment(-1)
-                            });
-                            
-                            hasUserVotedBefore = true;
-                                            
-                            } 
-                            calculateWinner(poll);
-                            resolve(true);
-                        })
-                    if (hasUserVotedBefore === false) {
-                            console.log('newVote')
-                            db.collection('users/'+auth.currentUser.uid+'/polls/').doc(poll.id).set({
-                                option: option.id
-                            })
-                            var optionToInc = db.doc('/polls/'+poll.id+'/options/'+option.id);
-                            optionToInc.update({
-                                votes: firebase.firestore.FieldValue.increment(1)
-                            });
-                            calculateWinner(poll);
-                            resolve(true);
+    pollId = pollId.replace("poll=", "");
+    var poll;
+    var option;
+    db.doc('polls/'+pollId).get()
+        .then((pollDoc) => {
+            poll= pollDoc;
+            var verifyVoters = poll.data().verify;
+            db.collection('polls/'+pollId+'/options/').where('option_name', '==', optionName).get()
+            .then((querySnapshot) => {
+                option = querySnapshot.docs[0];
+                if (verifyVoters===true && auth.currentUser===null) {
+                    reject(false);
+                }
+                else if (poll.data().open===false) {
+                    reject(false);
+                }
+                else if (verifyVoters===false) {
+                    var optionToInc = db.doc('/polls/'+poll.id+'/options/'+option.id);
+                        optionToInc.update({
+                        votes: firebase.firestore.FieldValue.increment(1)
+                        });
+                    calculateWinner(poll)
+                    reject(false);
+                    
+                }
+                else {
+                    db.collection('users/'+auth.currentUser.uid+'/polls/')
+                        .get()
+                            .then((querySnapshot)=> {
+                                var hasUserVotedBefore = false;
+                                querySnapshot.forEach((pollVote) => {
+                                    if (pollVote.id === poll.id && pollVote.data().option === option.id) {
+                                        console.log("you've already voted in this election and for this candidate");
+                                        hasUserVotedBefore = true;
+                    
+                                    }
+                                    else if (pollVote.id === poll.id && pollVote.data().option !== option.id ) {
+                                        console.log("changed vote");
+                                        db.collection('users/'+auth.currentUser.uid+'/polls/').doc(poll.id).set({
+                                            option: option.id
+                                        })
+                                        var candidateToInc = db.doc('/polls/'+poll.id+'/options/'+option.id);
+                                        candidateToInc.update({
+                                            votes: firebase.firestore.FieldValue.increment(1)
+                                        });
+                                        var candidateToDec = db.doc('/polls/'+poll.id+'/options/'+pollVote.data().option);
+                                        candidateToDec.update({
+                                            votes: firebase.firestore.FieldValue.increment(-1)
+                                        });
+                                        
+                                        hasUserVotedBefore = true;
+                                                        
+                                        } 
+                                        calculateWinner(poll);
+                                        resolve(true);
+                                    })
+                                if (hasUserVotedBefore === false) {
+                                        console.log('newVote')
+                                        db.collection('users/'+auth.currentUser.uid+'/polls/').doc(poll.id).set({
+                                            option: option.id
+                                        })
+                                        var optionToInc = db.doc('/polls/'+poll.id+'/options/'+option.id);
+                                        optionToInc.update({
+                                            votes: firebase.firestore.FieldValue.increment(1)
+                                        });
+                                        calculateWinner(poll);
+                                        resolve(true);
+                                }
+                    })
                     }
+            })
         })
-        }
+    
     })
 }
 
@@ -218,3 +240,9 @@ export function close(poll) {
 }
 
 
+export function createPollLink(ownerId, pollName) {
+    let base = '/vote/'
+    base = base.concat(ownerId)
+    base = base.concat(pollName)
+    return base
+}

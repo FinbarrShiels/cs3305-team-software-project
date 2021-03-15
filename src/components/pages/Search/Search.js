@@ -33,8 +33,8 @@ function Search() {
         }
       })
       .catch(error => {
-        setSearchMsg("There was an error while searching, please try again")
         console.log(error)
+        setSearchMsg("There was an unexpected error while searching, please refresh the page and try again")
       })
     }
     else {
@@ -51,11 +51,11 @@ function Search() {
             <input type="search" placeholder="Search for a vote..." {...bindSearch}/>
             <FontAwesomeIcon icon={['fas', 'search']} onClick={handleSearch}/>
         </form>
-        { user !== null && <Link to='/organise' className="organiseButton">Organise a Vote</Link>}
+        {user !== null && <Link to='/organise' className="organiseButton">Organise a Vote</Link>}
       </div>
       <div className="profileResultGrid">
         {results.map(result => {
-        return <ResultVote key={result.data.voteCode} title={result.data.title} organiser={result.data.organiser} winner={result.data.winner}/>
+        return <ResultVote key={result.data.voteCode} result={result.data}/>
         })}
       </div>
     </div>

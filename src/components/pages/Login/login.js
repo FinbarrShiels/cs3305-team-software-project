@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './login.css'
 import loginLogo from '../../Images/id-card.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { firebaseTwitterLogIn, firebaseFacebookLogIn, firebaseGoogleLogIn, firebaseRegularLogIn } from '../../../firebaseFunctions/auth'
+import { firebaseTwitterLogIn, firebaseFacebookLogIn, firebaseGoogleLogIn } from '../../../firebaseFunctions/auth'
 import { useInput } from '../../../customHooks/form-input.js'
 import FormError from '../../formError'
-import { useHistory } from 'react-router-dom'
-import { useUserSet } from '../../../context/UserContext'
+import { useUserLogin } from '../../../context/UserContext'
 
 function LogIn() {
   const [ formErrors, setFormErrors ] = useState(() => ({
@@ -14,12 +13,13 @@ function LogIn() {
     password: "",
     loginFail: ""
   }))
+
+  const userLogin = useUserLogin()
   
-  const history = useHistory()
-  const userSet = useUserSet()
-  
-  const { value:username, bind:bindUsername, reset:resetUsername } = useInput("")
+  const { value:username, bind:bindUsername } = useInput("")
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
+  const [ loginMsg, setLoginMsg ] = useState("")
+  const [ submitting, setSubmitting ] = useState(false)
 
   const invalidDetails = () => {
     setFormErrors({
@@ -29,40 +29,50 @@ function LogIn() {
     })
   }
 
+  useEffect(() => {
+    if (formErrors.username === "" && formErrors.password === "" && submitting) {
+      setLoginMsg("Logging in...")
+      userLogin(username, password)
+      .then(() => {
+        setFormErrors({
+          username: "",
+          password: "",
+          loginFail: "",
+        })
+        setLoginMsg("Finished logging in... Redirecting now...")
+      })
+      .catch(error => {
+        setLoginMsg("")
+        switch(error) {
+          case 'auth/invalid-email':
+            invalidDetails()
+            break
+          case 'auth/user-not-found':
+            invalidDetails()
+            break
+          case 'auth/wrong-password':
+            invalidDetails()
+            break
+          default:
+            console.log("UNEXPECTED LOGIN ERROR")
+            console.log(error)
+            setLoginMsg("Sorry, we've had an unexpected error while trying to log you in")
+        }
+      })
+    }
+    else {
+      resetPassword()
+    }
+    setSubmitting(false)
+  }, [ submitting ])
+
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     setFormErrors({
       username: username.trim() === "" ? "Please enter your username" : "",
       password: password.trim() === "" ? "Please enter your password" : ""
     })
-    if (username.trim() !== "" & password.trim() !== "") {
-      console.log(`Attempt login:\nUsername: ${username}\nPassword: ${password}`) 
-      firebaseRegularLogIn(username, password)
-      .then(userObj => {
-        console.log("Successful login!")
-        userSet({
-          username: userObj.displayName,
-          email: userObj.email,
-          verified: userObj.emailVerified,
-          uid: userObj.uid,
-          fname: userObj.fname,
-          sname: userObj.sname
-        })
-        history.push("/");
-      })
-      .catch(error => {
-        console.log(`LOGIN ERROR: ${error}`)
-        resetUsername();
-        resetPassword();
-        switch(error) {
-          case 'auth/invalid-email':
-            invalidDetails();
-            break;
-          default:
-            console.log("UNEXPECTED ERROR");
-        }
-      })
-    }
+    setSubmitting(true)
   }
 
   return(
@@ -71,13 +81,13 @@ function LogIn() {
         <div className="title">
             <img src={loginLogo} alt="loginLogo"/>
         </div>
-
+        <p className="loginMsg"> {loginMsg} </p>
         <form className="loginForm" onSubmit={handleSubmit}>
           <FormError errorMsg={formErrors.username}/>
           <input 
             className="loginFormInput" 
             type="text" 
-            placeholder="Username" 
+            placeholder="Username / Email" 
             {...bindUsername} />
           <br/>
           <FormError errorMsg={formErrors.password}/>
@@ -100,13 +110,13 @@ function LogIn() {
         </div>
 
         <div className="thirdPartyLogins">
-            <a href="/" className="socialIcon" onClick={()=>firebaseFacebookLogIn()}>
+            <a href="/" className="socialIcon" onClick={() => firebaseFacebookLogIn()}>
                 <FontAwesomeIcon icon={['fab', 'facebook-f']} size="2x"/>
             </a>
-            <a href="/" className="socialIcon" onClick={()=>firebaseGoogleLogIn()}>
+            <a href="/" className="socialIcon" onClick={() => firebaseGoogleLogIn()}>
                 <FontAwesomeIcon icon={['fab', 'google']} size="2x"/>
             </a>
-            <a href="/" className="socialIcon" onClick={()=>firebaseTwitterLogIn()}>
+            <a href="/" className="socialIcon" onClick={() => firebaseTwitterLogIn()}>
                 <FontAwesomeIcon icon={['fab', 'twitter']} size="2x"/>
             </a>
         </div>
@@ -118,4 +128,4 @@ function LogIn() {
     </div>
   )
 }
-export default LogIn;
+export default LogIn
