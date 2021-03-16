@@ -73,6 +73,7 @@
     cursor: pointer;
     background-color: #1BBAFf;
     margin-bottom: 10px;
+    border: none;
 }
 
 .verifyEmail{
@@ -81,6 +82,7 @@
     border-radius: 25px;
     cursor: pointer;
     background-color: #1BBAFf;
+    border: none;
 }
 
 .profileAvatar{
