@@ -12,12 +12,14 @@ export function createPoll(name, description, anon, options) {
                 var organiserName = userObj.data().fname + " " + userObj.data().sname;
                 db.collection('/polls').doc(auth.currentUser.uid + name).set({
                         poll_name: name,
+                        poll_name_insensitive: name.toLowerCase(),
                         anonymousVoting: anon,
                         description: description,
                         owners: [auth.currentUser.uid],
                         type: "poll",
                         winner: "None",
                         organiser: organiserName,
+                        organiser_insensitive: organiserName.toLowerCase(),
                         open: true,
                         createdAt: date.getDate() + "/" + date.getMonth() + 1 + "/" + date.getFullYear()
                     })
@@ -42,7 +44,7 @@ export function searchPoll(searchString) {
     return new Promise((resolve, reject) => {
         var results = []
         var count = 0
-        db.collection('polls/').where('poll_name', '>=', searchString).where('poll_name', '<=', searchString + '~').get()
+        db.collection('polls/').where('poll_name_insensitive', '>=', searchString.toLowerCase()).where('poll_name_insensitive', '<=', searchString.toLowerCase() + '~').get()
             .then((snapshot) => {
                 snapshot.docs.forEach(doc => {
                     var poll = {
