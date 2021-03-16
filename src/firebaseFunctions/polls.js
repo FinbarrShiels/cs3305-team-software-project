@@ -127,21 +127,24 @@ export function vote(optionName, pollId) {
     return new Promise((resolve, reject) => {
         db.doc('polls/' + pollId).get()
             .then((pollDoc) => {
-                var verifyVoters = pollDoc.data().anonymousVoting
+                var anonVoting = pollDoc.data().anonymousVoting
                 db.collection('polls/' + pollId + '/options/').where('option_name', '==', optionName).get()
                     .then((querySnapshot) => {
                         let option = querySnapshot.docs[0]
-                        if (verifyVoters === true && auth.currentUser === null) {
+                        if (anonVoting === true && auth.currentUser === null) {
                             reject("Not verified")
                         } else if (pollDoc.data().open === false) {
                             reject("Poll closed")
-                        } else if (verifyVoters === false) {
+                        } else if (anonVoting === false) {
                             var optionToInc = db.doc('/polls/' + pollDoc.id + '/options/' + option.id)
                             optionToInc.update({
                                 votes: firebase.firestore.FieldValue.increment(1)
+                            }).then(()=>{
+                                calculateWinner(pollDoc)
+                                resolve("New vote registered")
+
                             })
-                            calculateWinner(pollDoc)
-                            resolve("New vote registered")
+                            
                         } else {
                             db.collection('users/' + auth.currentUser.uid + '/polls/')
                                 .get()
@@ -165,11 +168,14 @@ export function vote(optionName, pollId) {
                                             var candidateToDec = db.doc('/polls/' + pollDoc.id + '/options/' + pollVote.data().option)
                                             candidateToDec.update({
                                                 votes: firebase.firestore.FieldValue.increment(-1)
+                                            }).then(()=>{
+                                                calculateWinner(pollDoc)
+                                                resolve("New vote registered")
+                                                hasUserVotedBefore = true
+                
                                             })
-                                            hasUserVotedBefore = true
                                         }
-                                        calculateWinner(pollDoc)
-                                        resolve('vote changed')
+                                      
                                     })
                                     if (hasUserVotedBefore === false) {
                                         //console.log('newVote')
@@ -179,9 +185,12 @@ export function vote(optionName, pollId) {
                                         var optionToInc = db.doc('/polls/' + pollDoc.id + '/options/' + option.id)
                                         optionToInc.update({
                                             votes: firebase.firestore.FieldValue.increment(1)
+                                        }).then(()=>{
+                                            calculateWinner(pollDoc)
+                                            resolve("New vote registered")
+            
                                         })
-                                        calculateWinner(pollDoc)
-                                        resolve('New vote registered')
+                                        
                                     }
                                 })
                         }
@@ -191,17 +200,25 @@ export function vote(optionName, pollId) {
 }
 
 export function calculateWinner(poll) {
+    var isTie;
     var maxVotes = 0;
     var winner;
     var newWinner = false
     db.collection('/polls/' + poll.id + '/options/').get()
         .then((options) => {
             options.docs.forEach(option => {
-                if (option.data().votes > maxVotes) {
-                    console.log("success");
+                if (option.data().votes>maxVotes) {
+                    console.log(option.data().option_name, option.data().votes);
                     maxVotes = option.data().votes;
                     winner = option.data().option_name;
+                    isTie = false;
                     newWinner = true;
+                }
+                else if (option.data().votes === maxVotes && maxVotes !==0) {
+                    console.log("tie", option.data().option_name);
+                    console.log(maxVotes, option.data().votes)
+                    isTie = true;
+                    newWinner = false;
                 }
             })
             console.log(newWinner)
@@ -209,6 +226,12 @@ export function calculateWinner(poll) {
                 db.doc('polls/' + poll.id).update({
                     winner: winner
                 });
+            }
+            else if (isTie) {
+                db.doc('polls/' + poll.id).update({
+                    winner: "Draw"
+                });
+
             }
         })
 
