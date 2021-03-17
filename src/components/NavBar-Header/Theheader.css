@@ -14,7 +14,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   height: 100px;
-  padding: 0 100px;
+  padding: 0 50px;
   transition: background-color 0.25s ease 0s;
 }
 
@@ -108,11 +108,20 @@ nav {
 }
 
 .userBadge{
-  color: #02b9d2;
+  font-size: 20px;
+  color: #fff;
   text-transform: uppercase;
   text-decoration: none;
   font-weight: 500;
+  background-color: #6a51ff;
+  padding: 8px;
+  border-radius: 50%;
 }
+
+.userBadge:hover{
+  background-color: #02b9d2;
+}
+
 
 @media (max-width: 1200px) {
   nav{
