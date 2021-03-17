@@ -41,7 +41,7 @@ function Theheader() {
                     {user === null && <li><NavLink className="loginButton" to="/login">Log In</NavLink></li>}
                     {user === null && <li><NavLink className="signUpButton" to="/signUp"> Sign Up </NavLink></li>}
                     {user !== null && <li><NavLink className="logOutButton" to="/logip" onClick={() => userLogOut()}> Log Out </NavLink></li>}
-                    {user !== null && user.fname && user.sname && <p><NavLink to="/profile"> {`${user.fname} ${user.sname}`} </NavLink></p>}
+                    {user !== null && user.fname && user.sname && <p><NavLink className="userBadge" to="/profile"> {`${user.fname} ${user.sname}`} </NavLink></p>}
                 </div>
                 {/* <div className="searchIcon"><span>
                     <FontAwesomeIcon icon={['fas', 'search']}/>
