@@ -138,16 +138,17 @@ function SignUp() {
               <FormError errorMsg={formErrors.password}/>
               <div className="innerInput"><label htmlFor="password"> Password: </label>
               <input type="password" id="password" {...bindPassword}/></div>
-              <p> i 
-                <span>
-                  Passwords should contain the following: 
+              <div className="passwordError">ⓘ
+                <span className="passwordErrorSpan">
+                  Passwords should contain the following:
                   <ul>
-                     <li>At least one symbol\nOne number (0-9)</li>
+                     <li>At least one symbol</li>
+                     <li>One number (0-9)</li>
                      <li>At least one lower case and one upper case letter</li>
                      <li>(a-z)6-16 characters</li>
                   </ul>
                 </span>
-              </p>
+              </div>
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.confirmPass}/>
