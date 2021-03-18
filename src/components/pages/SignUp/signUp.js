@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import './signUp.css'
 import { useInput } from '../../../customHooks/form-input.js'
 import FormError from '../../formError'
-import { useHistory } from 'react-router-dom'
 import { useUserSignUp } from '../../../context/UserContext'
 import { isUsernameUnique } from '../../../firebaseFunctions/auth'
 
@@ -18,33 +17,35 @@ function SignUp() {
   })
 
   const userSignUp = useUserSignUp()
-
-  const { value:username, bind:bindUsername, reset:resetUsername } = useInput("")
+  const { value:username, bind:bindUsername } = useInput("")
   const { value:fname, bind:bindFname } = useInput("")
   const { value:sname, bind:bindSname } = useInput("")
-  const { value:email, bind:bindEmail, reset:resetEmail } = useInput("")
+  const { value:email, bind:bindEmail } = useInput("")
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
   const { value:confirmPass, bind:bindConfirmPass, reset:resetConfirmPass } = useInput("")
-  const [tosChecked, setTosChecked] = useState(false);
+  const [tosChecked, setTosChecked] = useState(false)
+  const [ submitting, setSubmitting ] = useState(false)
 
   const getUsernameErrors = () => {
     return new Promise((resolve, reject) => {
-      console.log("finding username");
-      let trimmed = username.trim();
-      if (trimmed ==="") {
+      console.log("finding username")
+      let trimmed = username.trim()
+      if (trimmed === "") {
+        console.log("Username empty")
         resolve("Please choose a username")
-      }
-      else {
+      } else {
         isUsernameUnique(trimmed)
-          .then((unique) => {
-              resolve("")
-          })
-          .catch(error =>{
+        .then((unique) => {
+          if (unique) {
+            resolve("")
+          } else {
             resolve("Sorry, this username is already taken")
-            console.log("error");
-          })
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
       }
-
     })
   }
 
@@ -56,29 +57,53 @@ function SignUp() {
       formErrors.email === "" &&
       formErrors.password === "" &&
       formErrors.confirmPass === "" &&
-      formErrors.tos === ""
+      formErrors.tos === "" &&
+      submitting === true
     ) {
-      userSignUp(fname, sname, email, password, username).then().catch()
+      userSignUp(fname, sname, email, password, username)
+      .then(result => {
+      })
+      .catch(error => {
+        console.log("Sign up error", error)
+      })
+    } else {
+      resetPassword()
+      resetConfirmPass()
     }
+    setSubmitting(false)
   }, [ formErrors ])
 
+  const isValidPassword = new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     getUsernameErrors()
       .then(userNameError => {
+        let fnameError = fname.trim() === "" ? "Please enter your first name" : ""
+        let snameError = sname.trim() === "" ? "Please enter your second name" : ""
+        let emailError = email.trim() === "" ? "Please enter your email" : ""
+        let confirmPassError = (confirmPass.trim() !== password.trim()) ? "Please make sure both passwords are the same" : ""
+        let tosError = !tosChecked ? "Please agree to the Terms of Service" : ""
+        let passwordError = ""
+        if (password.trim() === "") {
+          passwordError = "Please enter your password"
+        } else if (!isValidPassword.test(password.trim())) {
+          passwordError = "Password doesn't meet the criteria"
+        }
+        // setSubmitting(true)
         setFormErrors({
           username: userNameError,
-          fname: fname.trim() === "" ? "Please enter your first name" : "",
-          sname: sname.trim() === "" ? "Please enter your second name" : "",
-          email: email.trim() === "" ? "Please enter your email" : "",
-          password: password.trim() === "" ? "Please enter your password" : "",
-          confirmPass: (confirmPass.trim() !== password.trim()) ? "Please make sure both passwords are the same" : "",
-          tos: !tosChecked ? "Please agree to the Terms of Service" : ""
+          fname: fnameError,
+          sname: snameError,
+          email: emailError,
+          password: passwordError,
+          confirmPass: confirmPassError,
+          tos: tosError
         })
-
       })
-    
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   return(
@@ -113,6 +138,16 @@ function SignUp() {
               <FormError errorMsg={formErrors.password}/>
               <div className="innerInput"><label htmlFor="password"> Password: </label>
               <input type="password" id="password" {...bindPassword}/></div>
+              <p> i 
+                <span>
+                  Passwords should contain the following: 
+                  <ul>
+                     <li>At least one symbol\nOne number (0-9)</li>
+                     <li>At least one lower case and one upper case letter</li>
+                     <li>(a-z)6-16 characters</li>
+                  </ul>
+                </span>
+              </p>
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.confirmPass}/>
@@ -140,4 +175,4 @@ function SignUp() {
     </div>
   )
 }
-export default SignUp;
+export default SignUp
