@@ -5,9 +5,11 @@ import { getUserByUid } from '../../../firebaseFunctions/auth'
 import { getPoll, hasUserAlreadyVoted, vote } from '../../../firebaseFunctions/polls'
 import "./vote.css"
 import "./activePanel.js"
+import { useUser } from '../../../context/UserContext'
 
 function Vote() {
 
+    const user = useUser()
     const { pollId } = useParams()
 
     const getCurrentPoll = () => {
@@ -32,7 +34,7 @@ function Vote() {
                     winner: newPoll.poll.data().winner
                 })
                 // determine if user has already voted in this poll and what they voted on
-                hasUserAlreadyVoted(`${newPoll.poll.data().owners[0]}${newPoll.poll.data().poll_name}`)
+                user !== null && hasUserAlreadyVoted(`${newPoll.poll.data().owners[0]}${newPoll.poll.data().poll_name}`)
                 .then(result => {
                     if (result !== false) {
                         let voteIndex = parseInt(result.replace("option",""))
@@ -93,7 +95,7 @@ function Vote() {
                 console.log(error)
                 switch (error) {
                     case "Not verified":
-                        setVoteMsg("This poll only lets verified users vote. Please verify your email")
+                        setVoteMsg("This poll only lets verified users vote. Please make sure you're logged in and have verified your email")
                         break
                     case "Poll closed":
                         setVoteMsg("Sorry it seems this vote has closed and is no longer accepting votes")
@@ -136,7 +138,7 @@ function Vote() {
                             })}
                         </div>
                         <div className="castVote">
-                            <button onClick={() => confirmVote()}> { alreadyVoted ? "Change Vote" : "Confirm Vote"} </button>
+                            { user !== null && <button onClick={() => confirmVote()}> { alreadyVoted ? "Change Vote" : "Confirm Vote"} </button> }
                         </div>
                     </div>
                 }
