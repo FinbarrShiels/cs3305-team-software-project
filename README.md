@@ -58,7 +58,7 @@ To begin deploying, initialise the project root as a firebase project.
 ``` 
 firebase init
 ```
-Follow the prompts in terminal, installing only firestore and hosting, registering the local app as specified earler depending on the user.
+Follow the prompts in terminal, installing only firestore and hosting, registering the local app as specified earlier depending on the user.
 
 To build the app for deployment, first edit `PROJECT_ROOT/firebase.json` and find the hosting rules.
 ```
@@ -82,8 +82,7 @@ const firebaseConfig = {
   appId: USER_APP_ID
 }
 ```
-This can be found within project settings on the Firebase console.
-This can be found at https://console.firebase.google.com/u/"USER"/project/"USER_PROJECT_ID"/settings/general/
+This can be found within project settings on the Firebase console at https://console.firebase.google.com/u/"USER"/project/"USER_PROJECT_ID"/settings/general/
 
 Then build with
 ```
