@@ -14,7 +14,7 @@ function TeamMemberCard(props) {
                 {props.statement}
             </p>
             <div className="gitHubLink">
-                <a href={props.github} >
+                <a target="_blank" rel="noreferrer" href={props.github} >
                     <FontAwesomeIcon icon={['fab', 'github']} size="2x"/>
                 </a>
             </div>

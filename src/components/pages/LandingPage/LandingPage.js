@@ -34,7 +34,7 @@ function LandingPage() {
         <div className="sectionTwo">
             <div className="rightText">
                 <h3>Setup polls or elections</h3>
-                <p>Setup a poll or election for any reason. Work,Union or Class Rep</p>
+                <p>Setup a poll or election for any reason. Work, Union or Class Rep</p>
             </div>
             <div className="leftImage">
                 <img src={vote_card} alt="computer_vote"/>
