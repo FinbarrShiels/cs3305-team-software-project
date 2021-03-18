@@ -4,7 +4,7 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 
-export function createPoll(name, description, anon, options) {
+export function createPoll(name, description, anon, options) {  // takes in 4 parameters 2 strings, a boolean, and an array of strings
     return new Promise((resolve, reject) => {
         var date = new Date()
         db.doc('users/' + auth.currentUser.uid).get()
@@ -160,22 +160,32 @@ export function vote(optionName, pollId) {
 
                                         } else if (pollVote.id === pollDoc.id && pollVote.data().option !== option.id) {
                                             //console.log("changed vote")
+                                            hasUserVotedBefore = true
                                             db.collection('users/' + auth.currentUser.uid + '/polls/').doc(pollDoc.id).set({
                                                 option: option.id
                                             })
-                                            var candidateToInc = db.doc('/polls/' + pollDoc.id + '/options/' + option.id)
-                                            candidateToInc.update({
+                                            .then(() => {
+                                                var candidateToInc = db.doc('/polls/' + pollDoc.id + '/options/' + option.id)
+                                                candidateToInc.update({
                                                 votes: firebase.firestore.FieldValue.increment(1)
+                                                })
+                                                .then(()=>{
+                                                        var candidateToDec = db.doc('/polls/' + pollDoc.id + '/options/' + pollVote.data().option)
+                                                        candidateToDec.update({
+                                                        votes: firebase.firestore.FieldValue.increment(-1)
+                                                        }).
+                                                        then(()=>{
+                                                            calculateWinner(pollDoc)
+                                                            resolve("New vote registered")
+                                                           
+                            
+                                                        })
+    
+                                                })
+
                                             })
-                                            var candidateToDec = db.doc('/polls/' + pollDoc.id + '/options/' + pollVote.data().option)
-                                            candidateToDec.update({
-                                                votes: firebase.firestore.FieldValue.increment(-1)
-                                            }).then(()=>{
-                                                calculateWinner(pollDoc)
-                                                resolve("New vote registered")
-                                                hasUserVotedBefore = true
-                
-                                            })
+                                           
+                                            
                                         }
                                       
                                     })
