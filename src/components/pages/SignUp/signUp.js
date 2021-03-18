@@ -88,7 +88,7 @@ function SignUp() {
         if (password.trim() === "") {
           passwordError = "Please enter your password"
         } else if (!isValidPassword.test(password.trim())) {
-          passwordError = "Password doesn't meet the criteria"
+          passwordError = "Password isn't strong enough"
         }
         // setSubmitting(true)
         setFormErrors({
