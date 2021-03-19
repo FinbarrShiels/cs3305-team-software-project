@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router'
-import { useState } from 'react/cjs/react.development'
+import { useEffect, useState } from 'react/cjs/react.development'
 import { getUserByUid } from '../../../firebaseFunctions/auth'
 import { getPoll, hasUserAlreadyVoted, vote } from '../../../firebaseFunctions/polls'
 import "./vote.css"
@@ -12,7 +12,7 @@ function Vote() {
     const user = useUser()
     const { pollId } = useParams()
 
-    const getCurrentPoll = () => {
+    useEffect(() => {
         getPoll(pollId)
         .then(newPoll => {
             getUserByUid(newPoll.poll.data().owners[0])
@@ -61,10 +61,10 @@ function Vote() {
             setFindingPoll(false)
             setPollError(true)
         })
-    }
+    }, [ user ])
     const [ findingPoll, setFindingPoll ] = useState(true)
     const [ pollError, setPollError ] = useState(false)
-    const [ currentPoll, setCurrentPoll ] = useState(() => getCurrentPoll())
+    const [ currentPoll, setCurrentPoll ] = useState(null)
     const [ selectedOption, setSelectedOption ] = useState(null)
     const [ voteConfirmed, setVoteConfirmed ] = useState({ status: false })
     const [ voteMsg, setVoteMsg ] = useState("")
