@@ -6,7 +6,6 @@ import LogIn from './pages/Login/login'
 import signUp from './pages/SignUp/signUp'
 import AboutUs from './pages/AboutUs/AboutUs'
 import ForgotPassword from './pages/PasswordReset/ForgotPassword'
-import RequestSent from './pages/PasswordResetConfirmation/RequestSent'
 import Search from './pages/Search/Search'
 import Profile from './pages/Profile/Profile'
 import ChangePassword from './pages/ChangePassword/ChangePassword'
@@ -25,7 +24,6 @@ const Main = () => (
     <Route path="/Login" component={LogIn} />
     <Route path="/AboutUs" component={AboutUs} />
     <Route path="/ForgotPassword" component={ForgotPassword} />
-    <Route path="/RequestSent" component={RequestSent} />
     <Route path="/ChangePassword" component={ChangePassword} />
     <Route path="/AnonymousV" component={AnonymousV}/>
     <Route path="/Search" component={Search}/>
