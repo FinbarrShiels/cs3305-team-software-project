@@ -138,7 +138,7 @@ function SignUp() {
             <div className="formInputSection">
               <FormError errorMsg={formErrors.password}/>
               <div className="innerInput"><label htmlFor="password"> Password: </label>
-              <input type={passwordShown ? "text" : "password"} id="password" {...bindPassword}/><button onClick={(e) => {e.preventDefault(); setPasswordShown(!passwordShown)}}>Show Password</button></div>
+              <input type={passwordShown ? "text" : "password"} id="password" {...bindPassword}/></div>
               <div className="passwordError">ⓘ
                 <span className="passwordErrorSpan">
                   Passwords should contain the following:

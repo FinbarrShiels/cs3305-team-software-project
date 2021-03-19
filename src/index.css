@@ -3,6 +3,7 @@ html,body{
     margin:0;
     padding:0;
     background-color: #1A2A6C;
+    #font-family: Averta-Regular,sans-serif;
 }
 
 body>#root>div {
