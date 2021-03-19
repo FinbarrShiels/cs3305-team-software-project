@@ -40,7 +40,11 @@ function Theheader() {
                     <li><NavLink to="/aboutUs"> About Us </NavLink></li>
                     {user === null && <li><NavLink className="loginButton" to="/login">Log In</NavLink></li>}
                     {user === null && <li><NavLink className="signUpButton" to="/signUp"> Sign Up </NavLink></li>}
+<<<<<<< HEAD
                     {user !== null && <li><NavLink className="logOutButton" to="" onClick={() => userLogOut()}> Log Out </NavLink></li>}
+=======
+                    {user !== null && <li><NavLink className="logOutButton" onClick={() => userLogOut()}> Log Out </NavLink></li>}
+>>>>>>> 9d2e62c77be6e013b41c42b882b6ee966f16641a
                     {user !== null && user.fname && user.sname && <p><NavLink className="userBadge" to="/profile"> {`${user.fname.charAt(0)} ${user.sname.charAt(0)}`} </NavLink></p>}
                 </div>
                 {/* <div className="searchIcon"><span>
