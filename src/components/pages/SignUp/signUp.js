@@ -4,6 +4,7 @@ import { useInput } from '../../../customHooks/form-input.js'
 import FormError from '../../formError'
 import { useUserSignUp } from '../../../context/UserContext'
 import { isUsernameUnique } from '../../../firebaseFunctions/auth'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function SignUp() {
   const [ formErrors, setFormErrors ] = useState({
@@ -137,9 +138,13 @@ function SignUp() {
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.password}/>
-              <div className="innerInput"><label htmlFor="password"> Password: </label>
-              <input type={passwordShown ? "text" : "password"} id="password" {...bindPassword}/></div>
-              <div className="passwordError">ⓘ
+              <div className="passwordInput"><label htmlFor="password"> Password: </label>
+              <input className="inputField" type={passwordShown ? "text" : "password"} id="password" {...bindPassword}/>
+              <button onClick={(e) => {e.preventDefault(); setPasswordShown(!passwordShown)}}>
+                <FontAwesomeIcon className="icon" icon={['fa', 'eye']} size="lg"/>
+              </button>
+              </div>
+              <div className="passwordError"><p className="icon">ⓘ</p>
                 <span className="passwordErrorSpan">
                   Passwords should contain the following:
                   <ul>
