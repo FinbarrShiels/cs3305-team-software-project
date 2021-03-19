@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { firebaseTwitterLogIn, firebaseFacebookLogIn, firebaseGoogleLogIn } from '../../../firebaseFunctions/auth'
 import { useInput } from '../../../customHooks/form-input.js'
 import FormError from '../../formError'
-import { useUserLogin } from '../../../context/UserContext'
+import { useUser, useUserLogin, useUserLogOut } from '../../../context/UserContext'
 
 function LogIn() {
   const [ formErrors, setFormErrors ] = useState(() => ({
@@ -14,7 +14,9 @@ function LogIn() {
     loginFail: ""
   }))
 
+  const user = useUser()
   const userLogin = useUserLogin()
+  const userLogOut = useUserLogOut()
   
   const { value:username, bind:bindUsername } = useInput("")
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
@@ -76,6 +78,7 @@ function LogIn() {
   }
 
   return(
+    user === null ?
     <div className="loginContainer">
       <div className="mainLogin">
         <div className="title">
@@ -125,6 +128,11 @@ function LogIn() {
             <a href="/ForgotPassword"> Forgot Password </a>
         </div>
       </div>
+    </div>
+  :
+    <div>
+      <h2> You seem to be already logged in, you don't need to be here... </h2>
+      <h3> Click <a onClick={() => userLogOut()}> here </a> to log out</h3>
     </div>
   )
 }

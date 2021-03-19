@@ -55,7 +55,7 @@ function AboutUs() {
         </div>
       </div>
       <div className="projectLinks">
-          <a href="https://github.com/FinbarrShiels/cs3305-team-software-project">
+          <a target="_blank" rel="noreferrer" href="https://github.com/FinbarrShiels/cs3305-team-software-project">
             <FontAwesomeIcon className="icon" icon={['fab', 'github',]} size="2x"/>
             cs3305-team-software-project
           </a>
