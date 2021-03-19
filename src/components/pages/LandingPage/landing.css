@@ -41,7 +41,19 @@
     margin: 20px;
     display: block;
     font-size: 26px;
-    text-shadow: 0 0 10px #000;
+    #text-shadow: 0 0 10px #000;
+}
+
+.one{
+    color: #5daeb6;
+}
+
+.two{
+    color: #e8663d;
+}
+
+.three{
+    color: #0d8e74;
 }
 
 .heroButton{
