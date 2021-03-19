@@ -144,7 +144,7 @@ function SignUp() {
                 <FontAwesomeIcon className="icon" icon={['fa', 'eye']} size="lg"/>
               </button>
               </div>
-              <div className="passwordError">ⓘ
+              <div className="passwordError"><p className="icon">ⓘ</p>
                 <span className="passwordErrorSpan">
                   Passwords should contain the following:
                   <ul>
