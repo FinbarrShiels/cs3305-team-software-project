@@ -8,6 +8,7 @@ import {createPoll, createPollLink} from "../../../firebaseFunctions/polls"
 import OrganiseOption from './OrganiseOption'
 import { useHistory } from 'react-router'
 import { useUser } from '../../../context/UserContext'
+import { useEffect } from 'react/cjs/react.development'
 
 function Organise() {
 
@@ -24,6 +25,10 @@ function Organise() {
     const [ anonChecked, setAnonChecked ] = useState(false)
     const [ options, setOptions ] = useState([])
     const [ nextIndex, setNextIndex ] = useState(0)
+    const [ formErrors, setFormErrors ] = useState({
+        title: null,
+        desc: null
+    })
     
     const addNewOption = e => {
         e.preventDefault()
@@ -53,21 +58,33 @@ function Organise() {
         return newArray
     }
     
-    const createVote = e => {
+    const handleSubmit = e => {
         e.preventDefault()
-        let optionCaptions = convertOptions()
-        console.log("Creating vote with the following options:")
-        console.log(optionCaptions)
-        createPoll(title, desc, anonChecked, optionCaptions)
-        .then(response => {
-            console.log(`SUCCESS CREATING POLL: ${response}`)
-            history.push(createPollLink(user.uid, title))
-        })
-        .catch(error => {
-            console.log('ERROR CREATING POLL:')
-            console.log(error)
+        setFormErrors({
+            title: title.trim() === "" ? "Please give your vote a title" : "",
+            desc: desc.trim() === "" ? "Please give your vote a description" : ""
         })
     }
+
+    useEffect(() => {
+        if (
+            formErrors.title === "" &&
+            formErrors.desc === ""
+        ) {
+            let optionCaptions = convertOptions()
+            console.log("Creating vote with the following options:")
+            console.log(optionCaptions)
+            createPoll(title, desc, anonChecked, optionCaptions)
+            .then(response => {
+                console.log(`SUCCESS CREATING POLL: ${response}`)
+                history.push(createPollLink(user.uid, title))
+            })
+            .catch(error => {
+                console.log('ERROR CREATING POLL:')
+                console.log(error)
+            })
+        }
+    }, [ formErrors ])
 
     return (
 
@@ -78,7 +95,7 @@ function Organise() {
                 <img src={clipboard} alt="img"/>
             </div>
             <div className="rightTab">
-                <form className="voteOptions" onSubmit={createVote}>
+                <form className="voteOptions" onSubmit={handleSubmit}>
                     <div className="title">
                     <label>Title:</label>
                         <input type="text" {...bindTitle}/>
@@ -91,14 +108,6 @@ function Organise() {
                     <label> Allow Anonymous Voters: </label>
                         <Switch checked={anonChecked} onChange={setAnonChecked}/>
                     </div>
-                    <div className="createOptions">
-                    <h3> Create Options </h3>
-                    <div onClick={addNewOption}>
-                        <label htmlFor="customOption"> New Option: </label>
-                        <input className="createOptionsInput" type="text" {...bindCustomOption} id="customOption"></input>
-                        <input className="createOptionsButton" type="submit" value="Add Option"></input>
-                    </div>
-                    </div>
                     {/* <div className="scheduleStart">
                     <label >Start:</label>
                     <input type="date" {...bindStartDate}/>
@@ -109,7 +118,15 @@ function Organise() {
                     <input type="date" {...bindEndDate}/>
                     <input type="time" {...bindEndTime}/>
                     </div> */}
-
+                    <div className="createOptions">
+                        <h3> Create Options </h3>
+                        <p>{optionMsg}</p>
+                        <div onClick={addNewOption}>
+                            <label htmlFor="customOption"> New Option: </label>
+                            <input className="createOptionsInput" type="text" {...bindCustomOption} id="customOption"></input>
+                            <input className="createOptionsButton" type="submit" value="Add Option"></input>
+                        </div>
+                    </div>
                     <div className="createVote">
                         <input type="submit" value="Create"/>
                     </div>
