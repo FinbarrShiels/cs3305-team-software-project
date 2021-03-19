@@ -10,19 +10,14 @@ const actionCodeSettings = {
 
 //Reset password from landing page if user has forgotten their password and cannot login
 export function forgotPassword(email) {
-    auth.sendPasswordResetEmail(email, actionCodeSettings)
-    .catch(error => {
-        switch (error.code) {
-            case 'auth/invalid-email':
-                console.log("Not a valid email address");
-                break;
-            case 'auth/user-not-found':
-                console.log("User does not exist, please enter a valid user");
-                break;
-            default:
-                console.log(error.message);
-                break;
-        }
+    return new Promise((resolve, reject) => {
+        auth.sendPasswordResetEmail(email, actionCodeSettings)
+        .then(() => {
+            resolve()
+        })
+        .catch(error => {
+            reject(error)
+        })
     })
 }
 

@@ -222,7 +222,7 @@ export function isUsernameUnique(username) {
                 resolve(isUnique)
             }
             else {
-                reject(isUnique)
+                resolve(isUnique)
             }
         })
         .catch((error) => {
