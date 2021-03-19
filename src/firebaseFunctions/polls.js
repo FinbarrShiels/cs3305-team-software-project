@@ -57,14 +57,41 @@ export function searchPoll(searchString) {
                             voteCode: count
                         }
                     }
+                    if (count>=24) {
+                        resolve(results)
+                    }
                     count = count + 1;
                     results.push(poll);
-                })
-                resolve(results)
+                    })
+                    db.collection('polls/').where('organiser_insensitive', '>=', searchString.toLowerCase()).where('organiser_insensitive', '<=', searchString.toLowerCase() + '~').get()
+                    .then((snapshot) => {
+                        snapshot.docs.forEach(doc => {
+                            var poll = {
+                                type: doc.data().type,
+                                data: {
+                                    title: doc.data().poll_name,
+                                    organiser: doc.data().organiser,
+                                    ownerId: doc.data().owners[0],
+                                    winner: doc.data().winner,
+                                    voteCode: count
+                                    }
+                                }
+                                if (count>=24) {
+                                    resolve(results)
+                                }
+                                count = count + 1;
+                                results.push(poll);
+                            })
+                        resolve(results)
+                        })
+                        .catch(error => {
+                            reject(error)
+                        }) 
             }).catch(error => {
                 reject(error)
             })
-    })
+
+        })
 }
 
 export function pollsForUser() {
