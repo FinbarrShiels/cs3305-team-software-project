@@ -41,7 +41,6 @@ function LogIn() {
           password: "",
           loginFail: "",
         })
-        setLoginMsg("Finished logging in... Redirecting now...")
       })
       .catch(error => {
         setLoginMsg("")
