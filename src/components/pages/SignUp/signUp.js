@@ -25,6 +25,7 @@ function SignUp() {
   const { value:confirmPass, bind:bindConfirmPass, reset:resetConfirmPass } = useInput("")
   const [tosChecked, setTosChecked] = useState(false)
   const [ submitting, setSubmitting ] = useState(false)
+  const [ passwordShown, setPasswordShown ] = useState(false)
 
   const getUsernameErrors = () => {
     return new Promise((resolve, reject) => {
@@ -137,7 +138,7 @@ function SignUp() {
             <div className="formInputSection">
               <FormError errorMsg={formErrors.password}/>
               <div className="innerInput"><label htmlFor="password"> Password: </label>
-              <input type="password" id="password" {...bindPassword}/></div>
+              <input type={passwordShown ? "text" : "password"} id="password" {...bindPassword}/><button onClick={(e) => {e.preventDefault(); setPasswordShown(!passwordShown)}}>Show Password</button></div>
               <div className="passwordError">ⓘ
                 <span className="passwordErrorSpan">
                   Passwords should contain the following:
@@ -153,7 +154,7 @@ function SignUp() {
             <div className="formInputSection">
               <FormError errorMsg={formErrors.confirmPass}/>
               <div className="innerInput"><label htmlFor="confirmPassword"> Confirm Password: </label>
-              <input type="password" id="confirmPassword" {...bindConfirmPass}/></div>
+              <input type={passwordShown ? "text" : "password"} id="confirmPassword" {...bindConfirmPass}/></div>
             </div>
             <div className="checkboxSection">
               <FormError errorMsg={formErrors.tos}/>
