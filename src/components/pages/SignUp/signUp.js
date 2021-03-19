@@ -83,7 +83,7 @@ function SignUp() {
         let fnameError = fname.trim() === "" ? "Please enter your first name" : ""
         let snameError = sname.trim() === "" ? "Please enter your second name" : ""
         let emailError = email.trim() === "" ? "Please enter your email" : ""
-        let confirmPassError = (confirmPass.trim() !== password.trim()) ? "Please make sure both passwords are the same" : ""
+        let confirmPassError = confirmPass.trim() !== password.trim() ? "Please make sure both passwords are the same" : ""
         let tosError = !tosChecked ? "Please agree to the Terms of Service" : ""
         let passwordError = ""
         if (password.trim() === "") {
@@ -91,7 +91,7 @@ function SignUp() {
         } else if (!isValidPassword.test(password.trim())) {
           passwordError = "Password isn't strong enough"
         }
-        // setSubmitting(true)
+        setSubmitting(true)
         setFormErrors({
           username: userNameError,
           fname: fnameError,

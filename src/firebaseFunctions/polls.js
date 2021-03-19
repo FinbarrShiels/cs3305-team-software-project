@@ -2,32 +2,35 @@ import firebase from "firebase/app";
 import "firebase/auth";
 const auth = firebase.auth();
 const db = firebase.firestore();
+const timestamp = firebase.firestore.FieldValue.serverTimestamp;
 
 
 export function createPoll(name, description, anon, options) {  // takes in 4 parameters 2 strings, a boolean, and an array of strings
-    return new Promise((resolve, reject) => {
-        var date = new Date()
-        db.doc('users/' + auth.currentUser.uid).get()
-            .then((userObj) => {
-                var organiserName = userObj.data().fname + " " + userObj.data().sname;
-                db.collection('/polls').doc(auth.currentUser.uid + name).set({
+    return new Promise((resolve, reject) => { 
+        var date = new Date() //date variable to store the time a vote is created
+        db.doc('users/' + auth.currentUser.uid).get() // get the document associated with the users account
+            .then((userObj) => { 
+                var organiserName = userObj.data().fname + " " + userObj.data().sname; // concatenate fname and sname to get the users full name
+                db.collection('/polls').doc(auth.currentUser.uid + name).set({ //create a poll document with the id auth.currentUser.uid + name.
+                        //set the fields to the relevant inputs to the function
                         poll_name: name,
-                        poll_name_insensitive: name.toLowerCase(),
-                        anonymousVoting: anon,
+                        poll_name_insensitive: name.toLowerCase(), // poll_name_insensitive is stored to make the search function case insensitive
+                        anonymousVoting: anon, 
                         description: description,
-                        owners: [auth.currentUser.uid],
+                        owners: [auth.currentUser.uid], //owners is an array to enable functionality later to allow giving more users owner privileges
                         type: "poll",
                         winner: "None",
                         organiser: organiserName,
                         organiser_insensitive: organiserName.toLowerCase(),
                         open: true,
-                        createdAt: date.getDate() + "/" + date.getMonth() + 1 + "/" + date.getFullYear()
+                        createdAt: date.getDate() + "/" + date.getMonth() + 1 + "/" + date.getFullYear(),
+                        timestamp:  timestamp()
                     })
                     .then(() => {
-                        for (var i = 0; i < options.length; i++) {
-                            db.collection('/polls').doc(auth.currentUser.uid + name).collection("options").doc('option' + i).set({
+                        for (var i = 0; i < options.length; i++) { //iterate through the options array
+                            db.collection('/polls').doc(auth.currentUser.uid + name).collection("options").doc('option' + i).set({ //create an option document for each option
                                 option_name: options[i],
-                                votes: 0
+                                votes: 0 //initialize it's votes at 0
                             })
                         }
                         resolve(true)
@@ -40,10 +43,10 @@ export function createPoll(name, description, anon, options) {  // takes in 4 pa
     })
 }
 
-export function searchPoll(searchString) {
+export function searchPoll(searchString) { // takes 1 input which is a string 
     return new Promise((resolve, reject) => {
-        var results = []
-        var count = 0
+        var results = [] // array for possible results
+        var count = 0 //
         db.collection('polls/').where('poll_name_insensitive', '>=', searchString.toLowerCase()).where('poll_name_insensitive', '<=', searchString.toLowerCase() + '~').get()
             .then((snapshot) => {
                 snapshot.docs.forEach(doc => {
@@ -57,8 +60,10 @@ export function searchPoll(searchString) {
                             voteCode: count
                         }
                     }
+                    if (count <=24) {
                     count = count + 1;
                     results.push(poll);
+                    }
                 })
                 resolve(results)
             }).catch(error => {
@@ -67,6 +72,18 @@ export function searchPoll(searchString) {
     })
 }
 
+export function getRecentVotes() {
+    return new Promise((resolve, reject)=> {
+        var recentVotes =[];
+        db.collection('/polls/').orderBy('timestamp', 'desc').get()
+        .then((querySnapshot) => {
+            querySnapshot.docs.forEach((doc) => {   
+                recentVotes.push(doc);
+            })
+        })
+    })
+   
+}
 export function pollsForUser() {
     return new Promise((resolve, reject) => {
         var userPolls = [];
@@ -137,7 +154,7 @@ export function vote(optionName, pollId) {
                             reject("Not verified")
                         } else if (pollDoc.data().open === false) {
                             reject("Poll closed")
-                        } else if (anonVoting === false) {
+                        } else if (anonVoting === true) {
                             var optionToInc = db.doc('/polls/' + pollDoc.id + '/options/' + option.id)
                             optionToInc.update({
                                 votes: firebase.firestore.FieldValue.increment(1)
