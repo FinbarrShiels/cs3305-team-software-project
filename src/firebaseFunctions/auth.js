@@ -32,45 +32,38 @@ export var firebaseRegister = function(fname, sname, email, pass, username) {
     {
     let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
     recaptcha.verify().then(() => {
-        //console.log("reCAPTCHA verified")
         auth.createUserWithEmailAndPassword(email, pass).then(userCred => {
-            //console.log("User created successfully");
-            //console.log(userCred.user.email, userCred.user.emailVerified);
             addNewUserToFirestore(userCred.user.uid, fname, sname, userCred.user.email, username);
             userCred.user.sendEmailVerification(actionCodeSettings).then(() => {
-                //console.log("Verification email sent");
                 recaptcha.clear()
                 resolve(true)
             }).catch(error => {
-                //console.log("Send email verification error catch", error.code);
                 recaptcha.clear()
                 reject(error.code)
             })
         }).catch(error => {
-            //console.log("Create user error catch", error.code);
             recaptcha.clear()
             reject(error.code)
         })
     }).catch(error => {
-        //console.log("Outermost verify error catch", error.code);
         recaptcha.clear()
         reject(error.code)
     })
     })
 }
-
-export var firebaseRegularLogIn = (email, pass) => {
+// takes in email and password parameters and authenticates the user based on the parameters
+export var firebaseRegularLogIn = (email, pass) => { 
     return new Promise((resolve, reject) => {
-        auth.signInWithEmailAndPassword(email, pass)
-        .then(userCred => {
+        auth.signInWithEmailAndPassword(email, pass) // call the firebase method to authenticate users with email and password inputs
+        .then(userCred => { // a user credential is returned which will have attributes such as uid and email
             let auth_user = userCred.user
-            db.doc('users/'+auth.currentUser.uid).get()
-            .then(userDoc => {
-                resolve({
+            db.doc('users/'+auth.currentUser.uid).get() // query with path to document associated with the user that has been authenticated
+            .then(userDoc => { // returns the document associated with the user 
+                resolve({ // resolve a JSON object with data that the front end will use 
+                    username: auth_user.displayName,
                     email: auth_user.email,
                     uid: auth_user.uid,
                     verified: auth_user.emailVerified,
-                    username: userDoc.data().username,
                     fname: userDoc.data().fname,
                     sname: userDoc.data().sname,
                     bio: userDoc.data().bio
@@ -86,11 +79,11 @@ export var firebaseRegularLogIn = (email, pass) => {
         })})
 }
 
-export function getUserByUid(uid) {
+export function getUserByUid(uid) { // find the details of the user assocaited with the uid input
     return new Promise((resolve, reject) => {
-        db.doc('users/'+uid).get()
-        .then((userDoc) => {
-            resolve({
+        db.doc('users/'+uid).get() // query with path to the current user's document 
+        .then((userDoc) => { // returns the user document
+            resolve({ // resolve a JSON object with data fields that the front end will use for their profile page
                 email: userDoc.data().email,
                 fname: userDoc.data().fname,
                 sname: userDoc.data().sname,
@@ -105,40 +98,46 @@ export function getUserByUid(uid) {
     })
 }
 
-function addNewUserToFirestore(uid, fname, sname, email, username) {
-    console.log("Registering user:", uid, email);
-    var alreadyExists = false;
-    var query = db.doc('users/'+uid);
-    query.get()
-        .then((user) => {
-            alreadyExists = true;
-        }).catch((error) => {
-            alreadyExists = false
-        })
-    if (alreadyExists === false) {
-        db.collection('users').doc(uid).set({ // the 'users/userID' in firestore will
-        // later be used to track what elections a user has voted in, and the ones they've organised
-        username: username,
-        email: email,
-        fname: fname,
-        sname: sname
-        })
-        return true;
-    }
-    else {
-        return uid
-    }
+function addNewUserToFirestore(uid, fname, sname, email, username) { // when a new user signs up to our website, we add their details to a document in firestore
+    return new Promise((resolve, reject) => {
+        console.log("Registering user:", uid, email);
+        var alreadyExists = false; // used to see if the user already exists in our firestore user collection
+        var query = db.doc('users/'+uid); // query with path to the user document, if it already exists 
+        query.get()
+            .then((user) => { // if a document is found
+                alreadyExists = true; // then the user already exists in our firestore user collection
+            }).catch((error) => { // if a document is not found
+                alreadyExists = false // then the user doesn't exist in our firestore user collection
+            })
+        if (alreadyExists === false) { // if user isn't in the Firestore collection
+            db.collection('users').doc(uid).set({ // the 'users/userID' in firestore will
+            // later be used to track what elections a user has voted in, and the ones they've organised
+            username: username,
+            email: email,
+            fname: fname,
+            sname: sname
+            })
+            resolve(true);
+        }
+        else {
+            reject(uid)
+        }
+    })
   
 }
 
-export var firebaseGoogleLogIn= function() {
+export var firebaseGoogleLogIn= function() { // function to authenticate a user in via their Google account
     return new Promise(function(resolve, reject) {
-        let provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider)
-            .then((userCred) => {
-                console.log(userCred.user.email)
-                var result = addNewUserToFirestore(userCred.user.uid, userCred.user.email);
-                resolve(result);
+        let provider = new firebase.auth.GoogleAuthProvider(); // create a instance of the google provider object
+        auth.signInWithPopup(provider) // authenticate the user with Firebase using the provider object and a pop up window
+            .then((userCred) => { // if user successfully logs in, a userCredential is provided
+                addNewUserToFirestore(userCred.user.uid, userCred.user.email) // call the addNewUserToFirestore to create a user document for this user
+                .then((result) => {
+                    resolve(userCred); 
+                })
+                .catch((resultUid) => {
+                    resolve(userCred)
+                })
             }).catch((error) => {
                 reject(error.code);
             });  
@@ -150,28 +149,41 @@ export var firebaseGoogleLogIn= function() {
 export var firebaseTwitterLogIn= function() {
     return new Promise(function(resolve, reject){
     let provider = new firebase.auth.TwitterAuthProvider(); 
-    auth.signInWithPopup(provider)
-        .then((userCred) => {
-            var result = addNewUserToFirestore(userCred.user.uid, userCred.user.email);
-            resolve(result)
-        }).catch((error) => {
-            reject(error.code);
-        }); 
+    auth.signInWithPopup(provider) // authenticate the user with Firebase using the provider object and a pop up window
+            .then((userCred) => { // if user successfully logs in, a userCredential is provided
+                addNewUserToFirestore(userCred.user.uid, userCred.user.email) // call the addNewUserToFirestore to create a user document for this user
+                .then((result) => {
+                    resolve(userCred); 
+                })
+                .catch((resultUid) => {
+                    resolve(userCred)
+                })
+            }).catch((error) => {
+                reject(error.code);
+            });  
+
     })
+    
 }
 
 export var firebaseFacebookLogIn= function() {
     return new Promise(function(resolve, reject){
         let provider = new firebase.auth.FacebookAuthProvider();
-        auth.signInWithPopup(provider)
-        .then((userCred) => {
-            var result = addNewUserToFirestore(userCred.user.uid, userCred.user.email);
-            resolve(result)
-        }).catch((error) => {
-            reject(error.code);
-        }); 
+        auth.signInWithPopup(provider) // authenticate the user with Firebase using the provider object and a pop up window
+            .then((userCred) => { // if user successfully logs in, a userCredential is provided
+                addNewUserToFirestore(userCred.user.uid, userCred.user.email) // call the addNewUserToFirestore to create a user document for this user
+                .then((result) => {
+                    resolve(userCred); 
+                })
+                .catch((resultUid) => {
+                    resolve(userCred)
+                })
+            }).catch((error) => {
+                reject(error.code);
+            });  
 
     })
+    
 }
 
 export var Logout= function() {
