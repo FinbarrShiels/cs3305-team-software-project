@@ -38,10 +38,7 @@
     border-radius: 25px;
 }
 
-.avatarImage{
-    width: 200px;
-    height: 200px;
-}
+
 .profileName{
     margin-top: 10px;
     font-size: 30px;
@@ -86,8 +83,15 @@
 }
 
 .profileAvatar{
+    width: auto;
     display: flex;
+    justify-content: center;
+}
 
+.avatarImage{
+    margin-left: 37.9px;
+    width: 200px;
+    height: 200px;
 }
 .tabOptions{
     display: flex;
