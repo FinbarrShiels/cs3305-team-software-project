@@ -33,7 +33,7 @@ export var firebaseRegister = function(fname, sname, email, pass, username) {
     let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
     recaptcha.verify().then(() => {
         auth.createUserWithEmailAndPassword(email, pass).then(userCred => {
-            addNewUserToFirestore(userCred.user.uid, fname, sname, userCred.user.email, username);
+            addNewUserToFirestore('email', userCred.user.uid, fname, sname, userCred.user.email, username);
             userCred.user.sendEmailVerification(actionCodeSettings).then(() => {
                 recaptcha.clear()
                 resolve(true)
@@ -124,7 +124,25 @@ function addNewUserToFirestore(uid, fname, sname, email, username) { // when a n
             reject(uid)
         }
     })
-  
+}
+
+export function addNewUserToFirestoreTwitterOrFB(uid, username, displayName, email) {
+    return new Promise((resolve, reject) => {
+        console.log('here')
+            db.collection('users').doc(uid).set({ // the 'users/userID' in firestore will
+            // later be used to track what elections a user has voted in, and the ones they've organised
+            username: username,
+            email: email,
+            fname: displayName,
+            sname: ""
+            })
+            .then(()=>{
+                resolve(true);
+            })
+            .catch((err) => {
+                reject(false)
+            })
+        })
 }
 
 export var firebaseGoogleLogIn= function() { // function to authenticate a user in via their Google account
@@ -151,41 +169,43 @@ export var firebaseTwitterLogIn= function() {
     return new Promise(function(resolve, reject){
     let provider = new firebase.auth.TwitterAuthProvider(); 
     auth.signInWithPopup(provider) // authenticate the user with Firebase using the provider object and a pop up window
-            .then((userCred) => { // if user successfully logs in, a userCredential is provided
-                addNewUserToFirestore(userCred.user.uid, userCred.user.email) // call the addNewUserToFirestore to create a user document for this user
-                .then((result) => {
-                    resolve(userCred); 
-                })
-                .catch((resultUid) => {
-                    resolve(userCred)
-                })
-            }).catch((error) => {
-                reject(error.code);
-            });  
-
-    })
+        .then((userCred) => {
+           console.log(userCred, userCred.additionalUserInfo);
+           if (userCred.additionalUserInfo.isNewUser) {
+               addNewUserToFirestoreTwitterOrFB(userCred.user.uid, userCred.additionalUserInfo.username, userCred.user.displayName, userCred.additionalUserInfo.username)
+               .then((result) => {
+                   resolve(result)
+               }).catch((err) => {
+                    resolve(err)
+               })
+           }
+        })
+        .catch((error) => {
+            reject(error)
+        });           
+        })
+    }
     
-}
-
 export var firebaseFacebookLogIn= function() {
     return new Promise(function(resolve, reject){
         let provider = new firebase.auth.FacebookAuthProvider();
         auth.signInWithPopup(provider) // authenticate the user with Firebase using the provider object and a pop up window
-            .then((userCred) => { // if user successfully logs in, a userCredential is provided
-                addNewUserToFirestore(userCred.user.uid, userCred.user.email) // call the addNewUserToFirestore to create a user document for this user
-                .then((result) => {
-                    resolve(userCred); 
-                })
-                .catch((resultUid) => {
-                    resolve(userCred)
-                })
-            }).catch((error) => {
-                reject(error.code);
-            });  
-
-    })
-    
-}
+        .then((userCred) => {
+           console.log(userCred, userCred.additionalUserInfo);
+           if (userCred.additionalUserInfo.isNewUser) {
+               addNewUserToFirestoreTwitterOrFB(userCred.user.uid, userCred.additionalUserInfo.username, userCred.user.displayName, userCred.additionalUserInfo.username)
+               .then((result) => {
+                   resolve(result)
+               }).catch((err) => {
+                    resolve(err)
+               })
+           }
+        })
+        .catch((error) => {
+            reject(error)
+        });           
+        })
+    }
 
 export var Logout= function() {
     return new Promise(function(resolve, reject){
