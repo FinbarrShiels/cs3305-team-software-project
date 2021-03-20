@@ -101,9 +101,9 @@ function Profile() {
                         {/* <p className="profileOccupation"> Occupation </p>
                         <p className="profileLocation"> Location </p> */}
                         <div className="profileConnectedAccounts">
-                            <FontAwesomeIcon className="twitter" icon={['fab', 'twitter']}/>
-                            <FontAwesomeIcon className="linkedIn" icon={['fab', 'linkedin']}/>
-                            <FontAwesomeIcon className="git" icon={['fab', 'github']}/>
+                            <FontAwesomeIcon className="twitterIcon" icon={['fab', 'twitter']}/>
+                            <FontAwesomeIcon className="linkedInIcon" icon={['fab', 'linkedin']}/>
+                            <FontAwesomeIcon className="gitIcon" icon={['fab', 'github']}/>
                         </div>
                         <button className="profileSettings"> Profile Settings </button>
                         { user !== null && !user.verified && <button className="verifyEmail" onClick={sendVerifyEmail}> Verify email </button>}

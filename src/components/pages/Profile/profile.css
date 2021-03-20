@@ -40,9 +40,14 @@
 
 
 .profileName{
+    color: #fff;
     margin-top: 10px;
     font-size: 30px;
     font-weight: 600;
+}
+
+.profileEmail{
+    color: #fff;
 }
 .profileConnectedAccounts{
     padding: 10px;
@@ -53,11 +58,11 @@
     color:#02b9d2;
 }
 
-.twitter{
+.twitterIcon{
     margin-bottom: 5px;
 }
 
-.git{
+.gitIcon{
     margin-top: 5px;
 }
 
