@@ -191,7 +191,7 @@ export var firebaseTwitterLogIn= function() {
            }
         })
         .catch((error) => {
-            reject(error)
+            reject(error.code)
         });           
         })
     }
@@ -212,7 +212,7 @@ export var firebaseFacebookLogIn= function() {
            }
         })
         .catch((error) => {
-            reject(error)
+            reject(error.code)
         });           
         })
     }
