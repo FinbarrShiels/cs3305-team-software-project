@@ -185,8 +185,13 @@ export function vote(optionName, pollId) { // inputs are the name of the option 
                                 votes: firebase.firestore.FieldValue.increment(1) // increment the votes field by 1 
                             }).then(()=>{
                                 calculateWinner(pollDoc) // call the calculate winner function to update the winner field in the pollDoc
-                                resolve("New vote registered") // resolve with message signifying completion
+                                .then(()=>{
+                                    updateTimestamp(pollDoc.id)
+                                    .then(()=>{
+                                        resolve("New vote registered") // resolve with a message signifying voting is completed
+                                    })
 
+                                })
                             })
                             
                         } 
@@ -219,7 +224,13 @@ export function vote(optionName, pollId) { // inputs are the name of the option 
                                                     }).
                                                     then(()=>{
                                                         calculateWinner(pollDoc)
-                                                        resolve("New vote registered") // resolve with a message signifying voting is completed
+                                                        .then(()=>{
+                                                            updateTimestamp(pollDoc.id)
+                                                            .then(()=>{
+                                                                resolve("New vote registered") // resolve with a message signifying voting is completed
+                                                            })
+                
+                                                        })
                                                     })
                                             })
                                         })
@@ -234,7 +245,13 @@ export function vote(optionName, pollId) { // inputs are the name of the option 
                                         votes: firebase.firestore.FieldValue.increment(1) // increment the votes field for the option being voted for
                                     }).then(()=>{
                                         calculateWinner(pollDoc)
-                                        resolve("New vote registered") // resolve with a message signifying voting is completed
+                                        .then(()=>{
+                                            updateTimestamp(pollDoc.id)
+                                            .then(()=>{
+                                                resolve("New vote registered") // resolve with a message signifying voting is completed
+                                            })
+
+                                        })
         
                                     })
                                     
@@ -247,6 +264,7 @@ export function vote(optionName, pollId) { // inputs are the name of the option 
 }
 
 export function calculateWinner(poll) { // input is a poll document
+    return new Promise((resolve, reject) => {
     var isTie; // boolean to denote when 2 options in the lead are drawing
     var maxVotes = 0; // set max votes to 0 
     var winner; // to track the current winner
@@ -268,15 +286,28 @@ export function calculateWinner(poll) { // input is a poll document
             if (newWinner) { // if newWinner is true
                 db.doc('polls/' + poll.id).update({ // query with path to the poll
                     winner: winner // update the winner field with the name of the new winner 
-                });
+                }).then(()=>{
+                    resolve(true)
+                })
+                .catch(()=>{
+                    reject(false)
+                })
             }
             else if (isTie) { // if isTie is true
                 db.doc('polls/' + poll.id).update({ // query with path to the poll
                     winner: "Draw" // update winner to "Draw" to denote that there is no outright leader
-                });
+                }).then(()=> {
+                    resolve(true)
+                })
+                .catch(()=>{
+                    reject(false)
+                })
 
             }
         })
+
+    })
+    
 
 }
 
@@ -334,3 +365,20 @@ export function getRecentPolls() {
     })
    
 }
+
+export function updateTimestamp(pollId) {
+    return new Promise((resolve, reject) => {
+        var pollToUpdate =  db.doc('/polls/' + pollId)
+        pollToUpdate.update({
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+           
+            })
+            .then(()=>{
+                console.log('updated timestamp')
+                resolve(true)
+            })
+            .catch(()=> {
+                reject(false)
+            })
+        })
+    }
