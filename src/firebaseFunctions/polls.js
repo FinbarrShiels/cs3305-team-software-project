@@ -323,7 +323,7 @@ export function hasUserAlreadyVoted(pollId) { // takes in a pollId as an input
 export function getRecentPolls() {
     return new Promise((resolve, reject)=> {
         var recentVotes =[];
-        db.collection('/polls/').orderBy('timestamp', 'desc').get()
+        db.collection('/polls/').orderBy('timestamp', 'desc').limit(24).get()
         .then((querySnapshot) => {
             querySnapshot.docs.forEach((doc) => {   
                 recentVotes.push(doc);
