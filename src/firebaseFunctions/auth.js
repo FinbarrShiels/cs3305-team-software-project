@@ -126,13 +126,32 @@ function addNewUserToFirestore(uid, fname, sname, email, username) { // when a n
     })
 }
 
-export function addNewUserToFirestoreTwitterOrFB(uid, username, displayName, email) {
+export function addNewUserToFirestoreGoogle(uid, email) {
+    return new Promise((resolve, reject) => {
+        console.log('here')
+        db.collection('users').doc(uid).set({ // the 'users/userID' in firestore will
+        // later be used to track what elections a user has voted in, and the ones they've organised
+        email: email,
+        fname: null,
+        sname: null
+
+        })
+        .then(()=>{
+            resolve(true);
+        })
+        .catch((err) => {
+            reject(false)
+        })
+        })
+}
+
+export function addNewUserToFirestoreTwitterOrFB(uid, username, displayName) {
     return new Promise((resolve, reject) => {
         console.log('here')
             db.collection('users').doc(uid).set({ // the 'users/userID' in firestore will
             // later be used to track what elections a user has voted in, and the ones they've organised
             username: username,
-            email: email,
+            email: null,
             fname: displayName,
             sname: ""
             })
@@ -150,13 +169,15 @@ export var firebaseGoogleLogIn= function() { // function to authenticate a user 
         let provider = new firebase.auth.GoogleAuthProvider(); // create a instance of the google provider object
         auth.signInWithPopup(provider) // authenticate the user with Firebase using the provider object and a pop up window
             .then((userCred) => { // if user successfully logs in, a userCredential is provided
-                addNewUserToFirestore(userCred.user.uid, userCred.user.email) // call the addNewUserToFirestore to create a user document for this user
-                .then((result) => {
-                    resolve(userCred); 
-                })
-                .catch((resultUid) => {
-                    resolve(userCred)
-                })
+                if (userCred.additionalUserInfo.isNewUser) {
+                    addNewUserToFirestoreGoogle(userCred.user.uid, userCred.user.email)
+                    .then((result) => {
+                        resolve(result)
+                    }).catch((err) => {
+                         resolve(err)
+                    })
+                }
+                console.log(userCred)
             }).catch((error) => {
                 reject(error.code);
             });  
@@ -172,7 +193,7 @@ export var firebaseTwitterLogIn= function() {
         .then((userCred) => {
            console.log(userCred, userCred.additionalUserInfo);
            if (userCred.additionalUserInfo.isNewUser) {
-               addNewUserToFirestoreTwitterOrFB(userCred.user.uid, userCred.additionalUserInfo.username, userCred.user.displayName, userCred.additionalUserInfo.username)
+               addNewUserToFirestoreTwitterOrFB(userCred.user.uid, userCred.additionalUserInfo.username, userCred.user.displayName)
                .then((result) => {
                    resolve(result)
                }).catch((err) => {
