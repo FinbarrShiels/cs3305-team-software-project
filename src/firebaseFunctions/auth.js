@@ -136,6 +136,7 @@ export var firebaseGoogleLogIn= function() {
         let provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider)
             .then((userCred) => {
+                console.log(userCred.user.email)
                 var result = addNewUserToFirestore(userCred.user.uid, userCred.user.email);
                 resolve(result);
             }).catch((error) => {
