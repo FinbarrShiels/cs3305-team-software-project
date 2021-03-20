@@ -4,6 +4,8 @@ import { useInput } from '../../../customHooks/form-input.js'
 import FormError from '../../formError'
 import { useUserSignUp } from '../../../context/UserContext'
 import { isUsernameUnique } from '../../../firebaseFunctions/auth'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { useHistory } from 'react-router'
 
 function SignUp() {
   const [ formErrors, setFormErrors ] = useState({
@@ -17,6 +19,8 @@ function SignUp() {
   })
 
   const userSignUp = useUserSignUp()
+  const history = useHistory()
+
   const { value:username, bind:bindUsername } = useInput("")
   const { value:fname, bind:bindFname } = useInput("")
   const { value:sname, bind:bindSname } = useInput("")
@@ -63,6 +67,7 @@ function SignUp() {
     ) {
       userSignUp(fname, sname, email, password, username)
       .then(result => {
+        history.push("/")
       })
       .catch(error => {
         console.log("Sign up error", error)
@@ -137,9 +142,13 @@ function SignUp() {
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.password}/>
-              <div className="innerInput"><label htmlFor="password"> Password: </label>
-              <input type={passwordShown ? "text" : "password"} id="password" {...bindPassword}/></div>
-              <div className="passwordError">ⓘ
+              <div className="passwordInput"><label htmlFor="password"> Password: </label>
+              <input className="inputField" type={passwordShown ? "text" : "password"} id="password" {...bindPassword}/>
+              <button onClick={(e) => {e.preventDefault(); setPasswordShown(!passwordShown)}}>
+                <FontAwesomeIcon className="icon" icon={['fa', 'eye']} size="lg"/>
+              </button>
+              </div>
+              <div className="passwordError"><p className="icon">ⓘ</p>
                 <span className="passwordErrorSpan">
                   Passwords should contain the following:
                   <ul>

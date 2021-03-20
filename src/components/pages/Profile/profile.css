@@ -38,14 +38,16 @@
     border-radius: 25px;
 }
 
-.avatarImage{
-    width: 200px;
-    height: 200px;
-}
+
 .profileName{
+    color: #fff;
     margin-top: 10px;
     font-size: 30px;
     font-weight: 600;
+}
+
+.profileEmail{
+    color: #fff;
 }
 .profileConnectedAccounts{
     padding: 10px;
@@ -56,11 +58,11 @@
     color:#02b9d2;
 }
 
-.twitter{
+.twitterIcon{
     margin-bottom: 5px;
 }
 
-.git{
+.gitIcon{
     margin-top: 5px;
 }
 
@@ -86,8 +88,15 @@
 }
 
 .profileAvatar{
+    width: auto;
     display: flex;
+    justify-content: center;
+}
 
+.avatarImage{
+    margin-left: 37.9px;
+    width: 200px;
+    height: 200px;
 }
 .tabOptions{
     display: flex;

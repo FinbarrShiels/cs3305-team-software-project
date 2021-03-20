@@ -13,7 +13,6 @@ import ContactUs from './pages/ContactUs/ContactUs'
 import Organise from "./pages/Voting/Organise"
 import LatchPage from "./pages/latchPage"
 import PasswordChanged from "./pages/PasswordReset/PasswordChanged"
-import SignUpComplete from "./pages/SignUp/SignUpComplete"
 import Vote from './pages/Voting/Vote.js'
 import PageNotFound from './pages/PageNotFound.js'
 
@@ -32,7 +31,6 @@ const Main = () => (
     <Route path="/Organise" component={Organise}/>
     <Route path="/latchPage" component={LatchPage}/>
     <Route path="/PasswordChanged" component={PasswordChanged}/>
-    <Route path="/SignUpComplete" component={SignUpComplete}/>
     <Route path="/Vote/:pollId" component={Vote}/>
     <Route path="/" component={PageNotFound}/>
   </Switch>

@@ -6,6 +6,7 @@ import { firebaseTwitterLogIn, firebaseFacebookLogIn, firebaseGoogleLogIn } from
 import { useInput } from '../../../customHooks/form-input.js'
 import FormError from '../../formError'
 import { useUser, useUserLogin, useUserLogOut } from '../../../context/UserContext'
+import { useHistory } from 'react-router'
 
 function LogIn() {
   const [ formErrors, setFormErrors ] = useState(() => ({
@@ -17,6 +18,7 @@ function LogIn() {
   const user = useUser()
   const userLogin = useUserLogin()
   const userLogOut = useUserLogOut()
+  const history = useHistory()
   
   const { value:username, bind:bindUsername } = useInput("")
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
@@ -35,13 +37,17 @@ function LogIn() {
     if (formErrors.username === "" && formErrors.password === "" && submitting) {
       setLoginMsg("Logging in...")
       userLogin(username, password)
-      .then(() => {
-        setFormErrors({
-          username: "",
-          password: "",
-          loginFail: "",
-        })
-        setLoginMsg("Finished logging in... Redirecting now...")
+      .then(result => {
+        if (result === true) {
+          setFormErrors({
+            username: "",
+            password: "",
+            loginFail: "",
+          })
+          console.log("Successful login")
+          setLoginMsg("You have successfully logged in")
+          history.push("/")
+        }
       })
       .catch(error => {
         setLoginMsg("")
@@ -77,6 +83,63 @@ function LogIn() {
     setSubmitting(true)
   }
 
+  const handleThirdPartyLoginError = (provider, error) => {
+    console.log(`Error signing in with ${provider}`, error)
+    userLogOut()
+    switch (error) {
+      case 'auth/popup-closed-by-user':
+        setLoginMsg("The popup was closed before we could sign you in")
+        break
+      default:
+        setLoginMsg(`There was an unexpected error while trying to log you in with ${provider}, please try again`)
+    }
+  }
+
+  const handleThirdPartyLoginSuccess = (provider, result) => {
+    console.log(`${provider} login:`, result)
+    setLoginMsg(`Succesfully logged in with ${provider}`)
+    history.push("/")
+  }
+
+  const thirdPartyLogin = (provider) => {
+    setLoginMsg(`Logging in with ${provider}...`)
+    switch (provider.toLowerCase()) {
+      case "google":
+        console.log("google login")
+        firebaseGoogleLogIn()
+        .then(result => {
+          handleThirdPartyLoginSuccess(provider, result)
+        })
+        .catch(error => {
+          handleThirdPartyLoginError("Google", error)
+        })
+        break
+      case "twitter":
+        console.log("twitter login")
+        firebaseTwitterLogIn()
+        .then(result => {
+          handleThirdPartyLoginSuccess(provider, result)
+        })
+        .catch(error => {
+          handleThirdPartyLoginError("Twitter", error)
+        })
+        break
+      case "facebook":
+        console.log("facebook login")
+        firebaseFacebookLogIn()
+        .then(result => {
+          handleThirdPartyLoginSuccess(provider, result)
+        })
+        .catch(error => {
+          handleThirdPartyLoginError("Facebook", error)
+        })
+        break
+      default:
+        console.log(`Unhandled error with ${provider}`)
+        setLoginMsg(`There was an unexpected outcome when trying to log in with ${provider}, please try again`)
+    }
+  }
+
   return(
     user === null ?
     <div className="loginContainer">
@@ -107,19 +170,18 @@ function LogIn() {
             value="Login" />
         </form>
 
-
         <div className="loginOptionBreak">
             <p><span>Or Sign In With</span></p>
         </div>
 
         <div className="thirdPartyLogins">
-            <a href="/" className="socialIcon" onClick={() => firebaseFacebookLogIn()}>
+            <a href="/" className="socialIcon" onClick={e => {e.preventDefault(); thirdPartyLogin("Facebook")}}>
                 <FontAwesomeIcon icon={['fab', 'facebook-f']} size="2x"/>
             </a>
-            <a href="/" className="socialIcon" onClick={() => firebaseGoogleLogIn()}>
+            <a href="/" className="socialIcon" onClick={e => {e.preventDefault(); thirdPartyLogin("Google")}}>
                 <FontAwesomeIcon icon={['fab', 'google']} size="2x"/>
             </a>
-            <a href="/" className="socialIcon" onClick={() => firebaseTwitterLogIn()}>
+            <a href="/" className="socialIcon" onClick={e => {e.preventDefault(); thirdPartyLogin("Twitter")}}>
                 <FontAwesomeIcon icon={['fab', 'twitter']} size="2x"/>
             </a>
         </div>
