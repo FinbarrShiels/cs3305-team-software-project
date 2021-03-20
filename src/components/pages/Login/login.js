@@ -6,6 +6,7 @@ import { firebaseTwitterLogIn, firebaseFacebookLogIn, firebaseGoogleLogIn } from
 import { useInput } from '../../../customHooks/form-input.js'
 import FormError from '../../formError'
 import { useUser, useUserLogin, useUserLogOut } from '../../../context/UserContext'
+import { useHistory } from 'react-router'
 
 function LogIn() {
   const [ formErrors, setFormErrors ] = useState(() => ({
@@ -17,6 +18,7 @@ function LogIn() {
   const user = useUser()
   const userLogin = useUserLogin()
   const userLogOut = useUserLogOut()
+  const history = useHistory()
   
   const { value:username, bind:bindUsername } = useInput("")
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
@@ -41,7 +43,7 @@ function LogIn() {
           password: "",
           loginFail: "",
         })
-        setLoginMsg("Finished logging in... Redirecting now...")
+        history.push("/")
       })
       .catch(error => {
         setLoginMsg("")

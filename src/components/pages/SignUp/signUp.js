@@ -4,6 +4,8 @@ import { useInput } from '../../../customHooks/form-input.js'
 import FormError from '../../formError'
 import { useUserSignUp } from '../../../context/UserContext'
 import { isUsernameUnique } from '../../../firebaseFunctions/auth'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { useHistory } from 'react-router'
 
 function SignUp() {
   const [ formErrors, setFormErrors ] = useState({
@@ -17,6 +19,8 @@ function SignUp() {
   })
 
   const userSignUp = useUserSignUp()
+  const history = useHistory()
+
   const { value:username, bind:bindUsername } = useInput("")
   const { value:fname, bind:bindFname } = useInput("")
   const { value:sname, bind:bindSname } = useInput("")
@@ -25,6 +29,7 @@ function SignUp() {
   const { value:confirmPass, bind:bindConfirmPass, reset:resetConfirmPass } = useInput("")
   const [tosChecked, setTosChecked] = useState(false)
   const [ submitting, setSubmitting ] = useState(false)
+  const [ passwordShown, setPasswordShown ] = useState(false)
 
   const getUsernameErrors = () => {
     return new Promise((resolve, reject) => {
@@ -62,6 +67,7 @@ function SignUp() {
     ) {
       userSignUp(fname, sname, email, password, username)
       .then(result => {
+        history.push("/")
       })
       .catch(error => {
         console.log("Sign up error", error)
@@ -82,7 +88,7 @@ function SignUp() {
         let fnameError = fname.trim() === "" ? "Please enter your first name" : ""
         let snameError = sname.trim() === "" ? "Please enter your second name" : ""
         let emailError = email.trim() === "" ? "Please enter your email" : ""
-        let confirmPassError = (confirmPass.trim() !== password.trim()) ? "Please make sure both passwords are the same" : ""
+        let confirmPassError = confirmPass.trim() !== password.trim() ? "Please make sure both passwords are the same" : ""
         let tosError = !tosChecked ? "Please agree to the Terms of Service" : ""
         let passwordError = ""
         if (password.trim() === "") {
@@ -90,7 +96,7 @@ function SignUp() {
         } else if (!isValidPassword.test(password.trim())) {
           passwordError = "Password isn't strong enough"
         }
-        // setSubmitting(true)
+        setSubmitting(true)
         setFormErrors({
           username: userNameError,
           fname: fnameError,
@@ -136,9 +142,13 @@ function SignUp() {
             </div>
             <div className="formInputSection">
               <FormError errorMsg={formErrors.password}/>
-              <div className="innerInput"><label htmlFor="password"> Password: </label>
-              <input type="password" id="password" {...bindPassword}/></div>
-              <div className="passwordError">ⓘ
+              <div className="passwordInput"><label htmlFor="password"> Password: </label>
+              <input className="inputField" type={passwordShown ? "text" : "password"} id="password" {...bindPassword}/>
+              <button onClick={(e) => {e.preventDefault(); setPasswordShown(!passwordShown)}}>
+                <FontAwesomeIcon className="icon" icon={['fa', 'eye']} size="lg"/>
+              </button>
+              </div>
+              <div className="passwordError"><p className="icon">ⓘ</p>
                 <span className="passwordErrorSpan">
                   Passwords should contain the following:
                   <ul>
@@ -153,7 +163,7 @@ function SignUp() {
             <div className="formInputSection">
               <FormError errorMsg={formErrors.confirmPass}/>
               <div className="innerInput"><label htmlFor="confirmPassword"> Confirm Password: </label>
-              <input type="password" id="confirmPassword" {...bindConfirmPass}/></div>
+              <input type={passwordShown ? "text" : "password"} id="confirmPassword" {...bindConfirmPass}/></div>
             </div>
             <div className="checkboxSection">
               <FormError errorMsg={formErrors.tos}/>

@@ -40,8 +40,8 @@ function Theheader() {
                     <li><NavLink to="/aboutUs"> About Us </NavLink></li>
                     {user === null && <li><NavLink className="loginButton" to="/login">Log In</NavLink></li>}
                     {user === null && <li><NavLink className="signUpButton" to="/signUp"> Sign Up </NavLink></li>}
-                    {user !== null && <li><NavLink className="logOutButton" to="" onClick={() => userLogOut()}> Log Out </NavLink></li>}
-                    {user !== null && user.fname && user.sname && <p><NavLink className="userBadge" to="/profile"> {`${user.fname.charAt(0)} ${user.sname.charAt(0)}`} </NavLink></p>}
+                    {user !== null && <li><NavLink className="logOutButton" to="/login" onClick={() => userLogOut()}> Log Out </NavLink></li>}
+                    {user !== null && user.fname && user.sname && <li><NavLink className="userBadge" to="/profile"> {`${user.fname.charAt(0)} ${user.sname.charAt(0)}`} </NavLink></li>}
                 </div>
                 {/* <div className="searchIcon"><span>
                     <FontAwesomeIcon icon={['fas', 'search']}/>
