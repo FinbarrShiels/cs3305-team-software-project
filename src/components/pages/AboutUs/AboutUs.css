@@ -33,6 +33,14 @@
 
 }
 
+.unique p{
+    color: #fff;
+}
+
+.description p{
+    color: #fff;
+}
+
 .projectLinks a{
     color: #fff;
     text-decoration: none;
