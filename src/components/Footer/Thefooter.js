@@ -10,7 +10,7 @@ function Thefooter() {
     return(
         <footer>
             <div className="footerLeft">
-                <svg className="logo footerLogo" width="80" height="80" data-name="Layer 1" version="1.1" viewBox="0 0 63.546 95.922" xmlns="http://www.w3.org/2000/svg">
+                <svg className="footerLogo" width="100" height="100" data-name="Layer 1" version="1.1" viewBox="0 0 63.546 95.922" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                     <linearGradient id="linear-gradient" x1="149.07" x2="149.07" y1="71.303" y2="167.15" gradientTransform="translate(-117.3 -84.928)" gradientUnits="userSpaceOnUse">
                         <stop stopColor="#04ecfb" offset="0"/>
@@ -21,11 +21,12 @@ function Thefooter() {
                 </svg>
                 <span> Show of Hands </span>
                 <div className="footerSocials">
-                    <FontAwesomeIcon className="twitter" icon={['fab', 'twitter']}/>
-                    <FontAwesomeIcon className="linkedIn" icon={['fab', 'linkedin']}/>
-                    <FontAwesomeIcon className="git" icon={['fab', 'github']}/>
+                    <FontAwesomeIcon className="twitter" icon={['fab', 'twitter']} size="2x"/>
+                    <FontAwesomeIcon className="linkedIn" icon={['fab', 'linkedin']} size="2x"/>
+                    <FontAwesomeIcon className="git" icon={['fab', 'github']} size="2x"/>
                 </div>
-                <p>&copy; 2021 Show Of Hands</p>
+                <p>&copy; 2021 Created By ST7 All Rights Reserved</p>
+            </div>
                 <div className="footerMenu">
                     <h4> Menu </h4>
                     <ul>
@@ -39,9 +40,8 @@ function Thefooter() {
                 </div>
                 <div className="footerContact">
                     <p> Want to talk to us? </p>
-                    <Link to="/About Us"> Contact Us </Link>
+                    <Link className="contactUsButton" to="/contactus"> Contact Us </Link>
                 </div>
-            </div>
         </footer>
     )
 }
