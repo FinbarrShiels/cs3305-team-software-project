@@ -24,3 +24,20 @@ export function setBio(newBio) {
         bio: newBio
     });
 }
+
+
+export function changeName(uid, fname, sname) {
+    return new Promise((resolve, reject) => {
+      var userToUpdate = db.doc('users/'+uid)
+      userToUpdate.update({
+          sname: sname,
+          fname: fname
+      })
+      .then(() => {
+          resolve(true)
+      })
+      .catch(() => {
+          reject(false)
+      })
+    })
+}
