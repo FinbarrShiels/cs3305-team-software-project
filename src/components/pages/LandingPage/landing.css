@@ -41,25 +41,38 @@
     margin: 20px;
     display: block;
     font-size: 26px;
-    text-shadow: 0 0 10px #000;
+    #text-shadow: 0 0 10px #000;
+}
+
+.one{
+    color: #5daeb6;
+}
+
+.two{
+    color: #e8663d;
+}
+
+.three{
+    color: #0d8e74;
 }
 
 .heroButton{
+    margin: 2px;
     color: #fff;
-    background-color: #6951FF;
+    background-color: transparent;
     padding: 10px 24px;
     font-size: 20px;
     text-decoration: none;
     border-radius: 8px;
     cursor: pointer;
     transition: 0.3s all;
-    border: none;
+    border: 2px solid #02b9d2;
     outline: 0;
 
 }
 
 .heroButton:hover{
-    opacity: 0.4;
+    background-color: #02b9d2;
 }
 
 .sectionContainer{

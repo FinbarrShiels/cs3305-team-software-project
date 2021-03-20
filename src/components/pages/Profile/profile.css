@@ -38,10 +38,7 @@
     border-radius: 25px;
 }
 
-.avatarImage{
-    width: 200px;
-    height: 200px;
-}
+
 .profileName{
     margin-top: 10px;
     font-size: 30px;
@@ -73,6 +70,7 @@
     cursor: pointer;
     background-color: #1BBAFf;
     margin-bottom: 10px;
+    border: none;
 }
 
 .verifyEmail{
@@ -81,11 +79,19 @@
     border-radius: 25px;
     cursor: pointer;
     background-color: #1BBAFf;
+    border: none;
 }
 
 .profileAvatar{
+    width: auto;
     display: flex;
+    justify-content: center;
+}
 
+.avatarImage{
+    margin-left: 37.9px;
+    width: 200px;
+    height: 200px;
 }
 .tabOptions{
     display: flex;

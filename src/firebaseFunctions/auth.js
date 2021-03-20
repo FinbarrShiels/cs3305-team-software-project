@@ -67,10 +67,10 @@ export var firebaseRegularLogIn = (email, pass) => {
             db.doc('users/'+auth.currentUser.uid).get()
             .then(userDoc => {
                 resolve({
-                    username: auth_user.displayName,
                     email: auth_user.email,
                     uid: auth_user.uid,
                     verified: auth_user.emailVerified,
+                    username: userDoc.data().username,
                     fname: userDoc.data().fname,
                     sname: userDoc.data().sname,
                     bio: userDoc.data().bio
@@ -222,7 +222,7 @@ export function isUsernameUnique(username) {
                 resolve(isUnique)
             }
             else {
-                reject(isUnique)
+                resolve(isUnique)
             }
         })
         .catch((error) => {

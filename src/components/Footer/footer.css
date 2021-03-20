@@ -1,8 +1,103 @@
 footer{
-    background-color: #1A2A6C;
-}
-p{
-    text-align: center;
-    color: #fff;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-bottom: 20px;
+    background-color: #fff;
 }
 
+.footerLeft{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.footerLogo{
+    margin:5px;
+}
+
+
+.footerLeft span{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.footerMenu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+
+
+}
+
+.footerMenu ul li{
+    list-style-type: none;
+}
+
+.footerMenu h4{
+    font-size: 25px;
+    font-weight: 700;
+    border-bottom: 2px solid #02b9d2;
+
+}
+
+.footerMenu ul li a{
+    text-decoration: none;
+    color: #000;
+    font-size: 20px;
+}
+
+.footerMenu ul li a:hover{
+    border-bottom: 2px solid #000;
+}
+
+.footerSocials{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.twitter{
+   margin-right: 15px;
+}
+
+.git{
+    margin-left: 15px;
+}
+
+.footerContact{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+
+.footerContact p{
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.contactUsButton{
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    background-color: #02b9d2;
+    padding: 12px 24px;
+    border-radius: 25px;
+}
+
+@media screen and (max-width: 990px){
+    footer{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+}

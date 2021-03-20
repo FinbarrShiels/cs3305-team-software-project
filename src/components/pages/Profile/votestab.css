@@ -1,5 +1,6 @@
 table{
     width: 100%;
+    overflow: scroll;
 }
 
 th, td{
@@ -22,4 +23,5 @@ td{
     border-radius: 25px;
     cursor: pointer;
     background-color: #1BBAFf;
+    border: none;
 }

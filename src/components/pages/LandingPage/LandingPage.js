@@ -13,7 +13,7 @@ function LandingPage() {
         <div className="heroImage">
             <div className="heroText">
                 <h1><span>Show Of Hands</span></h1>
-                <span className="lowerText">Organise - Vote - Elect</span>
+                <span className="lowerText"><span className="one">Organise</span> - <span className="two">Vote</span> - <span className="three">Elect</span></span>
                 <div>
                   { user === null && <Link to="/signup"><button className="heroButton"> Start Now </button></Link> }
                   { user !== null && <Link to="/organise"><button className="heroButton"> Organise your own vote </button></Link> }
@@ -34,7 +34,7 @@ function LandingPage() {
         <div className="sectionTwo">
             <div className="rightText">
                 <h3>Setup polls or elections</h3>
-                <p>Setup a poll or election for any reason. Work,Union or Class Rep</p>
+                <p>Setup a poll or election for any reason. Work, Union or Class Rep</p>
             </div>
             <div className="leftImage">
                 <img src={vote_card} alt="computer_vote"/>
