@@ -115,6 +115,14 @@
     text-transform: uppercase;
 }
 
+.rightText p{
+    color: #fff;
+}
+
+.leftText p{
+    color: #fff;
+}
+
 
 @media screen and (max-width: 990px){
     .sectionContainer{
