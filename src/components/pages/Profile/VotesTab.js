@@ -17,7 +17,7 @@ function Elections(props) {
                 <table>
                     <thead>
                         <tr>
-                            <th> Type </th>
+                            <th> Role </th>
                             <th> Title </th>
                             <th> Winner </th>
                             <th> Status </th>
@@ -28,7 +28,7 @@ function Elections(props) {
                         {props.currentElections.map(election => {
                             return (
                                 <tr className="electionItem" key={election.data.voteCode}>
-                                    <td className="type"> {election.type} </td>
+                                    <td className="type"> {election.role} </td>
                                     <td className="title"> {election.data.title} </td>
                                     <td className="winner"> {election.data.winner} </td>
                                     <td className="status"> {election.data.open ? "Open" : "Closed"} </td>
