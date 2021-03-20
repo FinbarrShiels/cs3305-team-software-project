@@ -96,7 +96,7 @@ function Profile() {
                                 </svg>
                              }
                         </div>
-                        <p className="profileName"> {`${user.fname} ${user.sname}`} </p>
+                        <p className="profileName"> {user.fname !== undefined && user.sname !== undefined && `${user.fname} ${user.sname}`} </p>
                         <p className="profileEmail"> {user.email} </p>
                         {/* <p className="profileOccupation"> Occupation </p>
                         <p className="profileLocation"> Location </p> */}

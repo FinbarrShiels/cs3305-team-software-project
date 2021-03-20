@@ -37,10 +37,10 @@ export default function UserProvider({ children }) {
             getUserByUid(user.uid)
             .then(userInfo => {
                 setUser({
-                    username: user.displayName,
-                    email: user.email,
                     uid: user.uid,
                     verified: user.emailVerified,
+                    email: userInfo.email,
+                    username: userInfo.username,
                     fname: userInfo.fname,
                     sname: userInfo.sname,
                     bio: userInfo.bio
@@ -56,7 +56,6 @@ export default function UserProvider({ children }) {
         Logout()
         .then(() => {
             setUser(null)
-            console.log("User successfully logged out")
             history.push("/login")
         })
         .catch(error => {
@@ -65,16 +64,15 @@ export default function UserProvider({ children }) {
     }
 
     const afterSuccessfulLogin = (userObj) => {
-        console.log("Successful login!")
-            setUser({
-                username: userObj.username,
-                email: userObj.email,
-                verified: userObj.verified,
-                uid: userObj.uid,
-                fname: userObj.fname,
-                sname: userObj.sname
-            })
-        history.push("/")
+        setUser({
+            username: userObj.username,
+            email: userObj.email,
+            verified: userObj.verified,
+            uid: userObj.uid,
+            fname: userObj.fname,
+            sname: userObj.sname
+        })
+        return true
     }
 
     const userLogIn = (username, password) => {
@@ -82,15 +80,14 @@ export default function UserProvider({ children }) {
             if (username.includes('@')) {
                 firebaseRegularLogIn(username, password)
                 .then(userObj => {
-                    afterSuccessfulLogin(userObj)
-                    resolve()
+                    resolve(afterSuccessfulLogin(userObj))
                 })
                 .catch(error => reject(error))
             }
             else {
                 logInWithUsername(username, password)
                 .then(userObj => {
-                    afterSuccessfulLogin(userObj)
+                    resolve(afterSuccessfulLogin(userObj))
                 })
                 .catch(error => reject(error))
             }
@@ -101,8 +98,8 @@ export default function UserProvider({ children }) {
         return new Promise((resolve, reject) => {
             firebaseRegister(fname, sname, email, password, username)
             .then((outcome) => {
-              history.push("/SignUpComplete")
-              resolve(outcome)
+                setAllowUserUpdate(true)
+                resolve(outcome)
             })
             .catch((error) => {
                 reject(error)
