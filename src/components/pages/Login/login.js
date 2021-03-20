@@ -45,6 +45,7 @@ function LogIn() {
             loginFail: "",
           })
           console.log("Successful login")
+          setLoginMsg("You have successfully logged in")
           history.push("/")
         }
       })
@@ -94,6 +95,12 @@ function LogIn() {
     }
   }
 
+  const handleThirdPartyLoginSuccess = (provider, result) => {
+    console.log(`${provider} login:`, result)
+    setLoginMsg(`Succesfully logged in with ${provider}`)
+    history.push("/")
+  }
+
   const thirdPartyLogin = (provider) => {
     setLoginMsg(`Logging in with ${provider}...`)
     switch (provider.toLowerCase()) {
@@ -101,7 +108,7 @@ function LogIn() {
         console.log("google login")
         firebaseGoogleLogIn()
         .then(result => {
-          console.log("LOGIN RESULT:", result)
+          handleThirdPartyLoginSuccess(provider, result)
         })
         .catch(error => {
           handleThirdPartyLoginError("Google", error)
@@ -111,7 +118,7 @@ function LogIn() {
         console.log("twitter login")
         firebaseTwitterLogIn()
         .then(result => {
-          console.log(result)
+          handleThirdPartyLoginSuccess(provider, result)
         })
         .catch(error => {
           handleThirdPartyLoginError("Twitter", error)
@@ -121,7 +128,7 @@ function LogIn() {
         console.log("facebook login")
         firebaseFacebookLogIn()
         .then(result => {
-          console.log(result)
+          handleThirdPartyLoginSuccess(provider, result)
         })
         .catch(error => {
           handleThirdPartyLoginError("Facebook", error)
