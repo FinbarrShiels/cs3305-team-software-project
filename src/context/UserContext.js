@@ -58,6 +58,10 @@ export default function UserProvider({ children }) {
             })
             .catch(error => {
                 console.log("Error updating user:", error)
+                setUser({
+                    ...newUser,
+                    verified: newUser.emailVerified
+                })
             })
         }
     }
