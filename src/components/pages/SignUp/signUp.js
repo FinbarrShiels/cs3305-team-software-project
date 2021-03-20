@@ -5,6 +5,7 @@ import FormError from '../../formError'
 import { useUserSignUp } from '../../../context/UserContext'
 import { isUsernameUnique } from '../../../firebaseFunctions/auth'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { useHistory } from 'react-router'
 
 function SignUp() {
   const [ formErrors, setFormErrors ] = useState({
@@ -18,6 +19,8 @@ function SignUp() {
   })
 
   const userSignUp = useUserSignUp()
+  const history = useHistory()
+
   const { value:username, bind:bindUsername } = useInput("")
   const { value:fname, bind:bindFname } = useInput("")
   const { value:sname, bind:bindSname } = useInput("")
@@ -64,6 +67,7 @@ function SignUp() {
     ) {
       userSignUp(fname, sname, email, password, username)
       .then(result => {
+        history.push("/")
       })
       .catch(error => {
         console.log("Sign up error", error)
