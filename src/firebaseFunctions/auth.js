@@ -87,7 +87,8 @@ export function getUserByUid(uid) { // find the details of the user assocaited w
                 email: userDoc.data().email,
                 fname: userDoc.data().fname,
                 sname: userDoc.data().sname,
-                bio: userDoc.data().bio
+                bio: userDoc.data().bio,
+                username: userDoc.data().username
             })
         })
         .catch(error => {

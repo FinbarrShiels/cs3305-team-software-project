@@ -44,6 +44,7 @@ function LogIn() {
             password: "",
             loginFail: "",
           })
+          console.log("Successful login")
           history.push("/")
         }
       })
