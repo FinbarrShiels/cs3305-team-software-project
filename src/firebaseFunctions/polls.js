@@ -118,6 +118,7 @@ export function pollsForUser() { // function for returning an array of all the p
                 snapshot.forEach(doc => {  // iterate through the array of poll documents
                     var poll = { // create a JSON object for each poll with data the front end can use 
                         type: doc.data().type,
+                        role: 'organiser',
                         data: {
                             title: doc.data().poll_name,
                             organiser: doc.data().organiser,
@@ -130,7 +131,39 @@ export function pollsForUser() { // function for returning an array of all the p
                     }
                     count = count + 1; // increment count variable
                     userPolls.push(poll);
-                }) 
+                })
+                db.collection('users/'+auth.currentUser.uid+'/polls/').get()
+                .then((snapshot)=>{
+                    console.log(snapshot)
+                    snapshot.forEach(doc => {
+                        console.log(doc)
+                        db.doc('polls/'+doc.id).get()
+                        .then((pollDoc)=>{
+                            var poll = {
+                            type: pollDoc.data().type,
+                            role: 'participant',
+                            data: {
+                                title: pollDoc.data().poll_name,
+                                organiser: pollDoc.data().organiser,
+                                ownerId: pollDoc.data().owners[0],
+                                winner: pollDoc.data().winner,
+                                open: pollDoc.data().open,
+                                anon: pollDoc.data().anonymousVoting,
+                                voteCode: count
+                                }
+                            }
+                            count = count + 1; // increment count variable
+                            userPolls.push(poll);
+                            
+                        })
+                        
+
+                    })
+
+                })
+                .catch(error => {
+                    console.log(error);
+                            })
             }).catch((error) => { //error in retrieving data from Firestore
                 reject(false)
             })
