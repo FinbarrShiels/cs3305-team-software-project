@@ -26,31 +26,49 @@ export function useUserSignUp() {
 export default function UserProvider({ children }) {
 
     const [ user, setUser ] = useState(null)
-    const [ allowUserUpdate, setAllowUserUpdate ] = useState(true)
+    const history = useHistory()
 
     useEffect(() => {
-        authSubscribe(setUser)
+        authSubscribe(firebaseUserUpdate)
+        console.log("User context refresh")
     }, [])
 
-    useEffect(() => {
-        if (user && allowUserUpdate) {
-            getUserByUid(user.uid)
+    const firebaseUserUpdate = (newUser) => {
+        updateUser(newUser)
+        console.log("Firebase User Update:", newUser)
+    }
+
+    const updateUser = (newUser) => {
+        console.log("Updating user to:", newUser)
+        if (newUser !== null) {
+            getUserByUid(newUser.uid)
             .then(userInfo => {
-                setUser({
-                    uid: user.uid,
-                    verified: user.emailVerified,
-                    email: userInfo.email,
+                console.log("New User's Firestore Information:", userInfo)
+                let updatedUser = {
+                    uid: newUser.uid,
+                    verified: newUser.emailVerified,
+                    email: newUser.email,
                     username: userInfo.username,
                     fname: userInfo.fname,
                     sname: userInfo.sname,
                     bio: userInfo.bio
+                }
+                console.log("UPDATED USER:", updatedUser)
+                setUser(updatedUser)
+            })
+            .catch(error => {
+                console.log("Error updating user:", error)
+                setUser({
+                    ...newUser,
+                    verified: newUser.emailVerified
                 })
             })
-            setAllowUserUpdate(false)
         }
-    }, [ user, allowUserUpdate ])
+    }
 
-    const history = useHistory()
+    useEffect(() => {
+        console.log("User information changed:", user)
+    }, [ user ])
 
     const userLogOut = () => {
         Logout()
@@ -63,31 +81,19 @@ export default function UserProvider({ children }) {
         })
     }
 
-    const afterSuccessfulLogin = (userObj) => {
-        setUser({
-            username: userObj.username,
-            email: userObj.email,
-            verified: userObj.verified,
-            uid: userObj.uid,
-            fname: userObj.fname,
-            sname: userObj.sname
-        })
-        return true
-    }
-
     const userLogIn = (username, password) => {
         return new Promise((resolve, reject) => {
             if (username.includes('@')) {
                 firebaseRegularLogIn(username, password)
                 .then(userObj => {
-                    resolve(afterSuccessfulLogin(userObj))
+                    resolve(true)
                 })
                 .catch(error => reject(error))
             }
             else {
                 logInWithUsername(username, password)
                 .then(userObj => {
-                    resolve(afterSuccessfulLogin(userObj))
+                    resolve(true)
                 })
                 .catch(error => reject(error))
             }
@@ -98,7 +104,6 @@ export default function UserProvider({ children }) {
         return new Promise((resolve, reject) => {
             firebaseRegister(fname, sname, email, password, username)
             .then((outcome) => {
-                setAllowUserUpdate(true)
                 resolve(outcome)
             })
             .catch((error) => {
