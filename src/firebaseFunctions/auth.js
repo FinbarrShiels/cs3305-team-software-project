@@ -133,7 +133,7 @@ export function addNewUserToFirestoreTwitterOrFB(uid, username, displayName, ema
             username: username,
             email: email,
             fname: displayName,
-            sname: null
+            sname: ""
             })
             .then(()=>{
                 resolve(true);
