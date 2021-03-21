@@ -5,7 +5,7 @@ import './footer.css'
 
 function Thefooter() {
 
-    const user = useUser()
+    const user = useUser() // The user context for information about the current user
 
     return(
         <footer>
@@ -45,5 +45,4 @@ function Thefooter() {
         </footer>
     )
 }
-
 export default Thefooter

@@ -9,23 +9,23 @@ import { useUser, useUserLogin, useUserLogOut } from '../../../context/UserConte
 import { useHistory } from 'react-router'
 
 function LogIn() {
-  const [ formErrors, setFormErrors ] = useState(() => ({
+  const [ formErrors, setFormErrors ] = useState(() => ({ // State object holds the error messages for the login form
     username: "",
     password: "",
     loginFail: ""
   }))
 
-  const user = useUser()
-  const userLogin = useUserLogin()
-  const userLogOut = useUserLogOut()
-  const history = useHistory()
+  const user = useUser() // The current user object from UserContext
+  const userLogin = useUserLogin() // Retrieves the login function from UserContext
+  const userLogOut = useUserLogOut() // Retrieves the logout function from UserContext
+  const history = useHistory() // The page history from react router dom. Used for redirection
   
-  const { value:username, bind:bindUsername } = useInput("")
-  const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
-  const [ loginMsg, setLoginMsg ] = useState("")
-  const [ submitting, setSubmitting ] = useState(false)
+  const { value:username, bind:bindUsername } = useInput("") // The current value in the username field
+  const { value:password, bind:bindPassword, reset:resetPassword } = useInput("") // The current value in the password field
+  const [ loginMsg, setLoginMsg ] = useState("") // Status message that is displayed to the user
+  const [ submitting, setSubmitting ] = useState(false) // Toggles whether the login functionality in the useEffect hook is allowed to run
 
-  const invalidDetails = () => {
+  const invalidDetails = () => { // Resets username and password error messages and sets the login failed message
     setFormErrors({
       username: "",
       password: "",
@@ -33,11 +33,11 @@ function LogIn() {
     })
   }
 
-  useEffect(() => {
-    if (formErrors.username === "" && formErrors.password === "" && submitting === true) {
-      setLoginMsg("Logging in...")
-      userLogin(username, password)
-      .then(result => {
+  useEffect(() => { // Runs when the submitting state changes
+    if (formErrors.username === "" && formErrors.password === "" && submitting === true) { // Login is only attempted when submitting == true
+      setLoginMsg("Logging in...") 
+      userLogin(username, password) // Attempts to log the user in with current values
+      .then(result => { // Login was successful
         if (result === true) {
           setFormErrors({
             username: "",
@@ -49,9 +49,9 @@ function LogIn() {
           history.push("/")
         }
       })
-      .catch(error => {
+      .catch(error => { // Login failed
         setLoginMsg("")
-        switch(error) {
+        switch(error) { // Act on the error depending on what went wrong
           case 'auth/invalid-email':
             invalidDetails()
             break
@@ -69,12 +69,12 @@ function LogIn() {
       })
     }
     else {
-      resetPassword()
+      resetPassword() // Resets the password field for security purposes (when the page is refreshed)
     }
-    setSubmitting(false)
+    setSubmitting(false) // Make sure there are no more subsquent login attempts until the submit button is pressed again
   }, [ submitting ])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => { // Checks for empty user input fields and allows a login attempt
     e.preventDefault()
     setFormErrors({
       username: username.trim() === "" ? "Please enter your username" : "",
@@ -83,7 +83,7 @@ function LogIn() {
     setSubmitting(true)
   }
 
-  const handleThirdPartyLoginError = (provider, error) => {
+  const handleThirdPartyLoginError = (provider, error) => { // Determines what to do if there was an error while trying to login through a third party portal
     console.log(`Error signing in with ${provider}`, error)
     userLogOut()
     switch (error) {
@@ -95,13 +95,13 @@ function LogIn() {
     }
   }
 
-  const handleThirdPartyLoginSuccess = (provider, result) => {
+  const handleThirdPartyLoginSuccess = (provider, result) => { // Determines what to do if the third party login through a portal was successful
     console.log(`${provider} login:`, result)
     setLoginMsg(`Succesfully logged in with ${provider}`)
-    history.push("/")
+    history.push("/") // Redirect to the homepage
   }
 
-  const thirdPartyLogin = (provider) => {
+  const thirdPartyLogin = (provider) => { // Attempt to log in with the selected portal provider
     setLoginMsg(`Logging in with ${provider}...`)
     switch (provider.toLowerCase()) {
       case "google":
@@ -141,7 +141,7 @@ function LogIn() {
   }
 
   return(
-    user === null ?
+    user === null ? // If there is no valid current user the login form is displayed
     <div className="loginContainer">
       <div className="mainLogin">
         <div className="title">
@@ -191,7 +191,7 @@ function LogIn() {
         </div>
       </div>
     </div>
-  :
+  : // If there is already a valid current user, a message is displayed instead of the login form
     <div>
       <h2> You seem to be already logged in, you don't need to be here... </h2>
       <h3> Click <a onClick={() => userLogOut()}> here </a> to log out</h3>

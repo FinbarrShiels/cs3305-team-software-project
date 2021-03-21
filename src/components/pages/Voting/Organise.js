@@ -8,7 +8,6 @@ import {createPoll, createPollLink} from "../../../firebaseFunctions/polls"
 import OrganiseOption from './OrganiseOption'
 import { useHistory } from 'react-router'
 import { useUser } from '../../../context/UserContext'
-import { useEffect } from 'react/cjs/react.development'
 import FormError from '../../formError'
 
 function Organise() {

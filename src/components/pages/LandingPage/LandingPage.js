@@ -6,7 +6,7 @@ import vote_card from "../../Images/vote_card.png"
 
 function LandingPage() {
 
-  const user = useUser()
+  const user = useUser() // The current user object from UserContext
 
   return(
     <main className="whoops">
@@ -15,9 +15,10 @@ function LandingPage() {
                 <h1><span>Show Of Hands</span></h1>
                 <span className="lowerText"><span className="one">Organise</span> - <span className="two">Vote</span> - <span className="three">Elect</span></span>
                 <div>
-                  { user === null && <Link to="/signup"><button className="heroButton"> Start Now </button></Link> }
-                  { user !== null && <Link to="/organise"><button className="heroButton"> Organise your own vote </button></Link> }
-                  { user !== null && <Link to="/search"><button className="heroButton"> Find a vote </button></Link> }
+                    {/* These links are rendered based on whether there is a valid current user object */}
+                    { user === null && <Link to="/signup"><button className="heroButton"> Start Now </button></Link> }
+                    { user !== null && <Link to="/organise"><button className="heroButton"> Organise your own vote </button></Link> }
+                    { user !== null && <Link to="/search"><button className="heroButton"> Find a vote </button></Link> }
                 </div>
             </div>
         </div>

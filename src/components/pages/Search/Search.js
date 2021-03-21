@@ -9,26 +9,23 @@ import { useUser } from '../../../context/UserContext';
 
 function Search() {
   
-  const user = useUser()
-  const [ results, setResults ] = useState([])
-  const { value:search, bind:bindSearch, reset:resetSearch } = useInput('')
-  const [ searchMsg, setSearchMsg ] = useState('Type in the seach box and click the search icon, or press enter!')
+  const user = useUser() // the current user object from UserContext
+  const [ results, setResults ] = useState([]) // Holds the results of the search query
+  const { value:search, bind:bindSearch, reset:resetSearch } = useInput('') // Custom hook for input field handling and controlling
+  const [ searchMsg, setSearchMsg ] = useState('Type in the seach box and click the search icon, or press enter!') // The current message being displayed to the user
 
-  const handleSearch = (e) => {
-    e.preventDefault()
-    let trimmedSearch = search.trim()
+  const handleSearch = (e) => { // Handles a user search
+    e.preventDefault() // Stops pages refresh
+    let trimmedSearch = search.trim() // Trims outer white space from the user's input
     if (trimmedSearch !== '') {
       setSearchMsg("Searching...")
-      // Wait for response from server with search results
-      // Then use reducer to render components based on returned array of polls
-      // pass result of query into reducer as payload
-      searchPoll(search)
+      searchPoll(search) // Search for polls based on user input
       .then(output => {
-        if (output.length !== 0) {
+        if (output.length !== 0) { // If there were results
           setSearchMsg("")
           setResults(output)
         }
-        else {
+        else { // If there were no matching polls
           setSearchMsg("Nothing was found")
         }
       })
@@ -40,7 +37,7 @@ function Search() {
     else {
       setSearchMsg("Please give us something to search for")
     }
-    resetSearch()
+    resetSearch() // Resets the search text input field
   }
   
   return(
@@ -54,7 +51,7 @@ function Search() {
         {user !== null && <Link to='/organise' className="organiseButton">Organise a Vote</Link>}
       </div>
       <div className="profileResultGrid">
-        {results.map(result => {
+        {results.map(result => { // Map search results to Result components
         return <ResultVote key={result.data.voteCode} result={result.data}/>
         })}
       </div>

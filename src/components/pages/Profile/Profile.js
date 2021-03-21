@@ -13,25 +13,25 @@ import {sendVerifyEmail} from "../../../firebaseFunctions/custom-landing";
 
 function Profile() {
     
-    const user = useUser()
-    const getUserElections = () => {
+    const user = useUser() // The current user object from UserContext
+    const getUserVotes = () => { // Find any votes the user has participated in or has organised
         if (user) {
             pollsForUser()
             .then(userPolls => {
-                setElectionMsg("")
+                setVoteMsg("")
                 setSavedElections(userPolls)
             })
             .catch(error => {
-                setElectionMsg("Something went wrong when getting your elections. Try reloading the page.")
+                setVoteMsg("Something went wrong when getting your elections. Try reloading the page.")
                 console.log('Failed GET')
                 console.log(error)
             })
         }
         else {
-            setElectionMsg("Please wait while we fetch your voting data...")
+            setVoteMsg("Please wait while we fetch your voting data...")
         }
     }
-    const getCurrentBio = () => {
+    const getCurrentBio = () => { // Retrieves the most recently saved version of the users bio
         if (user) {
             getBio()
         .then(currentBio => {
@@ -46,28 +46,28 @@ function Profile() {
             setBioMsg("Please wait while we fetch your bio...")
         }
     }
-    const saveNewBio = newBio => {
+    const saveNewBio = newBio => { // Saves the new bio value locally and to the database
         setSavedBio(newBio)
         setBio(newBio)
     }
 
-    useEffect(() => {
-        getUserElections()
+    useEffect(() => { // Runs when there is an update to the user object, refreshed vote and bio data
+        getUserVotes()
         getCurrentBio()
     }, [ user ])
 
     const [ savedElections, setSavedElections ] = useState(null)
     const [ savedBio, setSavedBio ] = useState('')
-    const [ electionMsg, setElectionMsg ] = useState('')
+    const [ voteMsg, setVoteMsg ] = useState('')
     const [ bioMsg, setBioMsg ] = useState('')
     const [ inviteMsg, setInviteMsg ] = useState('')
     const [ tab, setTab ] = useState(1)
-    const currentTab = tab => {
+    const currentTab = tab => { // returns the current tab based on the currently selected tab number
         switch(tab) {
             case 1:
                 return <Invites currentInvite={null} message={inviteMsg}/>
             case 2:
-                return <Elections currentElections={savedElections} message={electionMsg}/>
+                return <Elections currentElections={savedElections} message={voteMsg}/>
             case 3:
                 return <Bio currentBio={savedBio} saveBio={saveNewBio} message={bioMsg}/>
             default:
@@ -76,13 +76,13 @@ function Profile() {
     }
 
     return(
-        user !== null ? (
+        user !== null ? ( // Do not load the profile page unless there is a valid current user
             <div className="profileContainer">
                 <div className="profileCard">
                     <div className="left">
                         <div className="profileAvatar">
                             <img className="avatarImage" src={avatar} alt="avatar"/>
-                            {user.verified ? 
+                            {user.verified ? // Displays correct verification badge depending on current user's verification status
                                 <svg width="10mm" height="10mm" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                                     <g transform="translate(-55,-98.5)">
                                         <path fill="#0f0" transform="matrix(.26458 0 0 .26458 55 98.5)" d="m188.98 0a188.98 188.98 0 0 0-188.98 188.98 188.98 188.98 0 0 0 188.98 188.98 188.98 188.98 0 0 0 188.98-188.98 188.98 188.98 0 0 0-188.98-188.98zm88.508 86.691 37.906 37.904-166.67 166.67-86.16-85.869 37.881-37.881 48.109 48.109z"/>
@@ -98,8 +98,6 @@ function Profile() {
                         </div>
                         <p className="profileName"> {user.fname !== undefined && user.sname !== undefined && `${user.fname} ${user.sname}`} </p>
                         <p className="profileEmail"> {user.email} </p>
-                        {/* <p className="profileOccupation"> Occupation </p>
-                        <p className="profileLocation"> Location </p> */}
                         <div className="profileConnectedAccounts">
                             <FontAwesomeIcon className="twitterIcon" icon={['fab', 'twitter']}/>
                             <FontAwesomeIcon className="linkedInIcon" icon={['fab', 'linkedin']}/>

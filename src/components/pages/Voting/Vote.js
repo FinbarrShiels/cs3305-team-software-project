@@ -34,7 +34,7 @@ function Vote() {
                     winner: newPoll.poll.data().winner
                 })
                 if (newPoll.poll.data().open) {
-                    // determine if user has already voted in this poll and what they voted on
+                    // check whether the current user has already voted on this vote (only runs when there is a valid user)
                     user !== null && hasUserAlreadyVoted(`${newPoll.poll.data().owners[0]}${newPoll.poll.data().poll_name}`)
                     .then(result => {
                         if (result !== false) {
@@ -42,9 +42,6 @@ function Vote() {
                             setAlreadyVoted({
                                 caption: newPoll.options[voteIndex].data().option_name
                             })
-                            // setVoteConfirmed({
-                            //     caption: newPoll.options[voteIndex].data().option_name
-                            // })
                             setVoteMsg(`It looks like you've already voted for: ${newPoll.options[voteIndex].data().option_name}`)
                         } else {
                             setVoteMsg(`You haven't voted on this poll yet. Choose an option and hit the "Confirm Vote" button!`)

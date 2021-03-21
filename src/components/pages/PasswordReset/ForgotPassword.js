@@ -9,23 +9,23 @@ import mail from "../../Images/mail.svg"
 
 function ForgotPassword() {
 
-  const { value:email, bind:bindEmail, reset:resetEmail } = useInput("")
-  const [ title, setTitle ] = useState("Forgot your password?")
-  const [ subTitle, setSubtitle ] = useState("No worries! Enter your email and we'll send you a reset link")
-  const [ message, setMessage ] = useState("")
-  const [ requestSent, setRequestSent ] = useState(false)
+  const { value:email, bind:bindEmail, reset:resetEmail } = useInput("") // Use of custom hook to make input controlling easier
+  const [ title, setTitle ] = useState("Forgot your password?") // The current page title
+  const [ subTitle, setSubtitle ] = useState("No worries! Enter your email and we'll send you a reset link") // The current page subtitle
+  const [ message, setMessage ] = useState("") // The current message being displayed to the user
+  const [ requestSent, setRequestSent ] = useState(false) // True/False whether the request has already been sent or not
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => { // Attempts to send forgotten password to the given email 
     e.preventDefault()
     forgotPassword(email)
-    .then(response => {
-      setMessage("We have sent an email to this address, if it exits")
+    .then(response => { // Request sent successfully
       setTitle("Check your email!")
       setSubtitle("We just emailed you with instructions to change your password")
-      setRequestSent(true)
+      setMessage("We have sent an email to this address, if it exits")
+      setRequestSent(true) // Indicates the request email has been sent
     })
-    .catch(error => {
-      switch (error.code) {
+    .catch(error => { // Failed to send the request
+      switch (error.code) { // Determine what message to display to the user depending on the error that occured
         case 'auth/invalid-email':
             setMessage("Please enter a valid email")
             break

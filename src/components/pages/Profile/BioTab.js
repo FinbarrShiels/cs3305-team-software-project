@@ -2,13 +2,13 @@ import { useState } from "react"
 import "./biotab.css"
 function Bio(props) {
 
-    const [ currentText, setBioText ] = useState(props.currentBio)
-    const [ editing, setEditing ] = useState(false)
+    const [ currentText, setBioText ] = useState(props.currentBio) // The current value of the bio text field
+    const [ editing, setEditing ] = useState(false) // Boolean, whether the user is currently editing their bio
 
-    function handleSaveBio(e) {
+    function handleSaveBio(e) { // Attempts to save the current bio to the database
         e.preventDefault()
         props.saveBio(currentText)
-        setEditing(false)
+        setEditing(false) // Indicates no longer editing the bio
     }
 
     return (

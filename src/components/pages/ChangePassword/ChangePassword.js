@@ -1,37 +1,39 @@
-import React, { useState } from 'react';
-import { useInput } from '../../../customHooks/form-input.js';
-import "./ChangePassword.css";
-import FormError from '../../formError';
+import React, { useState } from 'react'
+import { useInput } from '../../../customHooks/form-input.js'
+import "./ChangePassword.css"
+import FormError from '../../formError'
 import { useHistory } from "react-router-dom"
-import {resetPassword} from "../../../firebaseFunctions/custom-landing";
+import {resetPassword} from "../../../firebaseFunctions/custom-landing"
 
 function ChangePassword() {
 
-    const history = useHistory();
-    const [ formErrors, setFormErrors ] = useState(() => ({
+    const history = useHistory() // The page history from react router dom. Used for redirection
+    const [ formErrors, setFormErrors ] = useState(() => ({ // formErrors is an object used to hold the error messages of the form
         password1: "",
         password2: ""
     }))
-    const { value:password1, bind:bindPassword1, reset:resetPassword1 } = useInput('');
-    const { value:password2, bind:bindPassword2, reset:resetPassword2 } = useInput('');
+    const { value:password1, bind:bindPassword1, reset:resetPassword1 } = useInput('') // the current value for the first password field
+    const { value:password2, bind:bindPassword2, reset:resetPassword2 } = useInput('') // the current value for the second password field
+    
+    // called when the page form is submitted
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
+        // Display error messages if any of the fields are empty
         setFormErrors({
           ...formErrors,
           password1: password1.trim() === "" && "Please enter a new password",
           password2: password2.trim() === "" && "Please confirm your password"
         })
-        alert(`Username: ${password1}, Password: ${password2}`)
-        let actCode = new URL(document.URL).search.replace("?", "");
-        console.log("actCode: >", actCode, "<");
-        let r = resetPassword(actCode);
+        let actCode = new URL(document.URL).search.replace("?", "")
+        console.log("actCode: >", actCode, "<")
+        let r = resetPassword(actCode)
         if (r) {
-            console.log("Password changed successfully");
-            resetPassword1();
-            resetPassword2();
-            history.push("/PasswordChanged");
+            console.log("Password changed successfully")
+            resetPassword1()
+            resetPassword2()
+            history.push("/PasswordChanged")
         } else {
-            console.log(r);
+            console.log(r)
         }
       }
     
