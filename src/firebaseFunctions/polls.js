@@ -312,16 +312,14 @@ export function calculateWinner(poll) { // input is a poll document
         })
 
 }
-
-<<<<<<< HEAD
-export function close(pollID) { // takes in a poll document as an input
+export function changeOpen(pollID, newOpenValue ) { // takes in a poll document as an input
     return new Promise((resolve, reject) => {
         db.doc('/polls/' + pollID).get() // query with path to the poll
             .then((queryPoll) => {
                 console.log(queryPoll.data())
                 if (queryPoll.data().owners.includes(auth.currentUser.uid)) { // if the current user is the owner of the poll
                     db.doc('/polls/' + pollID).update({ // query with path to the poll
-                        open: false // set the value of the open field to false
+                        open: newOpenValue // set the value of the open field to false
                     })
                     .then(resolve())
                 } else {
@@ -329,22 +327,7 @@ export function close(pollID) { // takes in a poll document as an input
                 }
             })
             .catch(error => reject(error))
-=======
-export function close(pollId) { // takes in a poll document as an input
-    return new Promise((resolve, reject) => {
-    db.doc('/polls/' + pollId).get() // query with path to the poll
-        .then((queryPoll) => {
-            if (queryPoll.data().owners.includes(auth.currentUser.uid)) { // if the current user is the owner of the poll
-                db.doc('/polls/' + pollId).update({ // query with path to the poll
-                    open: false // set the value of the open field to false
-                }).then(()=> {
-                    resolve(true)
-                })
-            } else {
-                reject("you lack privelege to do this");
-            }
-        })
->>>>>>> fbf54e8e31626071cb3410265080129a382740f5
+
     })
 }
 
