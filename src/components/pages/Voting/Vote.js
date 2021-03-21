@@ -162,8 +162,8 @@ function Vote() {
                             })}
                         </div>
                         <div className="castVote">
-                            { currentPoll.owners.includes(user.uid) && <button onClick={() => closePoll()}> Close Vote </button>}
-                            { currentPoll.owners.includes(user.uid) && <button onClick={() => closePoll()}> Re-Open Vote </button>}
+                            { currentPoll.owners.includes(user.uid) && <button onClick={() => changePollStatus(false)}> Close Vote </button>}
+                            { currentPoll.owners.includes(user.uid) && <button onClick={() => changePollStatus(true)}> Re-Open Vote </button>}
                             { user !== null && <button onClick={() => confirmVote()}> { alreadyVoted ? "Change Vote" : "Confirm Vote"} </button> }
                         </div>
                     </div>
