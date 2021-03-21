@@ -72,9 +72,6 @@ function SignUp() {
       .catch(error => {
         console.log("Sign up error", error)
       })
-    } else {
-      resetPassword()
-      resetConfirmPass()
     }
     setSubmitting(false)
   }, [ submitting ])
