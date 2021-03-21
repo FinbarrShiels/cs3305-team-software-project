@@ -312,18 +312,23 @@ export function calculateWinner(poll) { // input is a poll document
         })
 
 }
+export function changeOpen(pollID, newOpenValue ) { // takes in a poll document as an input
+    return new Promise((resolve, reject) => {
+        db.doc('/polls/' + pollID).get() // query with path to the poll
+            .then((queryPoll) => {
+                console.log(queryPoll.data())
+                if (queryPoll.data().owners.includes(auth.currentUser.uid)) { // if the current user is the owner of the poll
+                    db.doc('/polls/' + pollID).update({ // query with path to the poll
+                        open: newOpenValue // set the value of the open field to false
+                    })
+                    .then(resolve())
+                } else {
+                    console.log("you lack privelege to do this");
+                }
+            })
+            .catch(error => reject(error))
 
-export function close(poll) { // takes in a poll document as an input
-    db.doc('/polls/' + poll.id).get() // query with path to the poll
-        .then((queryPoll) => {
-            if (queryPoll.data().owners.includes(auth.currentUser.uid)) { // if the current user is the owner of the poll
-                db.doc('/polls/' + poll.id).update({ // query with path to the poll
-                    open: false // set the value of the open field to false
-                })
-            } else {
-                console.log("you lack privelege to do this");
-            }
-        })
+    })
 }
 
 
@@ -350,5 +355,21 @@ export function hasUserAlreadyVoted(pollId) { // takes in a pollId as an input
                 console.log(error)
                 reject(error)
             })
+    })
+}
+
+export function deletePoll(pollId)  {
+    return new Promise((resolve, reject) => {
+    db.doc('/polls/' + pollId).get() // query with path to the poll
+    .then((queryPoll) => {
+        if (queryPoll.data().owners.includes(auth.currentUser.uid)) { // if the current user is the owner of the poll
+            db.doc('/polls/' + pollId).delete() // query with path to the poll and deleting it
+            .then(()=> {
+                resolve(true)
+            })
+        } else {
+            reject("you lack privelege to do this");
+        }
+    })
     })
 }
