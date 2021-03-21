@@ -33,7 +33,7 @@ export var firebaseRegister = function(fname, sname, email, pass, username) {
     let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
     recaptcha.verify().then(() => {
         auth.createUserWithEmailAndPassword(email, pass).then(userCred => {
-            addNewUserToFirestore('email', userCred.user.uid, fname, sname, userCred.user.email, username);
+            addNewUserToFirestore(userCred.user.uid, fname, sname, userCred.user.email, username);
             userCred.user.sendEmailVerification(actionCodeSettings).then(() => {
                 recaptcha.clear()
                 resolve(true)
