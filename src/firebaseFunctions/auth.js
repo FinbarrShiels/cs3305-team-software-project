@@ -264,15 +264,16 @@ export function findUser(uid) {
     })
 }
 
-export function isUsernameUnique(username) {
+export function isUsernameUnique(username) { // used to enforce unique usernames
     return new Promise(function(resolve, reject) {
-        var isUnique = true
-        db.collection('users/').where("username", "==", username).get()
+        var isUnique = true // used to track if the username is already in use 
+        db.collection('users/').where("username", "==", username).get() // query to find user documents with the input username as their username
         .then((querySnapshot) => {
-            if (querySnapshot.size===0) {
-                resolve(isUnique)
+            if (querySnapshot.size===0) { // if no one has that username
+                resolve(isUnique) //return isUnique
             }
-            else {
+            else { // if someone already has that username
+                isUnique = false // set isUnique to false and return it
                 resolve(isUnique)
             }
         })
@@ -282,16 +283,16 @@ export function isUsernameUnique(username) {
     })
 }
 
-export function logInWithUsername(username, password) {
+export function logInWithUsername(username, password) { // takes in a username password combination
     return new Promise(function(resolve, reject){
-    db.collection('users/').where("username", "==", username).get()
+    db.collection('users/').where("username", "==", username).get() // gets the documnet associated with the username input
     .then((querySnapshot) => {
-        firebaseRegularLogIn(querySnapshot.docs[0].data().email, password)
+        firebaseRegularLogIn(querySnapshot.docs[0].data().email, password) // call the login function with the email field from the user document and the password function
             .then((userObj) => {
-                resolve(userObj)
+                resolve(userObj) // resolve the user object
             })
             .catch((error) => {
-                reject(error)
+                reject(error) // invalid email or password so reject
             })
     })
     .catch((error)=>{
