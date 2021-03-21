@@ -86,24 +86,38 @@ function Organise() {
             return "You must have more than one option"
         }
     }
+
+    const findFormErrors = () => {
+        let titleError = ""
+        let descError = ""
+        let optionsError = findOptionsError()
+        if (title.trim() === "") {
+            titleError = "Please give your vote a title"
+        }
+        if (desc.trim() === "") {
+            descError = "Please give your vote a description"
+        }
+        setFormErrors({
+            title: titleError,
+            desc: descError,
+            options: optionsError
+        })
+        if (
+            titleError === "" &&
+            descError === "" &&
+            optionsError === ""    
+        ) {
+            return true
+        } else {
+            return false
+        }
+    }
     
     const handleSubmit = e => {
         e.preventDefault()
-        setFormErrors({
-            title: title.trim() === "" ? "Please give your vote a title" : "",
-            desc: desc.trim() === "" ? "Please give your vote a description" : "",
-            options: findOptionsError()
-        })
+        
         setCreating(true)
-    }
-
-    useEffect(() => {
-        if (
-            formErrors.title === "" &&
-            formErrors.desc === "" &&
-            formErrors.options === "" &&
-            creating === true
-        ) {
+        if (findFormErrors) {
             let optionCaptions = convertOptions()
             console.log("Creating vote with the following options:")
             console.log(optionCaptions)
@@ -122,9 +136,8 @@ function Organise() {
                 console.log('ERROR CREATING POLL:')
                 console.log(error)
             })
-            setCreating(false)
         }
-    }, [ creating ])
+    }
 
     return (
 
