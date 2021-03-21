@@ -27,7 +27,7 @@ function SignUp() {
   const { value:email, bind:bindEmail } = useInput("")
   const { value:password, bind:bindPassword, reset:resetPassword } = useInput("")
   const { value:confirmPass, bind:bindConfirmPass, reset:resetConfirmPass } = useInput("")
-  const [tosChecked, setTosChecked] = useState(false)
+  const [ tosChecked, setTosChecked ] = useState(false)
   const [ submitting, setSubmitting ] = useState(false)
   const [ passwordShown, setPasswordShown ] = useState(false)
 
@@ -77,7 +77,7 @@ function SignUp() {
       resetConfirmPass()
     }
     setSubmitting(false)
-  }, [ formErrors ])
+  }, [ submitting ])
 
   const isValidPassword = new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/)
 
