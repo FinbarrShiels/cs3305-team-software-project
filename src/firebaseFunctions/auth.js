@@ -27,26 +27,27 @@ export function authSubscribe(setUser) {
     auth.onAuthStateChanged(setUser)
 }
 
-export var firebaseRegister = function(fname, sname, email, pass, username) {
+export var firebaseRegister = function(fname, sname, email, pass, username) { // takes in input fields from the sign up form
     return new Promise(function(resolve, reject)
     {
-    let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
-    recaptcha.verify().then(() => {
-        auth.createUserWithEmailAndPassword(email, pass).then(userCred => {
-            addNewUserToFirestore('email', userCred.user.uid, fname, sname, userCred.user.email, username);
-            userCred.user.sendEmailVerification(actionCodeSettings).then(() => {
-                recaptcha.clear()
-                resolve(true)
+    let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha'); // load the recaptcha verifier
+    recaptcha.verify().then(() => { // if the recaptcha verifier passes, signifying the user is not a bot 
+        auth.createUserWithEmailAndPassword(email, pass).then(userCred => { // create the user with firebase 
+            addNewUserToFirestore(userCred.user.uid, fname, sname, userCred.user.email, username); // add the users details to a document in firestore
+            userCred.user.sendEmailVerification(actionCodeSettings).then(() => { // send the user a verification email
+                // clear the recaptcha verifier 
+                    recaptcha.clear() 
+                    resolve(true)                 
             }).catch(error => {
-                recaptcha.clear()
+                recaptcha.clear() // clear the recaptcha verifier 
                 reject(error.code)
             })
         }).catch(error => {
-            recaptcha.clear()
+            recaptcha.clear() // clear the recaptcha verifier 
             reject(error.code)
         })
     }).catch(error => {
-        recaptcha.clear()
+        recaptcha.clear() // clear the recaptcha verifier 
         reject(error.code)
     })
     })
@@ -130,20 +131,26 @@ function addNewUserToFirestore(uid, fname, sname, email, username) { // when a n
 export function addNewUserToFirestoreTwitterOrFB(uid, username, displayName) {
     return new Promise((resolve, reject) => {
         console.log('here')
-            db.collection('users').doc(uid).set({ // the 'users/userID' in firestore will
-            // later be used to track what elections a user has voted in, and the ones they've organised
-            username: username,
-            email: null,
-            fname: displayName,
-            sname: ""
-            })
-            .then(()=>{
-                resolve(true);
-            })
-            .catch((err) => {
-                reject(false)
-            })
+        var names = displayName.split(' ')
+        var fname = names[0]
+        var lname = ""
+        for (var i=1; i<names.length; i++) {
+            lname = lname + names[i] + " ";
+        }
+        db.collection('users').doc(uid).set({ // the 'users/userID' in firestore will
+        // later be used to track what elections a user has voted in, and the ones they've organised
+        username: username,
+        email: null,
+        fname: fname,
+        sname: lname
         })
+        .then(()=>{
+            resolve(true);
+        })
+        .catch((err) => {
+            reject(false)
+        })
+    })
 }
 
 export var firebaseGoogleLogIn= function() { // function to authenticate a user in via their Google account
