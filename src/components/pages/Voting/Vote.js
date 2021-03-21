@@ -33,26 +33,30 @@ function Vote() {
                     type: newPoll.poll.data().type,
                     winner: newPoll.poll.data().winner
                 })
-                // determine if user has already voted in this poll and what they voted on
-                user !== null && hasUserAlreadyVoted(`${newPoll.poll.data().owners[0]}${newPoll.poll.data().poll_name}`)
-                .then(result => {
-                    if (result !== false) {
-                        let voteIndex = parseInt(result.replace("option",""))
-                        setAlreadyVoted({
-                            caption: newPoll.options[voteIndex].data().option_name
-                        })
-                        // setVoteConfirmed({
-                        //     caption: newPoll.options[voteIndex].data().option_name
-                        // })
-                        setVoteMsg(`It looks like you've already voted for: ${newPoll.options[voteIndex].data().option_name}`)
-                    } else {
-                        setVoteMsg(`You haven't voted on this poll yet. Choose an option and hit the "Confirm Vote" button!`)
-                    }
-                })
-                .catch(error => {
-                    console.log("ERROR CHECKING IF ALREADY VOTED")
-                    console.log(error)
-                })
+                if (newPoll.poll.data().open) {
+                    // determine if user has already voted in this poll and what they voted on
+                    user !== null && hasUserAlreadyVoted(`${newPoll.poll.data().owners[0]}${newPoll.poll.data().poll_name}`)
+                    .then(result => {
+                        if (result !== false) {
+                            let voteIndex = parseInt(result.replace("option",""))
+                            setAlreadyVoted({
+                                caption: newPoll.options[voteIndex].data().option_name
+                            })
+                            // setVoteConfirmed({
+                            //     caption: newPoll.options[voteIndex].data().option_name
+                            // })
+                            setVoteMsg(`It looks like you've already voted for: ${newPoll.options[voteIndex].data().option_name}`)
+                        } else {
+                            setVoteMsg(`You haven't voted on this poll yet. Choose an option and hit the "Confirm Vote" button!`)
+                        }
+                    })
+                    .catch(error => {
+                        console.log("ERROR CHECKING IF ALREADY VOTED")
+                        console.log(error)
+                    })
+                } else {
+                    setVoteMsg("This poll has been closed by its organiser and is no longer accepting votes")
+                }
                 setFindingPoll(false)
             })
         })
@@ -114,9 +118,8 @@ function Vote() {
     }
 
     const changePollStatus = (status) => {
-        if (currentPoll.open) {
+        if ((currentPoll.open && status) || !(currentPoll.open && status) ) {
             if (currentPoll.owners.includes(user.uid)) {
-                console.log(currentPoll)
                 changeOpen(`${currentPoll.owners[0]}${currentPoll.title}`, status)
                 .then(() => {
                     setForceUpdateCurrentPoll(!forceUpdateCurrentPoll)
@@ -129,7 +132,7 @@ function Vote() {
             }
         } else {
             setVoteMsg(`This vote is already ${status ? "open" : "closed"}`)
-        }
+        } 
     }
 
     useEffect(() => {
@@ -162,9 +165,9 @@ function Vote() {
                             })}
                         </div>
                         <div className="castVote">
-                            { currentPoll.owners.includes(user.uid) && <button onClick={() => changePollStatus(false)}> Close Vote </button>}
-                            { currentPoll.owners.includes(user.uid) && <button onClick={() => changePollStatus(true)}> Re-Open Vote </button>}
-                            { user !== null && <button onClick={() => confirmVote()}> { alreadyVoted ? "Change Vote" : "Confirm Vote"} </button> }
+                            { currentPoll.owners.includes(user.uid) && currentPoll.open && <button onClick={() => changePollStatus(false)}> Close Vote </button>}
+                            { currentPoll.owners.includes(user.uid) && !currentPoll.open && <button onClick={() => changePollStatus(true)}> Re-Open Vote </button>}
+                            { user !== null && currentPoll.open && <button onClick={() => confirmVote()}> { alreadyVoted ? "Change Vote" : "Confirm Vote"} </button> }
                         </div>
                     </div>
                 }
