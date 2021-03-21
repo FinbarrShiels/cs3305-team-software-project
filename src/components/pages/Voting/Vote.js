@@ -1,8 +1,8 @@
 import React from 'react'
 import { useParams } from 'react-router'
-import { useState } from 'react/cjs/react.development'
+import { useEffect, useState } from 'react/cjs/react.development'
 import { getUserByUid } from '../../../firebaseFunctions/auth'
-import { getPoll, hasUserAlreadyVoted, vote } from '../../../firebaseFunctions/polls'
+import { getPoll, hasUserAlreadyVoted, vote, changeOpen } from '../../../firebaseFunctions/polls'
 import "./vote.css"
 import "./activePanel.js"
 import { useUser } from '../../../context/UserContext'
@@ -64,11 +64,12 @@ function Vote() {
     }
     const [ findingPoll, setFindingPoll ] = useState(true)
     const [ pollError, setPollError ] = useState(false)
-    const [ currentPoll, setCurrentPoll ] = useState(() => getCurrentPoll())
+    const [ currentPoll, setCurrentPoll ] = useState(null)
     const [ selectedOption, setSelectedOption ] = useState(null)
     const [ voteConfirmed, setVoteConfirmed ] = useState({ status: false })
     const [ voteMsg, setVoteMsg ] = useState("")
     const [ alreadyVoted, setAlreadyVoted ] = useState(false)
+    const [ forceUpdateCurrentPoll, setForceUpdateCurrentPoll ] = useState(false)
 
     const voteForOption = option => {
         if (option === selectedOption) {
@@ -112,6 +113,29 @@ function Vote() {
         }
     }
 
+    const changePollStatus = (status) => {
+        if (currentPoll.open) {
+            if (currentPoll.owners.includes(user.uid)) {
+                console.log(currentPoll)
+                changeOpen(`${currentPoll.owners[0]}${currentPoll.title}`, status)
+                .then(() => {
+                    setForceUpdateCurrentPoll(!forceUpdateCurrentPoll)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            } else {
+                setVoteMsg(`You don't have permission to ${status ? "open" : "close"} this vote`)
+            }
+        } else {
+            setVoteMsg(`This vote is already ${status ? "open" : "closed"}`)
+        }
+    }
+
+    useEffect(() => {
+        getCurrentPoll()
+    }, [ user, forceUpdateCurrentPoll ])
+
     if (findingPoll) {
         return <h1> Please wait while we find the vote you're looking for... </h1>
     }
@@ -122,7 +146,7 @@ function Vote() {
         return (
             <div className="voteContainer">
             <div className="voteSections">
-                <h3> {currentPoll.title} </h3>
+                <h3> {currentPoll.title} {!currentPoll.open ? "(Closed)" : ""} </h3>
                 <h4> {currentPoll.open ? "Current" : ""} Winner: {currentPoll.winner} </h4>
                 <p className="voteMsg"> {voteMsg} </p>
                 { voteConfirmed.status === false &&
@@ -138,6 +162,8 @@ function Vote() {
                             })}
                         </div>
                         <div className="castVote">
+                            { currentPoll.owners.includes(user.uid) && <button onClick={() => closePoll()}> Close Vote </button>}
+                            { currentPoll.owners.includes(user.uid) && <button onClick={() => closePoll()}> Re-Open Vote </button>}
                             { user !== null && <button onClick={() => confirmVote()}> { alreadyVoted ? "Change Vote" : "Confirm Vote"} </button> }
                         </div>
                     </div>
