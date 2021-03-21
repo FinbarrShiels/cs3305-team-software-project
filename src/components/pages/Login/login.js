@@ -34,7 +34,7 @@ function LogIn() {
   }
 
   useEffect(() => {
-    if (formErrors.username === "" && formErrors.password === "" && submitting) {
+    if (formErrors.username === "" && formErrors.password === "" && submitting === true) {
       setLoginMsg("Logging in...")
       userLogin(username, password)
       .then(result => {

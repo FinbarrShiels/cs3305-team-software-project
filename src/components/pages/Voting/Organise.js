@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import "./Organise.css"
 import clipboard from "../../Images/clipboard.png"
 import { useState } from "react"
@@ -9,37 +9,57 @@ import OrganiseOption from './OrganiseOption'
 import { useHistory } from 'react-router'
 import { useUser } from '../../../context/UserContext'
 import { useEffect } from 'react/cjs/react.development'
+import FormError from '../../formError'
 
 function Organise() {
 
     const user = useUser()
     const history = useHistory()
-    const { value:title, bind:bindTitle, reset:resetTitle } = useInput("")
-    const { value:desc, bind:bindDesc, reset:resetDesc } = useInput("")
-    // const { value:startTime, bind:bindStartTime, reset:resetStartTime } = useInput("")
-    // const { value:startDate, bind:bindStartDate, reset:resetStartDate } = useInput("")
-    // const { value:endTime, bind:bindEndTime, reset:resetEndTime } = useInput("")
-    // const { value:endDate, bind:bindEndDate, reset:resetEndDate } = useInput("")
-    const {value:customOption, bind:bindCustomOption, reset:resetCustomOption } = useInput("")
+    const { value:title, bind:bindTitle } = useInput("")
+    const { value:desc, bind:bindDesc } = useInput("")
+    const { value:customOption, bind:bindCustomOption, reset:resetCustomOption } = useInput("")
     const [ optionMsg, setOptionMsg ] = useState("")
     const [ anonChecked, setAnonChecked ] = useState(false)
     const [ options, setOptions ] = useState([])
     const [ nextIndex, setNextIndex ] = useState(0)
+    const [ creating, setCreating ] = useState(false)
     const [ formErrors, setFormErrors ] = useState({
         title: null,
-        desc: null
+        desc: null,
+        options: null
     })
     
-    const addNewOption = e => {
-        e.preventDefault()
+    const addNewOption = () => {
         if (customOption.trim() !== "") {
-            setOptions([ ...options,  { caption: customOption, index: nextIndex} ])
-            setNextIndex(prevNextIndex => prevNextIndex + 1)
-            setOptionMsg("Option added!")
-            resetCustomOption()
+            let conflictFound = false
+            for (let i=0;i<options.length;i++) {
+                if (options[i].caption.toLowerCase() === customOption.toLowerCase()) {
+                    conflictFound = true
+                    setFormErrors({
+                        ...formErrors,
+                        options: `There's already an option with the caption ${customOption}`
+                    })
+                    setOptionMsg("Option captions are not case sensitive")
+                    break
+                }
+            }
+            if (!conflictFound) {
+                setOptions([ ...options,  { caption: customOption, index: nextIndex} ])
+                setNextIndex(prevNextIndex => prevNextIndex + 1)
+                setOptionMsg(`${customOption} added`)
+                setFormErrors({
+                    ...formErrors,
+                    options: ""
+                })
+                resetCustomOption()
+            }
         }
         else {
-            setOptionMsg("Please give the option a name")
+            setFormErrors({
+                ...formErrors,
+                options: "Please give the option a name"
+            })
+            setOptionMsg("")
         }
     }
     
@@ -57,19 +77,32 @@ function Organise() {
         }
         return newArray
     }
+
+    const findOptionsError = () => {
+        if (options.length > 1) {
+            return ""
+        } else {
+            setOptionMsg("")
+            return "You must have more than one option"
+        }
+    }
     
     const handleSubmit = e => {
         e.preventDefault()
         setFormErrors({
             title: title.trim() === "" ? "Please give your vote a title" : "",
-            desc: desc.trim() === "" ? "Please give your vote a description" : ""
+            desc: desc.trim() === "" ? "Please give your vote a description" : "",
+            options: findOptionsError()
         })
+        setCreating(true)
     }
 
     useEffect(() => {
         if (
             formErrors.title === "" &&
-            formErrors.desc === ""
+            formErrors.desc === "" &&
+            formErrors.options === "" &&
+            creating === true
         ) {
             let optionCaptions = convertOptions()
             console.log("Creating vote with the following options:")
@@ -77,14 +110,21 @@ function Organise() {
             createPoll(title, desc, anonChecked, optionCaptions)
             .then(response => {
                 console.log(`SUCCESS CREATING POLL: ${response}`)
+                setFormErrors({
+                    title: null,
+                    desc: null,
+                    options: null
+                })
+                setOptionMsg("")
                 history.push(createPollLink(user.uid, title))
             })
             .catch(error => {
                 console.log('ERROR CREATING POLL:')
                 console.log(error)
             })
+            setCreating(false)
         }
-    }, [ formErrors ])
+    }, [ creating ])
 
     return (
 
@@ -97,10 +137,12 @@ function Organise() {
             <div className="rightTab">
                 <form className="voteOptions" onSubmit={handleSubmit}>
                     <div className="title">
-                    <label>Title:</label>
+                        <FormError errorMsg={formErrors.title}/>
+                        <label>Title:</label>
                         <input type="text" {...bindTitle}/>
                     </div>
                     <div className="desc" >
+                        <FormError errorMsg={formErrors.desc}/>
                         <label>Description:</label>
                         <input type="text" {...bindDesc}/>
                     </div>
@@ -108,23 +150,14 @@ function Organise() {
                     <label> Allow Anonymous Voters: </label>
                         <Switch checked={anonChecked} onChange={setAnonChecked}/>
                     </div>
-                    {/* <div className="scheduleStart">
-                    <label >Start:</label>
-                    <input type="date" {...bindStartDate}/>
-                    <input type="time" {...bindStartTime}/>
-                    </div>
-                    <div className="scheduleEnd">
-                    <label>End:</label>
-                    <input type="date" {...bindEndDate}/>
-                    <input type="time" {...bindEndTime}/>
-                    </div> */}
                     <div className="createOptions">
                         <h3> Create Options </h3>
                         <p>{optionMsg}</p>
-                        <div onClick={addNewOption}>
+                        <div>
+                            <FormError errorMsg={formErrors.options}/>
                             <label htmlFor="customOption"> New Option: </label>
                             <input className="createOptionsInput" type="text" {...bindCustomOption} id="customOption"></input>
-                            <input className="createOptionsButton" type="submit" value="Add Option"></input>
+                            <input className="createOptionsButton" type="submit" value="Add Option" onClick={e => {e.preventDefault(); addNewOption()}}></input>
                         </div>
                     </div>
                     <div className="createVote">
