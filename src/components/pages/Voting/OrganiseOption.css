@@ -1,0 +1,14 @@
+.organiseOption{
+    margin-top: 10px;
+}
+
+.organiseOption p{
+    color: #fff;
+}
+
+.organiseOption button{
+    color: #fff;
+    background-color: #1BBAFf;
+    border-radius: 10px;
+    padding: 6px 12px;
+}

@@ -1,3 +1,4 @@
+import "./OrganiseOption.css"
 function OrganiseOption(props) {
     return (
         <div className="organiseOption">
