@@ -158,15 +158,15 @@ export var firebaseGoogleLogIn= function() { // function to authenticate a user 
         let provider = new firebase.auth.GoogleAuthProvider(); // create a instance of the google provider object
         auth.signInWithPopup(provider) // authenticate the user with Firebase using the provider object and a pop up window
             .then((userCred) => { // if user successfully logs in, a userCredential is provided
-                if (userCred.additionalUserInfo.isNewUser) {
-                    var userName = userCred.user.displayName;
-                    userName = userName.split(" ")
-                    var sname = userName[0]
-                    var lname = ""
-                    for (var i=1; i<userName.length; i++) {
+                if (userCred.additionalUserInfo.isNewUser) { // if its the users first time signing in 
+                    var userName = userCred.user.displayName; // the users name associated with their Google account will be their display name
+                    userName = userName.split(" ") // userNames is an array 
+                    var sname = userName[0] // the first name in the array is the first name
+                    var lname = "" 
+                    for (var i=1; i<userName.length; i++) { // in case the user has a dutch name it will iterate over the remaining names in the array and set last name to all of them concatenated
                         lname = lname + userName[i] + " ";
                     }
-                    addNewUserToFirestore(userCred.user.uid, sname, lname, userCred.user.email, null)
+                    addNewUserToFirestore(userCred.user.uid, sname, lname, userCred.user.email, null) // add the user to firebase 
                     .then((result) => {
                         resolve(result)
                     }).catch((err) => {
@@ -245,11 +245,11 @@ export function userState() {
     }
 }
 
-export function findUser(uid) {
+export function findUser(uid) { // takes in the id of the user 
     return new Promise((resolve, reject) => {
-        db.doc('users/'+uid).get()
-        .then((userDoc) => {
-            resolve({
+        db.doc('users/'+uid).get() // query to find user documented associated with that uid
+        .then((userDoc) => { 
+            resolve({ // return various fields for the front end to display
                 email: userDoc.data().email,
                 fname: userDoc.data().fname,
                 sname: userDoc.data().sname,
