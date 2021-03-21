@@ -156,6 +156,9 @@ export function pollsForUser() { // function for returning an array of all the p
                             userPolls.push(poll);
                             
                         })
+                        .catch(() => {
+                            reject(false);
+                        })
                         
 
                     })
@@ -163,6 +166,7 @@ export function pollsForUser() { // function for returning an array of all the p
                 })
                 .catch(error => {
                     console.log(error);
+                    reject(false)
                             })
             }).catch((error) => { //error in retrieving data from Firestore
                 reject(false)
