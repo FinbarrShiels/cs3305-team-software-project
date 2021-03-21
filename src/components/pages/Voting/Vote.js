@@ -76,11 +76,15 @@ function Vote() {
     const [ forceUpdateCurrentPoll, setForceUpdateCurrentPoll ] = useState(false)
 
     const voteForOption = option => {
-        if (option === selectedOption) {
-            setVoteMsg(`Option "${option.caption}" is already selected`)
+        if (currentPoll.open) {
+            if (option === selectedOption) {
+                setVoteMsg(`Option "${option.caption}" is already selected`)
+            } else {
+                setVoteMsg(`Voting for: ${option.caption}`)
+                setSelectedOption(option)
+            }
         } else {
-            setVoteMsg(`Voting for: ${option.caption}`)
-            setSelectedOption(option)
+            setVoteMsg("You can't vote after the vote has closed, sorry.")
         }
     }
 
@@ -139,7 +143,10 @@ function Vote() {
         getCurrentPoll()
     }, [ user, forceUpdateCurrentPoll ])
 
-    if (findingPoll) {
+    if (user === null) {
+        return <h1> Sorry, at the moment you must be logged in to view votes </h1>
+    }
+    else if (findingPoll) {
         return <h1> Please wait while we find the vote you're looking for... </h1>
     }
     else if (pollError){
