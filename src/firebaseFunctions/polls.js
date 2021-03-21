@@ -365,8 +365,15 @@ export function deletePoll(pollId)  {
         if (queryPoll.data().owners.includes(auth.currentUser.uid)) { // if the current user is the owner of the poll
             db.doc('/polls/' + pollId).delete() // query with path to the poll and deleting it
             .then(()=> {
-                resolve(true)
+                console.log('file deleted')
             })
+            db.collection('/polls/'+pollId+'/options/').get()
+            .then((snapshot)=>{
+                snapshot.forEach((doc) => {
+                    doc.ref.delete();
+                });
+            });
+            resolve(true)
         } else {
             reject("you lack privelege to do this");
         }
