@@ -22,7 +22,6 @@ function Organise() {
     const [ anonChecked, setAnonChecked ] = useState(false)
     const [ options, setOptions ] = useState([])
     const [ nextIndex, setNextIndex ] = useState(0)
-    const [ creating, setCreating ] = useState(false)
     const [ formErrors, setFormErrors ] = useState({
         title: null,
         desc: null,
@@ -115,9 +114,7 @@ function Organise() {
     
     const handleSubmit = e => {
         e.preventDefault()
-        
-        setCreating(true)
-        if (findFormErrors) {
+        if (findFormErrors()) {
             let optionCaptions = convertOptions()
             console.log("Creating vote with the following options:")
             console.log(optionCaptions)
