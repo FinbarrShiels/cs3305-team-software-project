@@ -1,6 +1,10 @@
+.electionList{
+    overflow-y: scroll;
+    max-height: 300px;
+}
+
 table{
     width: 100%;
-    overflow: scroll;
 }
 
 th, td{

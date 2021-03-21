@@ -21,6 +21,14 @@
     text-transform: uppercase;
 }
 
+.voteSections h4{
+    color: #fff;
+}
+
+.voteSections p{
+    color: #fff;
+}
+
 .optionList{
     display: flex;
     flex-direction: row;
@@ -31,6 +39,7 @@
 
 
 .voteOption{
+    background-color: #1BBAFf;
     display: flex;
     box-sizing: border-box;
     height: 200px;
@@ -43,15 +52,17 @@
     flex-direction: column;
 }
 
-.voteOption.show{
-    background-color: #1BBAFf;
+.voteOption p{
+    color: #6951FF;
 }
 
-.voteOption.active{
+
+.voteOption:hover{
     background-color: orange;
 }
 
 .castVote button{
+    color: #fff;
     margin-top: 10px;
     background-color: green;
     border-radius: 8px;
