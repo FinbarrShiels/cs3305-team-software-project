@@ -7,6 +7,7 @@ const actionCodeSettings = {
     handleCodeInApp: false
 }
 
+//Parse the URL and extract the query parameters
 export function handleUserParams() {
     const url = new URL(document.URL);
     let params = url.search.split("&");
@@ -15,7 +16,7 @@ export function handleUserParams() {
         let temp = params[q].split("=");
         queryValues.push(temp[1])
     }
-    console.log("queryValues: >", queryValues);
+    // Return the list of parameters
     return queryValues
 }
 
@@ -45,6 +46,7 @@ export function resetPassword(actionCode, continueURL) {
     })).catch(e => {return e})
 }
 
+// Confirm password reset Code from the email link query
 export function verifyResetCode(actionCode) {
     return new Promise((resolve, reject) => {
         auth.verifyPasswordResetCode(actionCode).then(() => {
@@ -77,7 +79,7 @@ export function verifyResetCode(actionCode) {
     })
 }
 
-export function recoverEmail(actionCode, continueURL) {}
+// Apply the confirmed action code and verify the relevant email
 export function verifyEmail(actionCode, continueURL) {
     return new Promise((resolve, reject) => {
         auth.applyActionCode(actionCode).then(() => {
@@ -109,9 +111,8 @@ export function verifyEmail(actionCode, continueURL) {
         })
     })
 }
-
+// Send verification email
 export function sendVerifyEmail() {
-    // Temp fix to stop email spam
     if (!auth.currentUser.emailVerified) {
         auth.currentUser.sendEmailVerification().then(() => console.log("Email sent")).catch(e => {
             console.log(e)
